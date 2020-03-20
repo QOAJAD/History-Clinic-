@@ -2,7 +2,6 @@
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
-                font-weight: 200;
                 height: 100vh;
                 margin: 0;
             }
@@ -28,34 +27,55 @@
             }
 
             .content {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                background: white;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 height: 60%;
                 width: 60%;
                 border:2px solid black;    
                      }
 
-            .title {
-                font-size:30px;
+            #Login{
+                grid-column: 1;
+                display: grid;
+                grid-template-rows: 100px 1fr;
+                border-right:2px solid black;  
             }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
+            .contenedor{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
             }
+
+            #title {
+                font-size:30px;
+                color: white;
+                background: black;
+                grid-row: 1;
+            }
+
+            #Iniciar{
+                grid-row: 2;
+            }
+        
 
             .m-b-md {
                 margin-bottom: 30px;
+                padding: 10px 15px;
+                font-size: 100%;
+                border:none;
+                border-bottom: 1px solid black;
             }
 
-            .button{
-                size: 13px;
+            #imagen{
+                grid-column:2;
+            }
+
+            #boton {
+                background: black;
+                cursor: pointer;
+                padding: 10px 15px;
+                color: white;
+                border-radius: 12px;
             }
