@@ -48,6 +48,22 @@
                 flex-direction: column;
             }
 
+            .right-box{
+                position: absolute;
+                align-items: center;
+                box-sizing: border-box;
+                padding: 40px;
+                width: 415px;
+                height: 396px;
+                background-image: url(fondo.jpg);
+                background-size: cover;
+                background-position: center;
+                border-right: 2px solid black;
+                border-bottom: 1px solid black;
+                border-left: 2px solid black;
+                
+            }   
+
             #title {
                 font-size:30px;
                 color: white;
@@ -57,15 +73,19 @@
 
             #Iniciar{
                 grid-row: 2;
+
             }
         
-
             .m-b-md {
                 margin-bottom: 30px;
                 padding: 10px 15px;
                 font-size: 100%;
                 border:none;
-                border-bottom: 1px solid black;
+                border-bottom: 1px solid gray;
+            }
+
+            .m-b-md:hover{
+                border-bottom: 2px solid black;
             }
 
             #imagen{
@@ -78,4 +98,9 @@
                 padding: 10px 15px;
                 color: white;
                 border-radius: 12px;
+            }
+
+            #boton:hover {
+                background: gray;
+                padding: 11px 16px;
             }

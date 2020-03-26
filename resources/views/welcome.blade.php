@@ -34,6 +34,7 @@
                     
                 </div>
                 <div class="contenedor" id="imagen">
+                    <div class="right-box"></div>
                     <button id="boton">Se supone que aquí esta la imagen</button>
                 </div>
                 
