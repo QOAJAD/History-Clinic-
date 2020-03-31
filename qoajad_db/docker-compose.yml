@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  db:
+    container_name: mh-users-mysql
+    restart: always
+    build: .
+    environment:
+      - MYSQL_ROOT_PASSWORD=qoajad
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d
