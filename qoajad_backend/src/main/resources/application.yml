@@ -1,0 +1,31 @@
+spring:
+  main:
+    banner-mode: off
+
+  application:
+    name: QoajadBackend
+
+  datasource:
+    url:
+      jdbc:mysql://localhost:3306/qoajad_users
+    username: qoajad
+    password: qoajad
+    driver-class-name: com.mysql.jdbc.Driver
+
+  hikari:
+    connection-timeout: 60000 # 60 seconds
+    maximum-pool-size: 25
+
+server:
+  port: 9090
+
+security:
+  basic:
+    enable: false
+
+management:
+  security:
+    enabled: false
+
+
+
