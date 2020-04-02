@@ -1,4 +1,4 @@
-package com.qoajad.qoajadbackend.model;
+package com.qoajad.backend.model;
 
 public class User {
 
