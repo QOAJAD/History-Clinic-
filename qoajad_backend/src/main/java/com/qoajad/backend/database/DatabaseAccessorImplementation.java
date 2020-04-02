@@ -3,10 +3,6 @@ package com.qoajad.backend.database;
 import com.qoajad.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,8 +14,6 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
 
     private final JdbcTemplate jdbcTemplate;
 
-    // TODO Create exception class to handle every catch on the CRUD functions in order to avoid duplicate code
-
     @Autowired
     public DatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -27,117 +21,69 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public ResponseEntity<List<User>> retrieveAllUsers() {
-        final String query = "SELECT user_id, user_pw FROM User";
+    public List<User> retrieveAllUsers() {
         List<User> users;
-        ResponseEntity<List<User>> response;
         try {
+            final String query = "SELECT user_id, user_pw FROM User";
             users = jdbcTemplate.query(query, (resultSet, rowNum) -> {
                 final int userId = resultSet.getInt("user_id");
                 final String password = resultSet.getString("user_pw");
                 return new User(userId, password);
             });
-            response = new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
-                response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            else if(e instanceof DataIntegrityViolationException) {
-                response = new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            else {
-                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            throw e;
         }
-        return response;
+        return users;
     }
 
     @Override
-    public ResponseEntity<User> readUser(Integer id) {
-        final String query = "SELECT user_id, user_pw FROM User where user_id = ?";
-        User user = null;
-        ResponseEntity<User> response;
+    public User readUser(int id) {
+        User user;
         try {
+            final String query = "SELECT user_id, user_pw FROM User where user_id = ?";
             user = jdbcTemplate.queryForObject(query, (resultSet, rowNum) -> {
                 final int userId = resultSet.getInt("user_id");
                 final String password = resultSet.getString("user_pw");
                 return new User(userId, password);
             }, id);
-            response = new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
-                response = new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
-            }
-            else if(e instanceof DataIntegrityViolationException) {
-                response = new ResponseEntity<>(user, HttpStatus.CONFLICT);
-            }
-            else {
-                response = new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
-            }
+            throw e;
         }
-        return response;
+        return user;
     }
 
     @Override
-    public ResponseEntity<Void> createUser(Integer id, String password) {
-        final String query = "INSERT INTO User(user_id, user_pw) VALUES (?, ?)";
-        ResponseEntity<Void> response;
+    public Void createUser(int  id, String password) {
         try {
+            final String query = "INSERT INTO User(user_id, user_pw) VALUES (?, ?)";
             jdbcTemplate.update(query, id, password);
-            response = new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
-                response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            else if(e instanceof DataIntegrityViolationException) {
-                response = new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            else {
-                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            throw e;
         }
-        return response;
+        return null;
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(Integer id, String password) {
-        final String query = "UPDATE User SET user_pw = ? WHERE user_id = ?";
-        ResponseEntity<Void> response;
+    public int updateUser(int id, String password) {
+        int rowsChanged = 0;
         try {
-            jdbcTemplate.update(query, id, password);
-            response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            final String query = "UPDATE User SET user_pw = ? WHERE user_id = ?";
+            rowsChanged = jdbcTemplate.update(query, password, id);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
-                response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            else if(e instanceof DataIntegrityViolationException) {
-                response = new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            else {
-                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            throw e;
         }
-        return response;
+        return rowsChanged;
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(Integer id) {
-        final String query = "DELETE FROM User WHERE user_id = ?";
-        ResponseEntity<Void> response;
+    public int deleteUser(int id) {
+        int rowsChanged = 0;
         try {
-            jdbcTemplate.update(query, id);
-            response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            final String query = "DELETE FROM User WHERE user_id = ?";
+            rowsChanged = jdbcTemplate.update(query, id);
         } catch (Exception e) {
-            if(e instanceof EmptyResultDataAccessException) {
-                response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            else if(e instanceof DataIntegrityViolationException) {
-                response = new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            else {
-                response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+            throw e;
         }
-        return response;
+        return rowsChanged;
     }
 }

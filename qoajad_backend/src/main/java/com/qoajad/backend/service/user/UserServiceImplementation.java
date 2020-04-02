@@ -4,7 +4,6 @@ import com.qoajad.backend.database.DatabaseAccessor;
 import com.qoajad.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,27 +20,27 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public ResponseEntity<List<User>> retrieveAllUsers() {
+    public List<User> retrieveAllUsers() {
         return databaseAccessor.retrieveAllUsers();
     }
 
     @Override
-    public ResponseEntity<User> readUser(Integer id) {
+    public User readUser(int id) {
         return databaseAccessor.readUser(id);
     }
 
     @Override
-    public ResponseEntity<Void> createUser(Integer id, String password) {
+    public Void createUser(int  id, String password) {
         return databaseAccessor.createUser(id, password);
     }
 
     @Override
-    public ResponseEntity<Void> updateUser(Integer id, String password) {
+    public int updateUser(int id, String password) {
         return databaseAccessor.updateUser(id, password);
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(Integer id) {
+    public int deleteUser(int id) {
         return databaseAccessor.deleteUser(id);
     }
 }

@@ -2,16 +2,14 @@ package com.qoajad.backend.controller;
 
 import com.qoajad.backend.model.User;
 import com.qoajad.backend.service.user.UserService;
-import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RefreshScope
@@ -27,26 +25,69 @@ public class DefaultController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<List<User>> retrieveAllUsers() {
-        return userService.retrieveAllUsers();
+        ResponseEntity<List<User>> response;
+        try {
+            response = new ResponseEntity<>(userService.retrieveAllUsers(), HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            response = new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return response;
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> readUser(@PathVariable Integer id) {
-        return userService.readUser(id);
+    public ResponseEntity<User> readUser(@PathVariable int id) {
+        ResponseEntity<User> response;
+        try {
+            response = new ResponseEntity<>(userService.readUser(id), HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            response = new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return response;
     }
 
-    @RequestMapping(value = "/create/user/{id}/{password}", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@PathVariable Integer id, @PathVariable String password) {
-        return userService.createUser(id, password);
+    @RequestMapping(value = "/create/user", method = RequestMethod.POST)
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        ResponseEntity<String> response;
+        try {
+            userService.createUser(user.getId(), user.getPassword());
+            response = new ResponseEntity<>("User created successfully.", HttpStatus.CREATED);
+        } catch (EmptyResultDataAccessException e) {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+                response = new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return response;
     }
 
-    @RequestMapping(value = "/update/user/{id}/{password}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> updateUser(@PathVariable Integer id, @PathVariable String password) {
-        return userService.updateUser(id, password);
+    @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateUser(@RequestBody User user) {
+        ResponseEntity<String> response;
+        try {
+            int rowsChanged = userService.updateUser(user.getId(), user.getPassword());
+            response = new ResponseEntity<>(rowsChanged + " row(s) changed.", HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            response = new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return response;
     }
 
     @RequestMapping(value = "/delete/user/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        return userService.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+        ResponseEntity<String> response;
+        try {
+            int rowsChanged = userService.deleteUser(id);
+            response = new ResponseEntity<>(rowsChanged + " row(s) changed.", HttpStatus.OK);
+        } catch (EmptyResultDataAccessException e) {
+            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (DataIntegrityViolationException e) {
+            response = new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return response;
     }
 }
