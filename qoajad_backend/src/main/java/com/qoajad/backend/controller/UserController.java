@@ -65,11 +65,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
-    //TODO modify the parameters of the mapping to allow new and old document.
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
-            // TODO Modify the parameters of the following function to allow new and old document.
             int rowsUpdated = userService.updateUser(user.getOldDocument(), user.getNewDocument(), user.getPassword()) ? 1 : 0;
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
