@@ -7,8 +7,8 @@ import java.util.List;
 public interface UserAccessor {
 
     List<User> retrieveAllUsers();
-    User findUserById(int id);
-    void createUser(int id, String password);
-    boolean updateUser(int id, String password);
-    boolean deleteUser(int id);
+    User findUserByDocument(int document);
+    void createUser(int document, String password);
+    boolean updateUser(int document, String password);
+    boolean deleteUser(int document);
 }

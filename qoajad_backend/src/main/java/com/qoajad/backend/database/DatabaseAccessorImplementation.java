@@ -25,11 +25,12 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     public List<User> retrieveAllUsers() {
         List<User> users;
         try {
-            final String query = "SELECT user_document, user_pw FROM User";
+            final String query = "SELECT user_id, user_document, user_pw FROM User";
             users = jdbcTemplate.query(query, (resultSet, rowNum) -> {
-                final int userId = resultSet.getInt("user_document");
+                final int userId = resultSet.getInt("user_id");
+                final int userDocument = resultSet.getInt("user_document");
                 final String password = resultSet.getString("user_pw");
-                return new User(userId, password);
+                return new User(userId, password, userDocument);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,15 +40,16 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public User findUserById(int id) {
+    public User findUserByDocument(int document) {
         User user;
         try {
-            final String query = "SELECT user_document, user_pw FROM User where user_document = ?";
+            final String query = "SELECT user_id, user_document, user_pw FROM User where user_document = ?";
             user = jdbcTemplate.queryForObject(query, (resultSet, rowNum) -> {
-                final int userId = resultSet.getInt("user_document");
+                final int userId = resultSet.getInt("user_id");
+                final int userDocument = resultSet.getInt("user_document");
                 final String password = resultSet.getString("user_pw");
-                return new User(userId, password);
-            }, id);
+                return new User(userId, password, userDocument);
+            }, document);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -56,10 +58,10 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public void createUser(int id, String password) {
+    public void createUser(int document, String password) {
         try {
             final String query = "INSERT INTO User(user_document, user_pw) VALUES (?, ?)";
-            jdbcTemplate.update(query, id, password);
+            jdbcTemplate.update(query, document, password);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -67,11 +69,11 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public boolean updateUser(int id, String password) {
+    public boolean updateUser(int document, String password) {
         int rowsChanged;
         try {
             final String query = "UPDATE User SET user_pw = ? WHERE user_document = ?";
-            rowsChanged = jdbcTemplate.update(query, password, id);
+            rowsChanged = jdbcTemplate.update(query, password, document);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -80,11 +82,11 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public boolean deleteUser(int id) {
+    public boolean deleteUser(int document) {
         int rowsChanged;
         try {
             final String query = "DELETE FROM User WHERE user_document = ?";
-            rowsChanged = jdbcTemplate.update(query, id);
+            rowsChanged = jdbcTemplate.update(query, document);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

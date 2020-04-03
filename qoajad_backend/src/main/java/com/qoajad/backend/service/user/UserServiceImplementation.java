@@ -25,22 +25,22 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserById(int id) {
-        return databaseAccessor.findUserById(id);
+    public User findUserByDocument(int document) {
+        return databaseAccessor.findUserByDocument(document);
     }
 
     @Override
-    public void createUser(int id, String password) {
-        databaseAccessor.createUser(id, password);
+    public void createUser(int document, String password) {
+        databaseAccessor.createUser(document, password);
     }
 
     @Override
-    public boolean updateUser(int id, String password) {
-        return databaseAccessor.updateUser(id, password);
+    public boolean updateUser(int document, String password) {
+        return databaseAccessor.updateUser(document, password);
     }
 
     @Override
-    public boolean deleteUser(int id) {
-        return databaseAccessor.deleteUser(id);
+    public boolean deleteUser(int document) {
+        return databaseAccessor.deleteUser(document);
     }
 }
