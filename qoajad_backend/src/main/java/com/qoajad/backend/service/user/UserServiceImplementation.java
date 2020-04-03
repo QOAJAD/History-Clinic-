@@ -30,17 +30,17 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public Void createUser(int  id, String password) {
-        return databaseAccessor.createUser(id, password);
+    public void createUser(int id, String password) {
+        databaseAccessor.createUser(id, password);
     }
 
     @Override
-    public int updateUser(int id, String password) {
+    public boolean updateUser(int id, String password) {
         return databaseAccessor.updateUser(id, password);
     }
 
     @Override
-    public int deleteUser(int id) {
+    public boolean deleteUser(int id) {
         return databaseAccessor.deleteUser(id);
     }
 }

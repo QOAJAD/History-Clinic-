@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,9 +32,10 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
                 return new User(userId, password);
             });
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
-        return users;
+        return users == null ? Collections.emptyList() : users;
     }
 
     @Override
@@ -47,43 +49,46 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
                 return new User(userId, password);
             }, id);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
         return user;
     }
 
     @Override
-    public Void createUser(int  id, String password) {
+    public void createUser(int id, String password) {
         try {
             final String query = "INSERT INTO User(user_id, user_pw) VALUES (?, ?)";
             jdbcTemplate.update(query, id, password);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
-        return null;
     }
 
     @Override
-    public int updateUser(int id, String password) {
-        int rowsChanged = 0;
+    public boolean updateUser(int id, String password) {
+        int rowsChanged;
         try {
             final String query = "UPDATE User SET user_pw = ? WHERE user_id = ?";
             rowsChanged = jdbcTemplate.update(query, password, id);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
-        return rowsChanged;
+        return rowsChanged > 0;
     }
 
     @Override
-    public int deleteUser(int id) {
-        int rowsChanged = 0;
+    public boolean deleteUser(int id) {
+        int rowsChanged;
         try {
             final String query = "DELETE FROM User WHERE user_id = ?";
             rowsChanged = jdbcTemplate.update(query, id);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
-        return rowsChanged;
+        return rowsChanged > 0;
     }
 }

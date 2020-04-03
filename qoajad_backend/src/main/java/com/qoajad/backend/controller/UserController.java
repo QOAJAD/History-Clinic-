@@ -14,12 +14,12 @@ import java.util.List;
 
 @RefreshScope
 @RestController
-public class DefaultController {
+public class UserController {
 
     private final UserService userService;
 
     @Autowired
-    public DefaultController(@Qualifier("defaultUserService") final UserService userService) {
+    public UserController(@Qualifier("defaultUserService") final UserService userService) {
         this.userService = userService;
     }
 
@@ -58,7 +58,7 @@ public class DefaultController {
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-                response = new ResponseEntity<>(HttpStatus.CONFLICT);
+            response = new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return response;
     }
@@ -67,8 +67,8 @@ public class DefaultController {
     public ResponseEntity<String> updateUser(@RequestBody User user) {
         ResponseEntity<String> response;
         try {
-            int rowsChanged = userService.updateUser(user.getId(), user.getPassword());
-            response = new ResponseEntity<>(rowsChanged + " row(s) changed.", HttpStatus.OK);
+            userService.updateUser(user.getId(), user.getPassword());
+            response = new ResponseEntity<>( "1 row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
@@ -81,8 +81,8 @@ public class DefaultController {
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
         ResponseEntity<String> response;
         try {
-            int rowsChanged = userService.deleteUser(id);
-            response = new ResponseEntity<>(rowsChanged + " row(s) changed.", HttpStatus.OK);
+            userService.deleteUser(id);
+            response = new ResponseEntity<>( "1 row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
