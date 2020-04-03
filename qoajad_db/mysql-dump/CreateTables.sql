@@ -57,6 +57,7 @@ CREATE TABLE User (
     user_id int NOT NULL AUTO_INCREMENT,
     user_document int UNSIGNED NOT NULL,
     user_pw varchar(20) NOT NULL,
+    UNIQUE INDEX document (user_document),
     CONSTRAINT id PRIMARY KEY (user_id)
 );
 
