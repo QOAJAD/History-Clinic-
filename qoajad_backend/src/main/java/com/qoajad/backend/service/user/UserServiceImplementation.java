@@ -35,8 +35,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean updateUser(int document, String password) {
-        return databaseAccessor.updateUser(document, password);
+    public boolean updateUser(int oldDocument, int newDocument, String password) {
+        return databaseAccessor.updateUser(oldDocument, newDocument, password);
     }
 
     @Override

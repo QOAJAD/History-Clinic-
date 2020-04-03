@@ -69,11 +69,11 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
     }
 
     @Override
-    public boolean updateUser(int document, String password) {
+    public boolean updateUser(int oldDocument, int newDocument, String password) {
         int rowsChanged;
         try {
-            final String query = "UPDATE User SET user_pw = ? WHERE user_document = ?";
-            rowsChanged = jdbcTemplate.update(query, password, document);
+            final String query = "UPDATE User SET user_document = ?, user_pw = ? WHERE user_document = ?";
+            rowsChanged = jdbcTemplate.update(query, newDocument, password, oldDocument);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

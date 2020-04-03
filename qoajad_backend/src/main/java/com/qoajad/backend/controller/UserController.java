@@ -1,5 +1,6 @@
 package com.qoajad.backend.controller;
 
+import com.qoajad.backend.model.UpdateUser;
 import com.qoajad.backend.model.User;
 import com.qoajad.backend.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +65,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateUser(@RequestBody User user) {
+    //TODO modify the parameters of the mapping to allow new and old document.
+    public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
-            int rowsUpdated = userService.updateUser(user.getDocument(), user.getPassword()) ? 1 : 0;
+            // TODO Modify the parameters of the following function to allow new and old document.
+            int rowsUpdated = userService.updateUser(user.getOldDocument(), user.getNewDocument(), user.getPassword()) ? 1 : 0;
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
