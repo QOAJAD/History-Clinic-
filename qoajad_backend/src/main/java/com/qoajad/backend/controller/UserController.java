@@ -37,10 +37,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> readUser(@PathVariable int id) {
+    public ResponseEntity<User> findUserById(@PathVariable int id) {
         ResponseEntity<User> response;
         try {
-            response = new ResponseEntity<>(userService.readUser(id), HttpStatus.OK);
+            response = new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
@@ -67,8 +67,8 @@ public class UserController {
     public ResponseEntity<String> updateUser(@RequestBody User user) {
         ResponseEntity<String> response;
         try {
-            userService.updateUser(user.getId(), user.getPassword());
-            response = new ResponseEntity<>( "1 row(s) changed.", HttpStatus.OK);
+            int rowsUpdated = userService.updateUser(user.getId(), user.getPassword()) ? 1 : 0;
+            response = new ResponseEntity<>( rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
@@ -81,8 +81,8 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
         ResponseEntity<String> response;
         try {
-            userService.deleteUser(id);
-            response = new ResponseEntity<>( "1 row(s) changed.", HttpStatus.OK);
+            int rowsDeleted = userService.deleteUser(id) ? 1 : 0;
+            response = new ResponseEntity<>( rowsDeleted + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {

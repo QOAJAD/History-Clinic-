@@ -25,8 +25,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User readUser(int id) {
-        return databaseAccessor.readUser(id);
+    public User findUserById(int id) {
+        return databaseAccessor.findUserById(id);
     }
 
     @Override
