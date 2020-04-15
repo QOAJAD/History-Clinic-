@@ -1,19 +1,19 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-03-30 16:24
+-- Last modification date: 2020-04-03 14:50
 
 -- tables
 -- Table: API
 use qoajad_users;
 
 CREATE TABLE API (
-    api_id int NOT NULL,
+    api_id int NOT NULL AUTO_INCREMENT,
     api_key varchar(50) NOT NULL,
     CONSTRAINT API_pk PRIMARY KEY (api_id)
 );
 
 -- Table: Appointment
 CREATE TABLE Appointment (
-    ap_id int NOT NULL,
+    ap_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The id of the user which makes the request',
     ap_state int NOT NULL COMMENT 'Whether the request was valid or not',
     ap_time datetime NOT NULL COMMENT 'The timestamp of the request',
@@ -25,7 +25,7 @@ CREATE TABLE Appointment (
 
 -- Table: Medical_History
 CREATE TABLE Medical_History (
-    mh_id int NOT NULL,
+    mh_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     mh_state varchar(15) NOT NULL COMMENT 'Whether the request was valid or not',
     mh_time datetime NOT NULL COMMENT 'The timestamp of the request',
@@ -35,7 +35,7 @@ CREATE TABLE Medical_History (
 
 -- Table: Login
 CREATE TABLE Login (
-    login_id int NOT NULL,
+    login_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     login_state int NOT NULL COMMENT 'Whether the request was valid or not',
     login_time datetime NOT NULL COMMENT 'The timestamp of the request',
@@ -45,7 +45,7 @@ CREATE TABLE Login (
 
 -- Table: Logout
 CREATE TABLE Logout (
-    logout_id int NOT NULL,
+    logout_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     logout_time datetime NOT NULL COMMENT 'The timestamp of the request',
     logout_ip varchar(15) NOT NULL COMMENT 'The IP of the request',
@@ -54,8 +54,10 @@ CREATE TABLE Logout (
 
 -- Table: User
 CREATE TABLE User (
-    user_id int NOT NULL,
+    user_id int NOT NULL AUTO_INCREMENT,
+    user_document int UNSIGNED NOT NULL,
     user_pw varchar(20) NOT NULL,
+    UNIQUE INDEX document (user_document),
     CONSTRAINT id PRIMARY KEY (user_id)
 );
 
