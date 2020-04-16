@@ -12,7 +12,7 @@ CREATE TABLE API (
 );
 
 -- Table: Appointment
-CREATE TABLE Appointment (
+CREATE TABLE AppointmentLog (
     ap_id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The id of the user which makes the request',
     ap_state int NOT NULL COMMENT 'Whether the request was valid or not',
@@ -61,13 +61,21 @@ CREATE TABLE User (
     CONSTRAINT id PRIMARY KEY (user_id)
 );
 
+-- Table: User
+CREATE TABLE Appointment (
+    id int NOT NULL AUTO_INCREMENT,
+    scheduled_by TINYTEXT NOT NULL,
+    date DATETIME NOT NULL,
+    CONSTRAINT Appointment_pk PRIMARY KEY (id)
+);
+
 -- foreign keys
 -- Reference: Medical_History_User (table: Medical_History)
 ALTER TABLE Medical_History ADD CONSTRAINT Medical_History_User FOREIGN KEY Medical_History_User (user_id)
     REFERENCES User (user_id);
 
 -- Reference: Copy_of_Medical_History_User (table: Appointment)
-ALTER TABLE Appointment ADD CONSTRAINT Copy_of_Medical_History_User FOREIGN KEY Copy_of_Medical_History_User (user_id)
+ALTER TABLE AppointmentLog ADD CONSTRAINT Copy_of_Medical_History_User FOREIGN KEY Copy_of_Medical_History_User (user_id)
     REFERENCES User (user_id);
 
 -- Reference: Login_User (table: Login)

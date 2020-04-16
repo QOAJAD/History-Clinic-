@@ -1,4 +1,4 @@
-package com.qoajad.backend.model;
+package com.qoajad.backend.model.user;
 
 public class UpdateUser {
 

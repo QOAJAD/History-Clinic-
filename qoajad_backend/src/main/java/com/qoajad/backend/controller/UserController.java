@@ -1,7 +1,7 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.UpdateUser;
-import com.qoajad.backend.model.User;
+import com.qoajad.backend.model.user.UpdateUser;
+import com.qoajad.backend.model.user.User;
 import com.qoajad.backend.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/list_all", method = RequestMethod.GET)
     public ResponseEntity<List<User>> retrieveAllUsers() {
         ResponseEntity<List<User>> response;
         try {
@@ -37,7 +37,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/user/{document}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/find/{document}", method = RequestMethod.GET)
     public ResponseEntity<User> findUserByDocument(@PathVariable int document) {
         ResponseEntity<User> response;
         try {
@@ -50,7 +50,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/create/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public ResponseEntity<String> createUser(@RequestBody User user) {
         ResponseEntity<String> response;
         try {
@@ -64,7 +64,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/update/user", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
@@ -78,7 +78,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/delete/user/{document}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/delete/{document}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUser(@PathVariable int document) {
         ResponseEntity<String> response;
         try {

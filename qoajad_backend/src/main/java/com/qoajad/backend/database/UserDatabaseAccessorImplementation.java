@@ -1,8 +1,11 @@
 package com.qoajad.backend.database;
 
-import com.qoajad.backend.model.User;
+import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.util.Collections;
@@ -10,13 +13,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Qualifier(value = "defaultDatabaseAccessor")
-public class DatabaseAccessorImplementation implements DatabaseAccessor {
+@Qualifier(value = "defaultUserDatabaseAccessor")
+public class UserDatabaseAccessorImplementation implements UserAccessor {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public DatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate) {
+    public UserDatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         Objects.requireNonNull(jdbcTemplate, "To instantiate the database accessor the jdbc template must not be null.");
     }
@@ -36,7 +39,7 @@ public class DatabaseAccessorImplementation implements DatabaseAccessor {
             e.printStackTrace();
             throw e;
         }
-        return users == null ? Collections.emptyList() : users;
+        return users;
     }
 
     @Override

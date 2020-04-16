@@ -1,7 +1,7 @@
 package com.qoajad.backend.service.user;
 
-import com.qoajad.backend.database.DatabaseAccessor;
-import com.qoajad.backend.model.User;
+import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import java.util.List;
 @Qualifier("defaultUserService")
 public class UserServiceImplementation implements UserService {
 
-    private final DatabaseAccessor databaseAccessor;
+    private final UserAccessor databaseAccessor;
 
     @Autowired
-    public UserServiceImplementation(@Qualifier("defaultDatabaseAccessor") final DatabaseAccessor databaseAccessor) {
+    public UserServiceImplementation(@Qualifier("defaultUserDatabaseAccessor") final UserAccessor databaseAccessor) {
         this.databaseAccessor = databaseAccessor;
     }
 
