@@ -16,6 +16,9 @@ spring:
     connection-timeout: 60000 # 60 seconds
     maximum-pool-size: 25
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
 server:
   port: 9090
 
