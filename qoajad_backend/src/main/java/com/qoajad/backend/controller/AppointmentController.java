@@ -49,7 +49,7 @@ public class AppointmentController {
         return response;
     }
 
-    @RequestMapping(value = "/appointment/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/appointment/update", method = RequestMethod.PUT)
     public ResponseEntity<String> updateAppointment(@RequestBody UpdateAppointment updateAppointment) {
         ResponseEntity<String> response;
         try {
