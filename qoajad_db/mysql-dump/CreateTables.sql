@@ -61,20 +61,12 @@ CREATE TABLE User (
     CONSTRAINT id PRIMARY KEY (user_id)
 );
 
--- Table: User
-CREATE TABLE Appointment (
-    id int NOT NULL AUTO_INCREMENT,
-    scheduled_by TINYTEXT NOT NULL,
-    date DATETIME NOT NULL,
-    CONSTRAINT Appointment_pk PRIMARY KEY (id)
-);
-
 -- foreign keys
 -- Reference: Medical_History_User (table: Medical_History)
 ALTER TABLE Medical_History ADD CONSTRAINT Medical_History_User FOREIGN KEY Medical_History_User (user_id)
     REFERENCES User (user_id);
 
--- Reference: Copy_of_Medical_History_User (table: Appointment)
+-- Reference: Copy_of_Medical_History_User (table: AppointmentLog)
 ALTER TABLE AppointmentLog ADD CONSTRAINT Copy_of_Medical_History_User FOREIGN KEY Copy_of_Medical_History_User (user_id)
     REFERENCES User (user_id);
 
