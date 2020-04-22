@@ -3,7 +3,7 @@
 
 -- tables
 -- Table: Appointment
-CREATE TABLE Appointment (
+CREATE TABLE AppointmentLog (
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The id of the user which makes the request',
     state int NOT NULL COMMENT 'Whether the request was valid or not',
@@ -15,7 +15,7 @@ CREATE TABLE Appointment (
 );
 
 -- Table: Login
-CREATE TABLE Login (
+CREATE TABLE LoginLog (
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     state int NOT NULL COMMENT 'Whether the request was valid or not',
@@ -25,7 +25,7 @@ CREATE TABLE Login (
 );
 
 -- Table: Logout
-CREATE TABLE Logout (
+CREATE TABLE LogoutLog (
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     time datetime NOT NULL COMMENT 'The timestamp of the request',
@@ -34,7 +34,7 @@ CREATE TABLE Logout (
 );
 
 -- Table: Medical_History
-CREATE TABLE Medical_History (
+CREATE TABLE Medical_HistoryLog (
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     state int NOT NULL COMMENT 'Whether the request was valid or not',
