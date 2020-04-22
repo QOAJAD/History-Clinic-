@@ -33,14 +33,14 @@ CREATE TABLE LogoutLog (
     CONSTRAINT Logout_pk PRIMARY KEY (id)
 );
 
--- Table: Medical_History
-CREATE TABLE Medical_HistoryLog (
+-- Table: MedicalHistory
+CREATE TABLE MedicalHistoryLog (
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL COMMENT 'The ID of the user which makes the request',
     state int NOT NULL COMMENT 'Whether the request was valid or not',
     time datetime NOT NULL COMMENT 'The timestamp of the request',
     ip varchar(15) NOT NULL COMMENT 'The IP of the request',
-    CONSTRAINT Medical_History_pk PRIMARY KEY (id)
+    CONSTRAINT MedicalHistory_pk PRIMARY KEY (id)
 );
 
 -- Table: User
@@ -55,12 +55,12 @@ CREATE TABLE User (
 );
 
 -- foreign keys
--- Reference: Clinical_History_User (table: Medical_History)
-ALTER TABLE Medical_History ADD CONSTRAINT Clinical_History_User FOREIGN KEY Clinical_History_User (user_id)
+-- Reference: MedicalHistory_User (table: Medical_History)
+ALTER TABLE MedicalHistory ADD CONSTRAINT MedicalHistory_User FOREIGN KEY Clinical_History_User (user_id)
     REFERENCES User (id);
 
--- Reference: Copy_of_Clinical_History_User (table: Appointment)
-ALTER TABLE Appointment ADD CONSTRAINT Copy_of_Clinical_History_User FOREIGN KEY Copy_of_Clinical_History_User (user_id)
+-- Reference: Appointment_User (table: Appointment)
+ALTER TABLE Appointment ADD CONSTRAINT Appointment_User FOREIGN KEY Appointment_User (user_id)
     REFERENCES User (id);
 
 -- Reference: Login_User (table: Login)
