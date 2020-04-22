@@ -3,29 +3,30 @@ package com.qoajad.backend.model.user;
 public class UpdateUser {
 
     private final int id;
+    private final String username;
     private final String password;
-    private final int oldDocument;
-    private final int newDocument;
+    private final int document;
 
-    public UpdateUser(final int id, final String password, final int oldDocument, final int newDocument) {
+    public UpdateUser(final int id, final String username, final String password, final int document) {
         this.id = id;
         this.password = password;
-        this.oldDocument = oldDocument;
-        this.newDocument = newDocument;
+        this.document = document;
+        this.username = username;
     }
 
-    public int getNewDocument() {
-        return newDocument;
+    public int getDocument() {
+        return document;
     }
 
-    public int getOldDocument() {
-        return oldDocument;
-    }
 
     public String getPassword() {
         return password;
     }
 
     public int getId() { return id; }
+
+    public String getUsername() {
+        return username;
+    }
 }
 

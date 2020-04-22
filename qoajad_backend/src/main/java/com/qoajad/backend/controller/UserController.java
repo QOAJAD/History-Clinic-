@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<String> createUser(@RequestBody User user) {
         ResponseEntity<String> response;
         try {
-            userService.createUser(user.getDocument(), user.getPassword());
+            userService.createUser(user);
             response = new ResponseEntity<>("User created successfully.", HttpStatus.CREATED);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,7 +68,7 @@ public class UserController {
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
-            int rowsUpdated = userService.updateUser(user.getOldDocument(), user.getNewDocument(), user.getPassword()) ? 1 : 0;
+            int rowsUpdated = userService.updateUser(user) ? 1 : 0;
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,6 +1,7 @@
 package com.qoajad.backend.database;
 
 import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.user.UpdateUser;
 import com.qoajad.backend.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,12 +29,13 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public List<User> retrieveAllUsers() {
         List<User> users;
         try {
-            final String query = "SELECT user_id, user_document, user_pw FROM User";
+            final String query = "SELECT id, username, document, pw FROM User";
             users = jdbcTemplate.query(query, (resultSet, rowNum) -> {
-                final int userId = resultSet.getInt("user_id");
-                final int userDocument = resultSet.getInt("user_document");
-                final String password = resultSet.getString("user_pw");
-                return new User(userId, password, userDocument);
+                final int id = resultSet.getInt("id");
+                final String username = resultSet.getString("username");
+                final int document = resultSet.getInt("document");
+                final String password = resultSet.getString("pw");
+                return new User(id, username, password, document);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,12 +48,12 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public User findUserByDocument(int document) {
         User user;
         try {
-            final String query = "SELECT user_id, user_document, user_pw FROM User where user_document = ?";
+            final String query = "SELECT id, username, document, pw FROM User where document = ?";
             user = jdbcTemplate.queryForObject(query, (resultSet, rowNum) -> {
-                final int userId = resultSet.getInt("user_id");
-                final int userDocument = resultSet.getInt("user_document");
-                final String password = resultSet.getString("user_pw");
-                return new User(userId, password, userDocument);
+                final int id = resultSet.getInt("id");
+                final String username = resultSet.getString("username");
+                final String password = resultSet.getString("pw");
+                return new User(id, username, password, document);
             }, document);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,10 +63,10 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public void createUser(int document, String password) {
+    public void createUser(User user) {
         try {
-            final String query = "INSERT INTO User(user_document, user_pw) VALUES (?, ?)";
-            jdbcTemplate.update(query, document, password);
+            final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
+            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -72,11 +74,11 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public boolean updateUser(int oldDocument, int newDocument, String password) {
+    public boolean updateUser(UpdateUser user) {
         int rowsChanged;
         try {
-            final String query = "UPDATE User SET user_document = ?, user_pw = ? WHERE user_document = ?";
-            rowsChanged = jdbcTemplate.update(query, newDocument, password, oldDocument);
+            final String query = "UPDATE User SET username = ?, document = ?, pw = ? WHERE id = ?";
+            rowsChanged = jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword(), user.getId());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -88,7 +90,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public boolean deleteUser(int document) {
         int rowsChanged;
         try {
-            final String query = "DELETE FROM User WHERE user_document = ?";
+            final String query = "DELETE FROM User WHERE document = ?";
             rowsChanged = jdbcTemplate.update(query, document);
         } catch (Exception e) {
             e.printStackTrace();
