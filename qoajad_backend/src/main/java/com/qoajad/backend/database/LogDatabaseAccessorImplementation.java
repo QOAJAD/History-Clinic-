@@ -32,7 +32,7 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
 
     @Override
     public void logAppointmentUpdate(UpdateAppointmentLog updateAppointmentLog) {
-        final String query = "UPDATE AppointmentLog SET id = ?, state = ?, time = ?, ip = ?, date = ?, mdid = ?";
+        final String query = "UPDATE AppointmentLog SET id = ?, state = ?, time = ?, ip = ?, date = ?, mdDocument = ?";
         jdbcTemplate.update(query, updateAppointmentLog.getUserId(), updateAppointmentLog.getState(),
                 dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getRequestDate()), updateAppointmentLog.getIp(),
                 dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getAppointmentDate()), updateAppointmentLog.getDoctorId());
