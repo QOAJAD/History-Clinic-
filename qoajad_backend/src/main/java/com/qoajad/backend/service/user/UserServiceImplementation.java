@@ -1,6 +1,7 @@
 package com.qoajad.backend.service.user;
 
 import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.user.UpdateUser;
 import com.qoajad.backend.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,13 +31,13 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void createUser(int document, String password) {
-        databaseAccessor.createUser(document, password);
+    public void createUser(User user) {
+        databaseAccessor.createUser(user);
     }
 
     @Override
-    public boolean updateUser(int oldDocument, int newDocument, String password) {
-        return databaseAccessor.updateUser(oldDocument, newDocument, password);
+    public boolean updateUser(UpdateUser user) {
+        return databaseAccessor.updateUser(user);
     }
 
     @Override
