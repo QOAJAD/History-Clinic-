@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.User;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class AuthenticationHeaderValidatorFilter extends OncePerRequestFilter {
     }
 
     private String findJWTInHeader(final HttpServletRequest request) {
-        String jwtContent = request.getHeader(AuthenticationConstants.AUTHENTICATION_COOKIE_NAME);
+        String jwtContent = request.getHeader(AuthenticationConstants.AUTHENTICATION_HEADER_NAME);
         if (jwtContent == null) {
             return null;
         }
