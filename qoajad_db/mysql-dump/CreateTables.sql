@@ -48,9 +48,9 @@ CREATE TABLE MedicalHistoryLog (
 -- Table: User
 CREATE TABLE User (
     id int NOT NULL AUTO_INCREMENT,
-    username varchar(20) NOT NULL,
+    username varchar(50) NOT NULL,
     document int UNSIGNED NOT NULL,
-    pw varchar(20) NOT NULL,
+    pw TINYTEXT NOT NULL,
     UNIQUE INDEX unique_document (document),
     UNIQUE INDEX unique_username (username),
     CONSTRAINT id PRIMARY KEY (id)
@@ -58,7 +58,7 @@ CREATE TABLE User (
 
 -- foreign keys
 -- Reference: MedicalHistoryLog_User (table: MedicalHistoryLog)
-ALTER TABLE MedicalHistory ADD CONSTRAINT MedicalHistoryLog_User FOREIGN KEY MedicalHistoryLog_User (user_id)
+ALTER TABLE MedicalHistoryLog ADD CONSTRAINT MedicalHistoryLog_User FOREIGN KEY MedicalHistoryLog_User (user_id)
     REFERENCES User (id);
 
 -- Reference: AppointmentLog_User (table: AppointmentLog)
