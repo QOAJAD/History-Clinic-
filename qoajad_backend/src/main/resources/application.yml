@@ -26,6 +26,9 @@ security:
   basic:
     enable: false
 
+  jwt:
+    secret: e-7L$F&Xne8hm_PgLArL9xj=uKuYyx-de93GV+pgaZ2Tw57@-S8W7URAK9y_TN$MDV9LDbg?j+dUH#--zg&pzSeyk#z*L*gL%X-7!tDGPhC6g$%PGgU-%ymK+t*s6v@^
+
 management:
   security:
     enabled: false

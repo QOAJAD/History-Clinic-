@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  */
 @Service
 @Qualifier("asynchronousDatabaseLogService")
-    public class AsynchronousDatabaseLogServiceImplementation implements DatabaseLogService {
+public class AsynchronousDatabaseLogServiceImplementation implements DatabaseLogService {
 
     private static final int DEFAULT_THREADS = 1;
 
