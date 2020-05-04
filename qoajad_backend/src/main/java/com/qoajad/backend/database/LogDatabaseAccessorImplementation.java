@@ -3,6 +3,7 @@ package com.qoajad.backend.database;
 import com.qoajad.backend.database.accessor.LogAccessor;
 import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
 import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
+import com.qoajad.backend.model.log.Log;
 import com.qoajad.backend.service.date.format.DateFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,18 +24,15 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     }
 
     @Override
-    public void logAppointmentCreation(CreateAppointmentLog createAppointmentLog) {
-        final String query = "INSERT INTO AppointmentLog (id, state, time, ip, date, mdDocument) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(query, createAppointmentLog.getUserId(), createAppointmentLog.getState(),
-                dateFormatService.convertDateToMySQLDateTime(createAppointmentLog.getRequestDate()), createAppointmentLog.getIp(),
-                dateFormatService.convertDateToMySQLDateTime(createAppointmentLog.getAppointmentDate()), createAppointmentLog.getDoctorId());
-    }
-
-    @Override
-    public void logAppointmentUpdate(UpdateAppointmentLog updateAppointmentLog) {
-        final String query = "UPDATE AppointmentLog SET id = ?, state = ?, time = ?, ip = ?, date = ?, mdDocument = ?";
-        jdbcTemplate.update(query, updateAppointmentLog.getUserId(), updateAppointmentLog.getState(),
-                dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getRequestDate()), updateAppointmentLog.getIp(),
-                dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getAppointmentDate()), updateAppointmentLog.getDoctorId());
+    public void logUserAuthentication(final Log log) {
+        try {
+            final String query = "INSERT INTO Log(user_id, state, time, ip, data, requestType) VALUES (NULL, ?, ?, ?, ?, ?)";
+            jdbcTemplate.update(
+                    query, log.getState(), dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
+                    log.getIp(), log.getData(), log.getRequestType());
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

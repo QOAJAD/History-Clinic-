@@ -2,9 +2,9 @@ package com.qoajad.backend.database.accessor;
 
 import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
 import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
+import com.qoajad.backend.model.log.Log;
 
 public interface LogAccessor {
 
-    void logAppointmentCreation(final CreateAppointmentLog createAppointmentLog);
-    void logAppointmentUpdate(final UpdateAppointmentLog updateAppointmentLog);
+    void logUserAuthentication(final Log log);
 }
