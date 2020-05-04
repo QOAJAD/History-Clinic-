@@ -5,13 +5,11 @@ import com.qoajad.backend.model.appointment.CreateAppointment;
 import com.qoajad.backend.model.appointment.UpdateAppointment;
 import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
 import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
-import com.qoajad.backend.model.user.User;
 import com.qoajad.backend.service.appointment.AppointmentService;
-import com.qoajad.backend.service.log.database.DatabaseLogService;
+import com.qoajad.backend.service.log.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -26,12 +24,10 @@ import java.util.Date;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-    private final DatabaseLogService databaseLogService;
 
     @Autowired
-    public AppointmentController(@Qualifier("defaultAppointmentService") final AppointmentService appointmentService, @Qualifier("asynchronousDatabaseLogService") final DatabaseLogService databaseLogService) {
+    public AppointmentController(@Qualifier("defaultAppointmentService") final AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
-        this.databaseLogService = databaseLogService;
     }
 
     @RequestMapping(value = "/appointment/find/{id}", method = RequestMethod.GET)
@@ -54,7 +50,6 @@ public class AppointmentController {
         } catch (DataIntegrityViolationException e) {
             response = new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        databaseLogService.logAppointmentCreation(new CreateAppointmentLog(-1, -1, new Date(), request.getRemoteAddr(), createAppointment.getDate(), -1));
         return response;
     }
 
@@ -67,7 +62,6 @@ public class AppointmentController {
         } catch (DataIntegrityViolationException e) {
             response = new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        databaseLogService.logAppointmentUpdate(new UpdateAppointmentLog(-1, -1, new Date(), request.getRemoteAddr(), updateAppointment.getDate(), -1));
         return response;
     }
 }
