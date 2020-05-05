@@ -13,6 +13,21 @@ import java.sql.Date;
 @RunWith(MockitoJUnitRunner.class)
 public class AppointmentUnitTest {
 
+    @Test(expected = IllegalStateException.class)
+    public void TestAppointmentConstructorFieldsAreInvalidAndThrowsException() {
+        new Appointment(0, "Mario Medina", new Date(System.currentTimeMillis()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void TestAppointmentConstructorFieldsAreInvalidAndThrowsException2() {
+        new Appointment(1, null, new Date(System.currentTimeMillis()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void TestAppointmentConstructorFieldsAreInvalidAndThrowsException3() {
+        new Appointment(1, "Ramiro Ergueta", null);
+    }
+
     @Test
     public void testAppointmentConstructorAssignsLocalFieldsCorrectly() {
         final int appointmentId = 15;

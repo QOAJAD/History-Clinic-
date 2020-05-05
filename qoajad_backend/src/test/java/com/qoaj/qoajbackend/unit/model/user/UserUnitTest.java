@@ -10,6 +10,26 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class UserUnitTest {
 
+    @Test(expected = IllegalStateException.class)
+    public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException() {
+        new UpdateUser(0, "username", "password", 1144099495);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException1() {
+        new UpdateUser(15, null, "password", 16748051);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException2() {
+        new UpdateUser(15, "username", null, 16748051);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException3() {
+        new UpdateUser(64, "username", "password", -1);
+    }
+
     @Test
     public void testUpdateUserConstructorAssignsLocalFieldsCorrectly() {
         final int id = 69;
