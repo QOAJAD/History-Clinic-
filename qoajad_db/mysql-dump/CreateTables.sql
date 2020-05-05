@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-05-04 06:45:26.551
+-- Last modification date: 2020-05-05 03:23:50.749
 
 -- tables
 -- Table: Log
@@ -11,6 +11,7 @@ CREATE TABLE Log (
     ip varchar(15) NOT NULL COMMENT 'The IP of the request',
     data json NOT NULL COMMENT 'The data of the request',
     requestType varchar(6) NOT NULL COMMENT 'The type of the request in REST format',
+    eventType varchar(30) NOT NULL COMMENT 'The type of the event which triggers a log writing',
     CONSTRAINT Log_pk PRIMARY KEY (id)
 );
 
