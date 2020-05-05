@@ -1,14 +1,18 @@
 package com.qoajad.backend.database;
 
+import com.google.gson.Gson;
 import com.qoajad.backend.database.accessor.LogAccessor;
-import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
-import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
+import com.qoajad.backend.model.log.AuthenticationLog;
+import com.qoajad.backend.model.log.Log;
 import com.qoajad.backend.service.date.format.DateFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -27,18 +31,48 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     }
 
     @Override
-    public void logAppointmentCreation(CreateAppointmentLog createAppointmentLog) {
-        final String query = "INSERT INTO AppointmentLog (id, state, time, ip, date, mdDocument) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(query, createAppointmentLog.getUserId(), createAppointmentLog.getState(),
-                dateFormatService.convertDateToMySQLDateTime(createAppointmentLog.getRequestDate()), createAppointmentLog.getIp(),
-                dateFormatService.convertDateToMySQLDateTime(createAppointmentLog.getAppointmentDate()), createAppointmentLog.getDoctorId());
+    public void log(final Log log) {
+        try {
+            final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            jdbcTemplate.update(
+                    query, log.getActiveUserId() == -1 ? null : log.getActiveUserId(), log.getState(),
+                    dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
+                    log.getIp(), new Gson().toJson(log.getData()), log.getRequestType(), log.getEventType());
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override
-    public void logAppointmentUpdate(UpdateAppointmentLog updateAppointmentLog) {
-        final String query = "UPDATE AppointmentLog SET id = ?, state = ?, time = ?, ip = ?, date = ?, mdDocument = ?";
-        jdbcTemplate.update(query, updateAppointmentLog.getUserId(), updateAppointmentLog.getState(),
-                dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getRequestDate()), updateAppointmentLog.getIp(),
-                dateFormatService.convertDateToMySQLDateTime(updateAppointmentLog.getAppointmentDate()), updateAppointmentLog.getDoctorId());
+    public List<Log> retrieveAllLogs() {
+        List<Log> logs;
+        try {
+            final String query = "SELECT id, active_user_id, state, time, ip, data, requestType, eventType FROM Log";
+            logs = jdbcTemplate.query(query, (resultSet, rowNum) -> {
+                final int id = resultSet.getInt("id");
+                final int activeUserId = resultSet.getInt("active_user_id");
+                final String state = resultSet.getString("state");
+                Date time = null;
+                try {
+                    time = dateFormatService.convertMySQLDateTimeToDate(resultSet.getString("time"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                final String ip = resultSet.getString("ip");
+                Object data = resultSet.getString("data");
+                final String requestType = resultSet.getString("requestType");
+                final String eventType = resultSet.getString("eventType");
+                switch(eventType) {
+                    case "AuthenticationLog": data = new Gson().fromJson(data.toString(), AuthenticationLog.class);
+                }
+                return new Log(id, activeUserId, state, time, ip, data, requestType);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return logs;
     }
 }
