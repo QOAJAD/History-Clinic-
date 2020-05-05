@@ -32,6 +32,7 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
 
     @Override
     public void log(final Log log) {
+        Objects.requireNonNull(log, "The log cannot be null.");
         try {
             final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
