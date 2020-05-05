@@ -2,6 +2,7 @@ package com.qoajad.backend.database;
 
 import com.google.gson.Gson;
 import com.qoajad.backend.database.accessor.LogAccessor;
+import com.qoajad.backend.model.log.AuthenticationLog;
 import com.qoajad.backend.model.log.Log;
 import com.qoajad.backend.service.date.format.DateFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,12 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
                     e.printStackTrace();
                 }
                 final String ip = resultSet.getString("ip");
-                final Object data = new Gson().fromJson(resultSet.getString("data"), Log.class);
+                Object data = resultSet.getString("data");
                 final String requestType = resultSet.getString("requestType");
+                final String eventType = resultSet.getString("eventType");
+                switch(eventType) {
+                    case "AuthenticationLog": data = new Gson().fromJson(data.toString(), AuthenticationLog.class);
+                }
                 return new Log(id, activeUserId, state, time, ip, data, requestType);
             });
         } catch (Exception e) {
