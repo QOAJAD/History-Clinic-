@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @Qualifier("defaultAuthenticationDatabaseAccessor")
 public class AuthenticationDatabaseAccessorImplementation implements AuthenticationAccessor {
@@ -16,10 +18,12 @@ public class AuthenticationDatabaseAccessorImplementation implements Authenticat
     @Autowired
     public AuthenticationDatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        Objects.requireNonNull(this.jdbcTemplate, "The JdbcTemplate cannot be passed as null when instantiating a database accessor.");
     }
 
     @Override
     public PrimitiveUserDetail retrieveUserDetails(String username) {
+        Objects.requireNonNull(username, "The username cannot be null.");
         final String query = "SELECT username, pw FROM User where username = ?";
         final PrimitiveUserDetail userDetail = jdbcTemplate.query(query, new Object[]{username}, (resultSet) -> {
             if (resultSet.next()) {

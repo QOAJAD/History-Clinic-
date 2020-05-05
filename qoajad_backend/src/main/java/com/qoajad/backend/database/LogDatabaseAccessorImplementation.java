@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Qualifier(value = "defaultLogDatabaseAccessor")
@@ -25,6 +26,8 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     public LogDatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate, @Qualifier("defaultDateFormatService") final DateFormatService dateFormatService) {
         this.jdbcTemplate = jdbcTemplate;
         this.dateFormatService = dateFormatService;
+        Objects.requireNonNull(this.jdbcTemplate, "The JdbcTemplate cannot be passed as null when instantiating a database accessor.");
+        Objects.requireNonNull(this.dateFormatService, "The DateFormatService cannot be passed as null when instantiating the LogDatabaseAccessor.");
     }
 
     @Override
