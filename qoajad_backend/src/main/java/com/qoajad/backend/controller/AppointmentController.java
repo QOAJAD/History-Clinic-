@@ -3,10 +3,7 @@ package com.qoajad.backend.controller;
 import com.qoajad.backend.model.appointment.Appointment;
 import com.qoajad.backend.model.appointment.CreateAppointment;
 import com.qoajad.backend.model.appointment.UpdateAppointment;
-import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
-import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
 import com.qoajad.backend.service.appointment.AppointmentService;
-import com.qoajad.backend.service.log.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -17,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 @RefreshScope
 @RestController
