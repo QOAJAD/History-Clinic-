@@ -3,13 +3,12 @@ package com.qoajad.backend.database;
 import com.qoajad.backend.database.accessor.UserAccessor;
 import com.qoajad.backend.model.user.UpdateUser;
 import com.qoajad.backend.model.user.User;
+import com.qoajad.backend.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +21,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     @Autowired
     public UserDatabaseAccessorImplementation(final JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        Objects.requireNonNull(jdbcTemplate, "To instantiate the database accessor the jdbc template must not be null.");
+        Objects.requireNonNull(this.jdbcTemplate, "The JdbcTemplate cannot be passed as null when instantiating a database accessor.");
     }
 
     @Override
@@ -46,6 +45,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
 
     @Override
     public User findUserByDocument(int document) {
+        ValidationUtils.requireLeftGreaterThanRight(document, 0, "The document must be positive.");
         User user;
         try {
             final String query = "SELECT id, username, document, pw FROM User where document = ?";
@@ -64,6 +64,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
 
     @Override
     public void createUser(User user) {
+        Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
             jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword());
@@ -75,6 +76,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
 
     @Override
     public boolean updateUser(UpdateUser user) {
+        Objects.requireNonNull(user, "The updated user cannot be null.");
         int rowsChanged;
         try {
             final String query = "UPDATE User SET username = ?, document = ?, pw = ? WHERE id = ?";
@@ -88,6 +90,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
 
     @Override
     public boolean deleteUser(int document) {
+        ValidationUtils.requireLeftGreaterThanRight(document, 0, "The document must be positive.");
         int rowsChanged;
         try {
             final String query = "DELETE FROM User WHERE document = ?";
