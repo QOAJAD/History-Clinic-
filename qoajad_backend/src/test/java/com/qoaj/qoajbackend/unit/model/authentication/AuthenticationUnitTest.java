@@ -9,6 +9,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationUnitTest {
 
+    @Test(expected = NullPointerException.class)
+    public void TestPrimitiveUserDetailConstructorFieldsAreInvalidAndThrowsException() {
+        new PrimitiveUserDetail(null, "password123");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void TestPrimitiveUserDetailConstructorFieldsAreInvalidAndThrowsException2() {
+        new PrimitiveUserDetail("username123", null);
+    }
+
     @Test
     public void testPrimitiveUserDetailConstructorAssignsLocalFieldsCorrectly() {
         final String username = "juan.2114@hotmail.com";

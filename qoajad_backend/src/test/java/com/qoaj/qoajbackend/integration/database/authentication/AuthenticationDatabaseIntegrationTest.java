@@ -28,6 +28,18 @@ public class AuthenticationDatabaseIntegrationTest {
     @Rule
     public MariaDB4jRule databaseRule = new MariaDB4jRule(DBConfigurationBuilder.newBuilder().setPort(PORT).build(), DATABASE_NAME, DATABASE_SQL_FILE);
 
+    @Test(expected = NullPointerException.class)
+    public void testJdbcTemplateInAuthenticationAccessorCannotBePassedAsNull() {
+        new AuthenticationDatabaseAccessorImplementation(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testRetrieveUserDetailsWithNullUsernameThrowsNullPointerException() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final AuthenticationAccessor authenticationAccessor = new AuthenticationDatabaseAccessorImplementation(mockedJdbcTemplate);
+        authenticationAccessor.retrieveUserDetails(null);
+    }
+
     /**
      * This test validates that an existing user in the database (Thanks to the DATABASE_SQL_FILE)
      * is detected as an existing user and, as a consequence, computes correctly the PrimitiveUserDetails.

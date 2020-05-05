@@ -1,6 +1,9 @@
 package com.qoajad.backend.model.appointment;
 
+import com.qoajad.backend.utils.ValidationUtils;
+
 import java.util.Date;
+import java.util.Objects;
 
 public class Appointment {
 
@@ -12,6 +15,9 @@ public class Appointment {
         this.id = id;
         this.scheduledBy = scheduledBy;
         this.date = date;
+        ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The appointment id must be positive.");
+        Objects.requireNonNull(this.scheduledBy, "The scheduled by field cannot be null.");
+        Objects.requireNonNull(this.date, "The date field cannot be null.");
     }
 
     public int getId() {

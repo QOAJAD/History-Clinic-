@@ -2,6 +2,7 @@ package com.qoaj.qoajbackend.integration.database.user;
 
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
+import com.qoajad.backend.database.AuthenticationDatabaseAccessorImplementation;
 import com.qoajad.backend.database.UserDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.UserAccessor;
 import com.qoajad.backend.model.user.UpdateUser;
@@ -39,6 +40,59 @@ public class UserDatabaseIntegrationTest {
      */
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test(expected = NullPointerException.class)
+    public void testJdbcTemplateInUserDatabaseAccessorCannotBePassedAsNull() {
+        new UserDatabaseAccessorImplementation(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testFindUserWithInvalidDocumentThrowsException() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.findUserByDocument(0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testFindUserWithInvalidDocumentThrowsException2() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.findUserByDocument(-500);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCreateUserWithNullUserThrowsException() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.createUser(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testUpdateUserWithNullUserThrowsException() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.updateUser(null);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testDeleteUserWithInvalidDocumentThrowsException() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.deleteUser(0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testDeleteUserWithInvalidDocumentThrowsException2() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
+
+        userAccessor.deleteUser(-214);
+    }
 
     @Test
     public void testCreateUserWorks() throws SQLException {
