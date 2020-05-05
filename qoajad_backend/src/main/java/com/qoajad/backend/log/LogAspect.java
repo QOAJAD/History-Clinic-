@@ -1,9 +1,8 @@
 package com.qoajad.backend.log;
 
-import com.google.gson.Gson;
 import com.qoajad.backend.model.log.AuthenticationLog;
 import com.qoajad.backend.model.log.Log;
-import com.qoajad.backend.service.log.LogService;
+import com.qoajad.backend.service.log.WritableLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -22,11 +20,11 @@ import java.util.Date;
 @Component
 public class LogAspect {
 
-    private final LogService logService;
+    private final WritableLogService writableLogService;
 
     @Autowired
-    public LogAspect(@Qualifier("asynchronousLogService") final LogService logService) {
-        this.logService = logService;
+    public LogAspect(@Qualifier("asynchronousWritableLogService") final WritableLogService writableLogService) {
+        this.writableLogService = writableLogService;
     }
 
     @Pointcut("execution (* com.qoajad.backend.controller.AuthenticationController.authenticate(..))")
@@ -38,6 +36,6 @@ public class LogAspect {
         AuthenticationLog authenticationLog = new AuthenticationLog(joinPoint.getArgs()[0].toString());
         Log log = new Log(-1, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
                 authenticationLog, request.getMethod());
-        logService.log(log);
+        writableLogService.log(log);
     }
 }
