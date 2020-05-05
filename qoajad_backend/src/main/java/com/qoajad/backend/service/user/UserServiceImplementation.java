@@ -13,35 +13,35 @@ import java.util.List;
 @Qualifier("defaultUserService")
 public class UserServiceImplementation implements UserService {
 
-    private final UserAccessor databaseAccessor;
+    private final UserAccessor userAccessor;
 
     @Autowired
-    public UserServiceImplementation(@Qualifier("defaultUserDatabaseAccessor") final UserAccessor databaseAccessor) {
-        this.databaseAccessor = databaseAccessor;
+    public UserServiceImplementation(@Qualifier("defaultUserDatabaseAccessor") final UserAccessor userAccessor) {
+        this.userAccessor = userAccessor;
     }
 
     @Override
     public List<User> retrieveAllUsers() {
-        return databaseAccessor.retrieveAllUsers();
+        return userAccessor.retrieveAllUsers();
     }
 
     @Override
     public User findUserByDocument(int document) {
-        return databaseAccessor.findUserByDocument(document);
+        return userAccessor.findUserByDocument(document);
     }
 
     @Override
     public void createUser(User user) {
-        databaseAccessor.createUser(user);
+        userAccessor.createUser(user);
     }
 
     @Override
     public boolean updateUser(UpdateUser user) {
-        return databaseAccessor.updateUser(user);
+        return userAccessor.updateUser(user);
     }
 
     @Override
     public boolean deleteUser(int document) {
-        return databaseAccessor.deleteUser(document);
+        return userAccessor.deleteUser(document);
     }
 }
