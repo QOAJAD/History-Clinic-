@@ -5,7 +5,7 @@
 -- Table: Log
 CREATE TABLE Log (
     id int NOT NULL AUTO_INCREMENT,
-    user_id int NULL COMMENT 'The id of the user which makes the request',
+    active_user_id int NULL COMMENT 'The id of the user which makes the request',
     state varchar(15) NOT NULL COMMENT 'Whether the request was valid or not',
     time timestamp NOT NULL COMMENT 'The timestamp of the request',
     ip varchar(15) NOT NULL COMMENT 'The IP of the request',
@@ -27,7 +27,7 @@ CREATE TABLE User (
 
 -- foreign keys
 -- Reference: Log_User (table: Log)
-ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (user_id)
+ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (active_user_id)
     REFERENCES User (id);
 
 -- End of file.

@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
  */
 @Service
 @Qualifier("asynchronousLogService")
-public class AsynchronousLogServiceImplementation implements LogService {
+public class AsynchronousDatabaseLogServiceImplementation implements LogService {
 
     private static final int DEFAULT_THREADS = 1;
 
@@ -26,15 +26,15 @@ public class AsynchronousLogServiceImplementation implements LogService {
     private final ExecutorService executorService;
 
     @Autowired
-    public AsynchronousLogServiceImplementation(@Qualifier("defaultLogService") final LogService logService) {
+    public AsynchronousDatabaseLogServiceImplementation(@Qualifier("defaultLogService") final LogService logService) {
         this.logService = logService;
         this.executorService = Executors.newFixedThreadPool(DEFAULT_THREADS);
     }
 
     @Override
-    public void logUserAuthentication(Log log) {
+    public void log(Log log) {
         execute(() ->{
-            logService.logUserAuthentication(log);
+            logService.log(log);
         });
     }
 

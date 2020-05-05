@@ -1,5 +1,6 @@
 package com.qoajad.backend.database;
 
+import com.google.gson.Gson;
 import com.qoajad.backend.database.accessor.LogAccessor;
 import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
 import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
@@ -24,12 +25,14 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     }
 
     @Override
-    public void logUserAuthentication(final Log log) {
+    public void log(final Log log) {
         try {
-            final String query = "INSERT INTO Log(user_id, state, time, ip, data, requestType) VALUES (NULL, ?, ?, ?, ?, ?)";
+            final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(
-                    query, log.getState(), dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
-                    log.getIp(), log.getData(), log.getRequestType());
+                    query, log.getActiveUserId() == -1 ? null : log.getActiveUserId(), log.getState(),
+                    dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
+                    log.getIp(), new Gson().toJson(log.getData()), log.getRequestType(), log.getEventType());
         } catch(Exception e) {
             e.printStackTrace();
             throw e;

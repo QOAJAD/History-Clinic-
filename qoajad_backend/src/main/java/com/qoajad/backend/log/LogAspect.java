@@ -29,16 +29,15 @@ public class LogAspect {
         this.logService = logService;
     }
 
-
     @Pointcut("execution (* com.qoajad.backend.controller.AuthenticationController.authenticate(..))")
-    private void userLogin() {}
+    private void userLoginPointcut() {}
 
-    @AfterReturning(pointcut = "userLogin()", returning = "response")
+    @AfterReturning(pointcut = "userLoginPointcut()", returning = "response")
     public void logUserLogin(JoinPoint joinPoint, ResponseEntity<String> response) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         AuthenticationLog authenticationLog = new AuthenticationLog(joinPoint.getArgs()[0].toString());
         Log log = new Log(-1, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
-                new Gson().toJson(authenticationLog), request.getMethod());
-        logService.logUserAuthentication(log);
+                authenticationLog, request.getMethod());
+        logService.log(log);
     }
 }

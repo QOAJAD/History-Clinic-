@@ -5,29 +5,32 @@ import java.util.Date;
 public class Log {
 
     private final int id;
-    private final int userId;
+    // If there is no active user id, then the following value must be set to -1.
+    private final int activeUserId;
     private final String state;
     private final Date requestDate;
     private final String ip;
-    private final String data;
+    private final Object data;
     private final String requestType;
+    private final String eventType;
 
-    public Log(int id, int userId, String state, Date requestDate, String ip, String data, String requestType) {
+    public Log(int id, int activeUserId, String state, Date requestDate, String ip, Object data, String requestType) {
         this.id = id;
-        this.userId = userId;
+        this.activeUserId = activeUserId;
         this.state = state;
         this.requestDate = requestDate;
         this.ip = ip;
         this.data = data;
         this.requestType = requestType;
+        this.eventType = data.getClass().getSimpleName();
     }
 
     public int getId() {
         return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getActiveUserId() {
+        return activeUserId;
     }
 
     public String getState() {
@@ -42,11 +45,15 @@ public class Log {
         return ip;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
     public String getRequestType() {
         return requestType;
+    }
+
+    public String getEventType() {
+        return eventType;
     }
 }

@@ -6,5 +6,5 @@ import com.qoajad.backend.model.log.Log;
 
 public interface LogAccessor {
 
-    void logUserAuthentication(final Log log);
+    void log(final Log log);
 }

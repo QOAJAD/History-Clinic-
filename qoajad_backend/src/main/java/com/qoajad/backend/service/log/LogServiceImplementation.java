@@ -20,7 +20,7 @@ public class LogServiceImplementation implements LogService {
     }
 
     @Override
-    public void logUserAuthentication(Log log) {
-        logDatabaseAccessor.logUserAuthentication(log);
+    public void log(Log log) {
+        logDatabaseAccessor.log(log);
     }
 }
