@@ -5,6 +5,8 @@ import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
 import com.qoajad.backend.database.LogDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.LogAccessor;
+import com.qoajad.backend.model.log.AuthenticationLog;
+import com.qoajad.backend.model.log.Log;
 import com.qoajad.backend.service.date.format.DateFormatService;
 import com.qoajad.backend.service.date.format.DateFormatServiceImplementation;
 import org.junit.Rule;
@@ -15,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import static utils.database.TestDatabaseUtils.*;
 
@@ -26,7 +29,7 @@ import static utils.database.TestDatabaseUtils.*;
 @RunWith(MockitoJUnitRunner.class)
 public class LogDatabaseIntegrationTest {
 
-    private static final String DATABASE_SQL_FILE = "mysql-user-test.sql";
+    private static final String DATABASE_SQL_FILE = "mysql-log-test.sql";
 
     @Rule
     public MariaDB4jRule databaseRule = new MariaDB4jRule(DBConfigurationBuilder.newBuilder().setPort(PORT).build(), DATABASE_NAME, DATABASE_SQL_FILE);
@@ -59,5 +62,24 @@ public class LogDatabaseIntegrationTest {
         final LogAccessor logAccessor = new LogDatabaseAccessorImplementation(mockedJdbcTemplate, dateFormatService);
 
         logAccessor.log(null);
+    }
+
+    //TODO: Need to create retrieve log by id endpoint and validate that the data retrieved is correct.
+    @Test
+    public void testCreateLogWorks() throws SQLException {
+        final JdbcTemplate mockedJdbcTemplate = createMockedJdbcTemplate(databaseRule.getURL());
+        final DateFormatService dateFormatService = new DateFormatServiceImplementation();
+        final LogAccessor logAccessor = new LogDatabaseAccessorImplementation(mockedJdbcTemplate, dateFormatService);
+
+        final int id = 1;
+        final int activeUserId = -1;
+        final String state = "OK";
+        final Date requestDate = new Date();
+        final String ip = "0:0:0:0:0:0:0:1";
+        final Object data = new AuthenticationLog("juan@hotmail.com");
+        final String requestType = "GET";
+        final Log log = new Log(id, activeUserId, state, requestDate, ip, data, requestType);
+
+        logAccessor.log(log);
     }
 }
