@@ -1,7 +1,5 @@
 package com.qoajad.backend.database.accessor;
 
-import com.qoajad.backend.model.appointment.log.CreateAppointmentLog;
-import com.qoajad.backend.model.appointment.log.UpdateAppointmentLog;
 import com.qoajad.backend.model.log.Log;
 
 import java.util.List;

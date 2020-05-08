@@ -1,6 +1,9 @@
 package com.qoajad.backend.model.log;
 
+import com.qoajad.backend.utils.ValidationUtils;
+
 import java.util.Date;
+import java.util.Objects;
 
 public class Log {
 
@@ -23,6 +26,13 @@ public class Log {
         this.data = data;
         this.requestType = requestType;
         this.eventType = data.getClass().getSimpleName();
+        ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The log id must be positive");
+        Objects.requireNonNull(this.state, "The state cannot be null.");
+        Objects.requireNonNull(this.requestDate, "The date cannot be null.");
+        Objects.requireNonNull(this.ip, "The ip cannot be null.");
+        Objects.requireNonNull(this.data, "The data cannot be null.");
+        Objects.requireNonNull(this.requestType, "The requestType cannot be null.");
+
     }
 
     public int getId() {
