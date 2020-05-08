@@ -41,17 +41,17 @@ public class LogDatabaseIntegrationTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test(expected = NullPointerException.class)
-    public void testJdbcTemplateInLogDatabaseAccessorCannotBePassedAsNull1() {
+    public void testJdbcTemplateAndDateFormatServiceInLogDatabaseAccessorCannotBePassedAsNull() {
         new LogDatabaseAccessorImplementation(null, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testJdbcTemplateInLogDatabaseAccessorCannotBePassedAsNull2() {
+    public void testJdbcTemplateInLogDatabaseAccessorCannotBePassedAsNull() {
         new LogDatabaseAccessorImplementation(null, new DateFormatServiceImplementation());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testJdbcTemplateInLogDatabaseAccessorCannotBePassedAsNull3() throws SQLException {
+    public void testDateFormatserviceInLogDatabaseAccessorCannotBePassedAsNull() throws SQLException {
         new LogDatabaseAccessorImplementation(createMockedJdbcTemplate(databaseRule.getURL()), null);
     }
 
