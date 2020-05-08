@@ -2,11 +2,10 @@ package com.qoaj.qoajbackend.integration.database.user;
 
 import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
-import com.qoajad.backend.database.AuthenticationDatabaseAccessorImplementation;
 import com.qoajad.backend.database.UserDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.UserAccessor;
-import com.qoajad.backend.model.user.UpdateUser;
-import com.qoajad.backend.model.user.User;
+import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.User;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

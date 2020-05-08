@@ -1,7 +1,7 @@
 package com.qoajad.backend.database.accessor;
 
-import com.qoajad.backend.model.user.UpdateUser;
-import com.qoajad.backend.model.user.User;
+import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.User;
 
 import java.util.List;
 

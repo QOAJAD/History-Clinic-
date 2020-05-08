@@ -1,6 +1,6 @@
 package com.qoaj.qoajbackend.unit.model.authentication;
 
-import com.qoajad.backend.model.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
