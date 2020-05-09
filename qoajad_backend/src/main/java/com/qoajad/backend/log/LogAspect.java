@@ -1,8 +1,8 @@
 package com.qoajad.backend.log;
 
-import com.qoajad.backend.model.log.AuthenticationLog;
-import com.qoajad.backend.model.log.Log;
-import com.qoajad.backend.service.log.WritableLogService;
+import com.qoajad.backend.model.internal.log.AuthenticationLog;
+import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.service.internal.log.WritableLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

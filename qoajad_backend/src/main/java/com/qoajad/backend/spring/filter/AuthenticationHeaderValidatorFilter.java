@@ -1,7 +1,7 @@
 package com.qoajad.backend.spring.filter;
 
 import com.qoajad.backend.constants.AuthenticationConstants;
-import com.qoajad.backend.service.jwt.JWTService;
+import com.qoajad.backend.service.internal.jwt.JWTService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

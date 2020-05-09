@@ -4,7 +4,7 @@ import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
 import com.qoajad.backend.database.AuthenticationDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.AuthenticationAccessor;
-import com.qoajad.backend.model.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.qoajad.backend.database.accessor;
 
-import com.qoajad.backend.model.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
 
 public interface AuthenticationAccessor {
 

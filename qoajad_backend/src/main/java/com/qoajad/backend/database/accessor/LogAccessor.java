@@ -1,6 +1,6 @@
 package com.qoajad.backend.database.accessor;
 
-import com.qoajad.backend.model.log.Log;
+import com.qoajad.backend.model.internal.log.Log;
 
 import java.util.List;
 

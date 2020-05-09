@@ -1,7 +1,7 @@
 package com.qoajad.backend.database;
 
 import com.qoajad.backend.database.accessor.AuthenticationAccessor;
-import com.qoajad.backend.model.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;

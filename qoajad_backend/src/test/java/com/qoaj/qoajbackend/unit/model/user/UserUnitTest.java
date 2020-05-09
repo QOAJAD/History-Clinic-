@@ -1,7 +1,7 @@
 package com.qoaj.qoajbackend.unit.model.user;
 
-import com.qoajad.backend.model.user.UpdateUser;
-import com.qoajad.backend.model.user.User;
+import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
