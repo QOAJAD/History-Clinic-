@@ -34,7 +34,7 @@ public class LogAspect {
     public void logUserLogin(JoinPoint joinPoint, ResponseEntity<String> response) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         AuthenticationLog authenticationLog = new AuthenticationLog(joinPoint.getArgs()[0].toString());
-        Log log = new Log(-1, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
+        Log log = new Log(1, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
                 authenticationLog, request.getMethod());
         writableLogService.log(log);
     }
