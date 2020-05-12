@@ -32,9 +32,12 @@ public class LogAspect {
 
     @AfterReturning(pointcut = "userLoginPointcut()", returning = "response")
     public void logUserLogin(JoinPoint joinPoint, ResponseEntity<String> response) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        AuthenticationLog authenticationLog = new AuthenticationLog(joinPoint.getArgs()[0].toString());
-        Log log = new Log(1, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
+        final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        final AuthenticationLog authenticationLog = new AuthenticationLog(joinPoint.getArgs()[0].toString());
+        // TODO(Juan, AntonioYU): The Log model should be replaced with a LogCreation model because at the creation point we don't know the log id.
+        // Instead, the Log model should be used to retrieve a model.
+        final int temporalLogId = 1;
+        final Log log = new Log(temporalLogId, -1, response.getStatusCode().name(), new Date(), request.getRemoteAddr(),
                 authenticationLog, request.getMethod());
         writableLogService.log(log);
     }

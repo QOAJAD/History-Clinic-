@@ -17,6 +17,9 @@ import java.util.Objects;
 @Qualifier(value = "defaultUserDatabaseAccessor")
 public class UserDatabaseAccessorImplementation implements UserAccessor {
 
+    private static final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private static final String BCRYPT_PASSWORD_PREFIX = "{bcrypt}";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -34,7 +37,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
                 final int id = resultSet.getInt("id");
                 final String username = resultSet.getString("username");
                 final int document = resultSet.getInt("document");
-                final String password =  resultSet.getString("pw");
+                final String password = resultSet.getString("pw");
                 return new User(id, username, password, document);
             });
         } catch (Exception e) {
@@ -68,9 +71,8 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
-            final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            final String tmpPw = encoder.encode(user.getPassword());
-            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), tmpPw);
+            final String encryptedPassword = BCRYPT_PASSWORD_PREFIX + bCryptPasswordEncoder.encode(user.getPassword());
+            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptedPassword);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
