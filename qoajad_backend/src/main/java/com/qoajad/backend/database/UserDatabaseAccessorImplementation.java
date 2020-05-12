@@ -7,6 +7,7 @@ import com.qoajad.backend.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.Objects;
 @Service
 @Qualifier(value = "defaultUserDatabaseAccessor")
 public class UserDatabaseAccessorImplementation implements UserAccessor {
+
+    private static final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private static final String BCRYPT_PASSWORD_PREFIX = "{bcrypt}";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -67,7 +71,8 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
-            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword());
+            final String encryptedPassword = BCRYPT_PASSWORD_PREFIX + bCryptPasswordEncoder.encode(user.getPassword());
+            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptedPassword);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
