@@ -7,7 +7,6 @@ import com.qoajad.backend.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
                 final int id = resultSet.getInt("id");
                 final String username = resultSet.getString("username");
                 final int document = resultSet.getInt("document");
-                final String password =  resultSet.getString("pw");
+                final String password = resultSet.getString("pw");
                 return new User(id, username, password, document);
             });
         } catch (Exception e) {
@@ -68,9 +67,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
-            final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            final String tmpPw = encoder.encode(user.getPassword());
-            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), tmpPw);
+            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Service
 @Qualifier("defaultAuthenticationDatabaseAccessor")
-public class    AuthenticationDatabaseAccessorImplementation implements AuthenticationAccessor {
+public class AuthenticationDatabaseAccessorImplementation implements AuthenticationAccessor {
 
     private final JdbcTemplate jdbcTemplate;
 
