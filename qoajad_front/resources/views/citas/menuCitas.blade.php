@@ -1,6 +1,7 @@
 @extends('main')
 
 @section('content')
+<div id = "menuCitas">
     <div id="verCitas">
     	VER CITAS
     </div>
@@ -10,8 +11,8 @@
     </div>
 
     <div id="borrarCitas">
-    	BORRAR O MODIFICAR CITAS
+    	<p> BORRAR CITAS </p> 
     </div>
-
-    <img src="">
+</div>
+    
 @endsection
