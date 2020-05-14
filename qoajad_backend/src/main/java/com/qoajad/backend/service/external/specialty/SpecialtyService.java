@@ -1,10 +1,10 @@
 package com.qoajad.backend.service.external.specialty;
 
-import com.qoajad.backend.model.external.specialty.Specialty;
+import com.qoajad.backend.model.external.specialty.Specialties;
 
 import java.util.List;
 
 public interface SpecialtyService {
 
-    List<Specialty> retrieveAllSpecialtys(final String healthProviderName);
+    List<Specialties> retrieveAllSpecialties(final String healthProviderName);
 }

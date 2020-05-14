@@ -1,6 +1,6 @@
 package com.qoajad.backend.rpc;
 
-import com.qoajad.backend.model.external.specialty.Specialty;
+import com.qoajad.backend.model.external.specialty.Specialties;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,5 +14,5 @@ import java.util.List;
 public interface SpecialtyRPC {
 
     @RequestMapping(value = "ips/{healthProviderInstituteName}", method = RequestMethod.GET)
-    List<Specialty> retrieveAll(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
+    List<Specialties> retrieveAll(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
 }

@@ -1,6 +1,6 @@
 package com.qoajad.backend.service.external.specialty;
 
-import com.qoajad.backend.model.external.specialty.Specialty;
+import com.qoajad.backend.model.external.specialty.Specialties;
 import com.qoajad.backend.rpc.SpecialtyRPC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +20,7 @@ public class SpecialtyServiceImplementation implements SpecialtyService {
     }
 
     @Override
-    public List<Specialty> retrieveAllSpecialtys(String healthProviderName) {
+    public List<Specialties> retrieveAllSpecialties(String healthProviderName) {
         return specialtyRPC.retrieveAll(healthProviderName);
     }
 }

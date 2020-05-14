@@ -23,21 +23,21 @@ public class Appointment {
     private final String doctorName;
 
     @SerializedName("especializacion")
-    private final String specialization;
+    private final String specialty;
 
-    public Appointment(int id, Date date, String healthProviderInstitute, String address, String doctorName, String specialization) {
+    public Appointment(int id, Date date, String healthProviderInstitute, String address, String doctorName, String specialty) {
         this.id = id;
         this.date = date;
         this.healthProviderInstitute = healthProviderInstitute;
         this.address = address;
         this.doctorName = doctorName;
-        this.specialization = specialization;
+        this.specialty = specialty;
         ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "Appointment id must be positive.");
         Objects.requireNonNull(this.date, "Date cannot be null.");
         Objects.requireNonNull(this.healthProviderInstitute, "Health provider institute cannot be null.");
         Objects.requireNonNull(this.address, "Address cannot be null.");
         Objects.requireNonNull(this.doctorName, "Doctor name cannot be null");
-        Objects.requireNonNull(this.specialization, "Specialization cannot be null");
+        Objects.requireNonNull(this.specialty, "Specialty cannot be null");
     }
 
     public int getId() {
@@ -60,7 +60,7 @@ public class Appointment {
         return doctorName;
     }
 
-    public String getSpecialization() {
-        return specialization;
+    public String getSpecialty() {
+        return specialty;
     }
 }
