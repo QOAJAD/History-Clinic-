@@ -140,7 +140,7 @@ button {
 }
 
 body {
-    background-color: #5DADFD;
+    background-color: #B5FDF7;
     font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
     font-weight: 400;
     font-size: 14px;
@@ -229,7 +229,7 @@ h6 {
 .btn {
     line-height: 40px;
     display: inline-block;
-    padding: 0px 25px;
+    padding: 0 25px;
     cursor: pointer;
     color: #fff;
     font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
@@ -250,7 +250,6 @@ h6 {
 
 .btn--radius:hover {
     background: gray;
-    padding: 1px 27px;
 }
 
 
@@ -334,7 +333,7 @@ input {
 }
 
 .card-2 .card-heading {
-    background: url("loginImg.jpg") top left/cover no-repeat;
+    background: url("registimg.jpg") top left/cover no-repeat;
     width: 50.1%;
     display: table-cell;
 }
@@ -359,8 +358,4 @@ input {
         display: block;
         padding: 60px 50px;
     }
-}
-
-.registro {
-    font-size: 11.5px;
 }
