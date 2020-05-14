@@ -3,6 +3,7 @@ package com.qoajad.backend.rpc;
 import com.qoajad.backend.model.external.appointment.Appointment;
 import com.qoajad.backend.model.external.appointment.ConsultingRoom;
 import com.qoajad.backend.model.external.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.appointment.UpdateAppointment;
 import com.qoajad.backend.model.external.response.Response;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,8 +18,8 @@ import java.util.List;
 @Qualifier("defaultAppointmentRPC")
 public interface AppointmentRPC {
 
-    @RequestMapping(value = "/horarios/{healthProviderInstituteName}/{specializationName}", method = RequestMethod.GET)
-    List<ConsultingRoom> findAvailableAppointments(@PathVariable("healthProviderInstituteName") String healthProviderInstituteName, @PathVariable("specializationName") String specializationName);
+    @RequestMapping(value = "/horarios/{healthProviderInstituteName}/{specialtyName}", method = RequestMethod.GET)
+    List<ConsultingRoom> findAvailableAppointments(@PathVariable("healthProviderInstituteName") String healthProviderInstituteName, @PathVariable("specialtyName") String specialtyName);
 
     @RequestMapping(value = "/horarios/", method = RequestMethod.POST)
     Response attemptToCreateAppointment(@RequestBody final CreateAppointment createAppointment);
@@ -28,4 +29,8 @@ public interface AppointmentRPC {
 
     @RequestMapping(value = "/horarios/{userDocument}", method = RequestMethod.GET)
     List<Appointment> findUserAppointments(@PathVariable("userDocument") int userDocument);
+
+    //TODO(AntonioYu): Change the path to the updating method to match the API path.
+    @RequestMapping(value = "/horarios/update", method = RequestMethod.PUT)
+    Response attemptToUpdateAppointment(UpdateAppointment updateAppointment);
 }

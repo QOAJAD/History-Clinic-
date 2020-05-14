@@ -1,9 +1,6 @@
 package com.qoajad.backend.service.external.appointment;
 
-import com.qoajad.backend.model.external.appointment.Appointment;
-import com.qoajad.backend.model.external.appointment.AvailableAppointment;
-import com.qoajad.backend.model.external.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.appointment.*;
 import com.qoajad.backend.model.external.response.Response;
 import com.qoajad.backend.rpc.AppointmentRPC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
     }
 
     @Override
-    public List<ConsultingRoom> findAvailableAppointments(String healthProviderInstituteName, String specializationName) {
-        return appointmentRPC.findAvailableAppointments(healthProviderInstituteName, specializationName);
+    public List<ConsultingRoom> findAvailableAppointments(String healthProviderInstituteName, String specialtyName) {
+        return appointmentRPC.findAvailableAppointments(healthProviderInstituteName, specialtyName);
     }
 
     @Override
@@ -41,5 +38,10 @@ public class AppointmentServiceImplementation implements AppointmentService {
     @Override
     public Response attemptToDeleteAppointment(int appointmentId) {
         return appointmentRPC.attemptToDeleteAppointment(appointmentId);
+    }
+
+    @Override
+    public Response attemptToUpdateAppointment(UpdateAppointment updateAppointment) {
+        return appointmentRPC.attemptToUpdateAppointment(updateAppointment);
     }
 }
