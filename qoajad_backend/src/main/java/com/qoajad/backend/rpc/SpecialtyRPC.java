@@ -1,6 +1,6 @@
 package com.qoajad.backend.rpc;
 
-import com.qoajad.backend.model.external.specialization.Specialization;
+import com.qoajad.backend.model.external.specialty.Specialty;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(name = "SpecializationService", url = "http://thawing-stream-48846.herokuapp.com")
-@Qualifier("defaultSpecializationRPC")
-public interface SpecializationRPC {
+@FeignClient(name = "SpecialtyService", url = "http://thawing-stream-48846.herokuapp.com")
+@Qualifier("defaultSpecialtyRPC")
+public interface SpecialtyRPC {
 
     @RequestMapping(value = "ips/{healthProviderInstituteName}", method = RequestMethod.GET)
-    List<Specialization> retrieveAll(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
+    List<Specialty> retrieveAll(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
 }
