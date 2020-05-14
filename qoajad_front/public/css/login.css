@@ -1,0 +1,105 @@
+html,
+body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 60%;
+    width: 60%;
+    border: 2px solid black;
+}
+
+#Login {
+    grid-column: 1;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    border-right: 2px solid black;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-box {
+    position: absolute;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 415px;
+    height: 396px;
+    background-image: url(fondo.jpg);
+    background-size: cover;
+    background-position: center;
+    border-right: 2px solid black;
+    border-bottom: 1px solid black;
+    border-left: 2px solid black;
+}
+
+#title {
+    font-size: 30px;
+    color: white;
+    background: black;
+    grid-row: 1;
+}
+
+#Iniciar {
+    grid-row: 2;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+    padding: 10px 15px;
+    font-size: 100%;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.m-b-md:hover {
+    border-bottom: 2px solid black;
+}
+
+#imagen {
+    grid-column: 2;
+}
+
+#boton {
+    background: black;
+    cursor: pointer;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 12px;
+}
+
+#boton:hover {
+    background: gray;
+    padding: 11px 16px;
+}
