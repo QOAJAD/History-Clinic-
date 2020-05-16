@@ -71,7 +71,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
-            final String encryptedPassword = BCRYPT_PASSWORD_PREFIX + bCryptPasswordEncoder.encode(user.getPassword());
+            final String encryptedPassword = encryptPassword(user.getPassword());
             jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptedPassword);
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,12 +85,16 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         int rowsChanged;
         try {
             final String query = "UPDATE User SET username = ?, document = ?, pw = ? WHERE id = ?";
-            rowsChanged = jdbcTemplate.update(query, user.getUsername(), user.getDocument(), user.getPassword(), user.getId());
+            rowsChanged = jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptPassword(user.getPassword()), user.getId());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
         return rowsChanged > 0;
+    }
+
+    private String encryptPassword(final String rawPassword) {
+        return BCRYPT_PASSWORD_PREFIX + bCryptPasswordEncoder.encode(rawPassword);
     }
 
     @Override
