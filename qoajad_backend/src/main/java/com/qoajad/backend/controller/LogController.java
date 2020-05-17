@@ -1,6 +1,6 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.model.internal.log.LogCreate;
 import com.qoajad.backend.service.internal.log.ReadableLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,8 +27,8 @@ public class LogController {
     }
 
     @RequestMapping(value = "/log/list_all", method = RequestMethod.GET)
-    public ResponseEntity<List<Log>> retrieveAllLogs() {
-        ResponseEntity<List<Log>> response;
+    public ResponseEntity<List<LogCreate>> retrieveAllLogs() {
+        ResponseEntity<List<LogCreate>> response;
         try {
             response = new ResponseEntity<>(readableLogService.retrieveAllLogs(), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {

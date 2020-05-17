@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.qoajad.backend.database.accessor.LogAccessor;
 import com.qoajad.backend.model.internal.log.AuthenticationLog;
 import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.model.internal.log.LogCreate;
 import com.qoajad.backend.service.internal.date.format.DateFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,15 +32,15 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     }
 
     @Override
-    public void log(final Log log) {
-        Objects.requireNonNull(log, "The log cannot be null.");
+    public void log(final LogCreate logCreate) {
+        Objects.requireNonNull(logCreate, "The logCreate cannot be null.");
         try {
             final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(
-                    query, log.getActiveUserId() == -1 ? null : log.getActiveUserId(), log.getState(),
-                    dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
-                    log.getIp(), new Gson().toJson(log.getData()), log.getRequestType(), log.getEventType());
+                    query, logCreate.getActiveUserId() == -1 ? null : logCreate.getActiveUserId(), logCreate.getState(),
+                    dateFormatService.convertDateToMySQLDateTime(logCreate.getRequestDate()),
+                    logCreate.getIp(), new Gson().toJson(logCreate.getData()), logCreate.getRequestType(), logCreate.getEventType());
         } catch(Exception e) {
             e.printStackTrace();
             throw e;

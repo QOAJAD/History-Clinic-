@@ -1,8 +1,8 @@
 package com.qoajad.backend.service.internal.log;
 
-import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.model.internal.log.LogCreate;
 
 public interface WritableLogService {
 
-    void log(final Log log);
+    void log(final LogCreate logCreate);
 }

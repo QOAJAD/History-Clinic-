@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Log {
-
     private final int id;
     // If there is no active user id, then the following value must be set to -1.
     private final int activeUserId;
@@ -26,17 +25,13 @@ public class Log {
         this.data = data;
         this.requestType = requestType;
         this.eventType = data.getClass().getSimpleName();
-        ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The log id must be positive");
+        ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The id must be positive.");
         Objects.requireNonNull(this.state, "The state cannot be null.");
         Objects.requireNonNull(this.requestDate, "The date cannot be null.");
         Objects.requireNonNull(this.ip, "The ip cannot be null.");
         Objects.requireNonNull(this.data, "The data cannot be null.");
         Objects.requireNonNull(this.requestType, "The requestType cannot be null.");
 
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getActiveUserId() {

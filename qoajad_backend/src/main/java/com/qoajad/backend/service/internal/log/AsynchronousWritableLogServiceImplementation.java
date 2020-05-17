@@ -1,6 +1,6 @@
 package com.qoajad.backend.service.internal.log;
 
-import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.model.internal.log.LogCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,9 +29,9 @@ public class AsynchronousWritableLogServiceImplementation implements WritableLog
     }
 
     @Override
-    public void log(Log log) {
+    public void log(LogCreate logCreate) {
         execute(() ->{
-            writableLogService.log(log);
+            writableLogService.log(logCreate);
         });
     }
 
