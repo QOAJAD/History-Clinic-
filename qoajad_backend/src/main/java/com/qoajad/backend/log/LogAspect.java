@@ -80,7 +80,6 @@ public class LogAspect {
         final LogCreate logCreate = new LogCreate("", response.getStatusCode().name(), new Date(),
                 request.getRemoteAddr(), authenticationLog, request.getMethod());
         writableLogService.log(logCreate);
-        request = null;
     }
 
     @AfterReturning(pointcut = "findAvailableAppointmentsPointcut()", returning = "response")
@@ -89,8 +88,6 @@ public class LogAspect {
         final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
                 request.getRemoteAddr(), response.getBody(), request.getMethod());
         writableLogService.log(logCreate);
-        request = null;
-
     }
 
     @AfterReturning(pointcut = "findUserAppointmentsPointcut()", returning = "response")
@@ -99,7 +96,6 @@ public class LogAspect {
         final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
                 request.getRemoteAddr(), response.getBody(), request.getMethod());
         writableLogService.log(logCreate);
-        request = null;
     }
 
     @AfterReturning(pointcut = "createAppointmentPointcut()", returning = "response")
@@ -109,27 +105,25 @@ public class LogAspect {
         final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
                 request.getRemoteAddr(), createAppointment, request.getMethod());
         writableLogService.log(logCreate);
-        request = null;
     }
 
-    @Around("updateAppointmentPointcut()")
-    public void logUpdateAppointment(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        Object[] args = proceedingJoinPoint.getArgs();
-        final UpdateAppointment updateAppointment = (UpdateAppointment) args[0];
-        Appointment oldAppointment;
-        Appointment newAppointment;
-        oldAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
-                updateAppointment.getPatientDocument());
-        ResponseEntity<String> response = (ResponseEntity<String>) proceedingJoinPoint.proceed(args);
-        newAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
-                updateAppointment.getPatientDocument());
-        UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        final UpdateAppointmentLog updateAppointmentLog = new UpdateAppointmentLog(oldAppointment, newAppointment);
-        final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
-                request.getRemoteAddr(), updateAppointmentLog, request.getMethod());
-        writableLogService.log(logCreate);
-        request = null;
-    }
+//    @Around("updateAppointmentPointcut()")
+//    public void logUpdateAppointment(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+//        Object[] args = proceedingJoinPoint.getArgs();
+//        final UpdateAppointment updateAppointment = (UpdateAppointment) args[0];
+//        Appointment oldAppointment;
+//        Appointment newAppointment;
+//        oldAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
+//                updateAppointment.getPatientDocument());
+//        ResponseEntity<String> response = (ResponseEntity<String>) proceedingJoinPoint.proceed(args);
+//        newAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
+//                updateAppointment.getPatientDocument());
+//        UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        final UpdateAppointmentLog updateAppointmentLog = new UpdateAppointmentLog(oldAppointment, newAppointment);
+//        final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
+//                request.getRemoteAddr(), updateAppointmentLog, request.getMethod());
+//        writableLogService.log(logCreate);
+//    }
 
     @AfterReturning(pointcut = "deleteAppointmentPointcut()", returning = "response")
     public void logDeleteAppointment(JoinPoint joinPoint, ResponseEntity<String> response) {
