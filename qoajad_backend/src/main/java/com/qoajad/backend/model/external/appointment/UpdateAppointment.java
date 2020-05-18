@@ -8,13 +8,9 @@ import java.util.Objects;
 public class UpdateAppointment {
 
     private final int id;
-
     private final int patientDocument;
-
     private final Date date;
-
     private final int doctorDocument;
-
     private final String healthProviderInstitute;
 
     public UpdateAppointment(int id, int patientDocument, Date date, int doctorDocument, String healthProviderInstitute) {

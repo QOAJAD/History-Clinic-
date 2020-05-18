@@ -9,12 +9,8 @@ import java.util.Objects;
 public class AvailableAppointment {
 
     private final int id;
-
-    @SerializedName("nombre doctor")
     private final String doctorName;
-    @SerializedName("documento doctor")
     private final int doctorDocument;
-    @SerializedName("fecha cita")
     private final Date date;
 
     public AvailableAppointment(int id, final String doctorName, final int doctorDocument, final Date date) {

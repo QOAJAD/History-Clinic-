@@ -9,20 +9,10 @@ import java.util.Objects;
 public class Appointment {
 
     private final int id;
-
-    @SerializedName("fecha")
     private final Date date;
-
-    @SerializedName("ips")
     private final String healthProviderInstitute;
-
-    @SerializedName("direccion")
     private final String address;
-
-    @SerializedName("medico")
     private final String doctorName;
-
-    @SerializedName("especializacion")
     private final String specialty;
 
     public Appointment(int id, Date date, String healthProviderInstitute, String address, String doctorName, String specialty) {
