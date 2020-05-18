@@ -13,6 +13,6 @@ import java.util.List;
 @Qualifier("defaultSpecialtyRPC")
 public interface SpecialtyRPC {
 
-    @RequestMapping(value = "ips/{healthProviderInstituteName}", method = RequestMethod.GET)
-    List<Specialties> retrieveAll(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
+    @RequestMapping(value = "/ips/{healthProviderInstituteName}", method = RequestMethod.GET)
+    List<Specialties> retrieveAllSpecialties(@PathVariable("healthProviderInstituteName") final String healthProviderInstituteName);
 }

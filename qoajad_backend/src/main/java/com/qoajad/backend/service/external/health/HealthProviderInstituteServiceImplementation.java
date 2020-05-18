@@ -20,7 +20,7 @@ public class HealthProviderInstituteServiceImplementation implements HealthProvi
     }
 
     @Override
-    public List<HealthProviderInstitute> retrieveAll() {
-        return healthProviderInstituteRPC.retrieveAll();
+    public List<HealthProviderInstitute> retrieveAllHPI() {
+        return healthProviderInstituteRPC.retrieveAllHPI();
     }
 }

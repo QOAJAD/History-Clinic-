@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface HealthProviderInstituteService {
 
-    List<HealthProviderInstitute> retrieveAll();
+    List<HealthProviderInstitute> retrieveAllHPI();
 }

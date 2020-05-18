@@ -12,6 +12,6 @@ import java.util.List;
 @Qualifier("defaultHealthProviderInstituteRPC")
 public interface HealthProviderInstituteRPC {
 
-    @RequestMapping(value = "ips", method = RequestMethod.GET)
-    List<HealthProviderInstitute> retrieveAll();
+    @RequestMapping(value = "/ips", method = RequestMethod.GET)
+    List<HealthProviderInstitute> retrieveAllHPI();
 }

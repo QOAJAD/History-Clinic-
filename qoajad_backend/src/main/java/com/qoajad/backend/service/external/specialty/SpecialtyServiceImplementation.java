@@ -21,6 +21,6 @@ public class SpecialtyServiceImplementation implements SpecialtyService {
 
     @Override
     public List<Specialties> retrieveAllSpecialties(String healthProviderName) {
-        return specialtyRPC.retrieveAll(healthProviderName);
+        return specialtyRPC.retrieveAllSpecialties(healthProviderName);
     }
 }
