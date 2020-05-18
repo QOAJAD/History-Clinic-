@@ -37,39 +37,32 @@ public class AppointmentController {
     public ResponseEntity<List<Appointment>> findUserAppointments(@PathVariable("userDocument") final int userDocument) {
         ResponseEntity<List<Appointment>> response;
         response = new ResponseEntity<>(appointmentService.findUserAppointments(userDocument), HttpStatus.OK);
-
         return response;
     }
 
     @RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
     public ResponseEntity<String> createAppointment(@RequestBody final CreateAppointment createAppointment) {
         ResponseEntity<String> response;
-        boolean rowsChanged;
-        rowsChanged = appointmentService.attemptToCreateAppointment(createAppointment);
+        boolean rowsChanged = appointmentService.attemptToCreateAppointment(createAppointment);
         if(rowsChanged) {
             response = new ResponseEntity<>("Appointment created successfully.", HttpStatus.CREATED);
         } else {
             response = new ResponseEntity<>("An error has occurred while creating the appointment.", HttpStatus.CONFLICT);
         }
-
         return response;
     }
 
     @RequestMapping(value = "/appointment/update", method = RequestMethod.PUT)
     public ResponseEntity<String> updateAppointment(@RequestBody final UpdateAppointment updateAppointment) {
-        ResponseEntity<String> response;
-        int rowsChanged;
-        rowsChanged = appointmentService.attemptToUpdateAppointment(updateAppointment) ? 1 : 0;
-        response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
+        final int rowsChanged = appointmentService.attemptToUpdateAppointment(updateAppointment) ? 1 : 0;
+        ResponseEntity<String> response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
         return response;
     }
 
     @RequestMapping(value = "/appointment/delete/{appointmentId}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteAppointment(@PathVariable("appointmentId") final int appointmentId) {
-        ResponseEntity<String> response;
-        int rowsChanged;
-        rowsChanged = appointmentService.attemptToDeleteAppointment(appointmentId) ? 1 : 0;
-        response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
+        final int rowsChanged = appointmentService.attemptToDeleteAppointment(appointmentId) ? 1 : 0;
+        ResponseEntity<String> response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
         return response;
     }
 

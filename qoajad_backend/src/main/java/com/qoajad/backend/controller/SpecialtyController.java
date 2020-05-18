@@ -29,9 +29,7 @@ public class SpecialtyController {
 
     @RequestMapping(value = "/specialty/list_all/{hpiName}", method = RequestMethod.GET)
     public ResponseEntity<List<Specialties>> retrieveAllSpecialties(@PathVariable("hpiName") String hpiName) {
-        ResponseEntity<List<Specialties>> response;
         //TODO: Must process the response given by the API to check whether it was successful or not.
-        response = new ResponseEntity<>(specialtyService.retrieveAllSpecialties(hpiName), HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(specialtyService.retrieveAllSpecialties(hpiName), HttpStatus.OK);
     }
 }

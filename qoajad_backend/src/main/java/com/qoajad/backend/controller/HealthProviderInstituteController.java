@@ -27,9 +27,7 @@ public class HealthProviderInstituteController {
 
     @RequestMapping(value = "/hpi/list_all", method = RequestMethod.GET)
     public ResponseEntity<List<HealthProviderInstitute>> retrieveAllHPI() {
-        ResponseEntity<List<HealthProviderInstitute>> response;
         //TODO: Must process the response given by the API to check whether it was successful or not.
-        response = new ResponseEntity<>(hpiService.retrieveAllHPI(), HttpStatus.OK);
-        return response;
+        return new ResponseEntity<>(hpiService.retrieveAllHPI(), HttpStatus.OK);
     }
 }
