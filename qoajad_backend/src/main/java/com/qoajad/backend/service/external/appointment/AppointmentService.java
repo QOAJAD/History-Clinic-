@@ -11,9 +11,11 @@ import java.util.List;
 public interface AppointmentService {
 
     List<ConsultingRoom> findAvailableAppointments(final String healthProviderInstituteName, final String specialtyName);
-    List<Appointment> findUserAppointments(final int document);
+    List<Appointment> findUserAppointments(final int userDocument);
 
-    Response attemptToCreateAppointment(final CreateAppointment createAppointment);
-    Response attemptToDeleteAppointment(final int appointmentId);
-    Response attemptToUpdateAppointment(final UpdateAppointment updateAppointment);
+    boolean attemptToCreateAppointment(final CreateAppointment createAppointment);
+    boolean attemptToDeleteAppointment(final int appointmentId);
+    boolean attemptToUpdateAppointment(final UpdateAppointment updateAppointment);
+
+    Appointment findUserAppointment(final int userDocument, final int appointmentId);
 }

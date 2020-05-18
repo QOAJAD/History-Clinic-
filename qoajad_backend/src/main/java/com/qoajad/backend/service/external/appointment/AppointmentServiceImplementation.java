@@ -31,17 +31,28 @@ public class AppointmentServiceImplementation implements AppointmentService {
     }
 
     @Override
-    public Response attemptToCreateAppointment(CreateAppointment createAppointment) {
-        return appointmentRPC.attemptToCreateAppointment(createAppointment);
+    public boolean attemptToCreateAppointment(CreateAppointment createAppointment) {
+        //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
+        Response response = appointmentRPC.attemptToCreateAppointment(createAppointment);
+        return true;
     }
 
     @Override
-    public Response attemptToDeleteAppointment(int appointmentId) {
-        return appointmentRPC.attemptToDeleteAppointment(appointmentId);
+    public boolean attemptToDeleteAppointment(int appointmentId) {
+        //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
+        Response response = appointmentRPC.attemptToDeleteAppointment(appointmentId);
+        return true;
     }
 
     @Override
-    public Response attemptToUpdateAppointment(UpdateAppointment updateAppointment) {
-        return appointmentRPC.attemptToUpdateAppointment(updateAppointment);
+    public boolean attemptToUpdateAppointment(UpdateAppointment updateAppointment) {
+        //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
+        Response response = appointmentRPC.attemptToUpdateAppointment(updateAppointment);
+        return true;
+    }
+
+    @Override
+    public Appointment findUserAppointment(int userDocument, int appointmentId) {
+        return appointmentRPC.findUserAppointment(userDocument, appointmentId);
     }
 }
