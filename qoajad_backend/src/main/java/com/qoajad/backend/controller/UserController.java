@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/find/{document}", method = RequestMethod.GET)
-    public ResponseEntity<User> findUserByDocument(@PathVariable int document) {
+    public ResponseEntity<User> findUserByDocument(@PathVariable("document") int document) {
         ResponseEntity<User> response;
         try {
             response = new ResponseEntity<>(userService.findUserByDocument(document), HttpStatus.OK);
