@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Log {
     private final int id;
     // If there is no active user id, then the following value must be set to -1.
-    private final int activeUserId;
+    private final String activeUsername;
     private final String state;
     private final Date requestDate;
     private final String ip;
@@ -16,9 +16,9 @@ public class Log {
     private final String requestType;
     private final String eventType;
 
-    public Log(int id, int activeUserId, String state, Date requestDate, String ip, Object data, String requestType) {
+    public Log(int id, String activeUsername, String state, Date requestDate, String ip, Object data, String requestType) {
         this.id = id;
-        this.activeUserId = activeUserId;
+        this.activeUsername = activeUsername;
         this.state = state;
         this.requestDate = requestDate;
         this.ip = ip;
@@ -34,8 +34,8 @@ public class Log {
 
     }
 
-    public int getActiveUserId() {
-        return activeUserId;
+    public String getActiveUsername() {
+        return activeUsername;
     }
 
     public String getState() {

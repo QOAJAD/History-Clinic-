@@ -1,11 +1,11 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2020-05-05 03:23:50.749
+-- Last modification date: 2020-05-17 20:17:46.456
 
 -- tables
 -- Table: Log
 CREATE TABLE Log (
     id int NOT NULL AUTO_INCREMENT,
-    active_user_id int NULL COMMENT 'The id of the user which makes the request',
+    activeUsername varchar(50) NULL,
     state varchar(15) NOT NULL COMMENT 'Whether the request was valid or not',
     time timestamp NOT NULL COMMENT 'The timestamp of the request',
     ip varchar(15) NOT NULL COMMENT 'The IP of the request',
@@ -28,7 +28,8 @@ CREATE TABLE User (
 
 -- foreign keys
 -- Reference: Log_User (table: Log)
-ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (active_user_id)
-    REFERENCES User (id);
+ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (activeUsername)
+    REFERENCES User (username);
 
 -- End of file.
+
