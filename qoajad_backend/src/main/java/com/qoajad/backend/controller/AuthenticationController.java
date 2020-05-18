@@ -1,5 +1,7 @@
 package com.qoajad.backend.controller;
 
+import com.google.gson.Gson;
+import com.qoajad.backend.model.internal.authentication.AuthenticationJWT;
 import com.qoajad.backend.service.internal.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +31,14 @@ public class AuthenticationController {
     @RequestMapping(value = "/authentication/authenticate/{username}/{password}", method = RequestMethod.GET)
     public ResponseEntity<String> authenticate(@PathVariable("username") final String username, @PathVariable("password") final String password) {
         final boolean couldAuthenticate = attemptToAuthenticate(username, password);
+        final AuthenticationJWT jwt;
         ResponseEntity<String> response;
         if (!couldAuthenticate) {
-            response = new ResponseEntity<>("Invalid username or password.", HttpStatus.UNAUTHORIZED);
+            jwt = new AuthenticationJWT(null, "Invalid username or password.");
+            response = new ResponseEntity<>(new Gson().toJson(jwt), HttpStatus.UNAUTHORIZED);
         } else {
-            final String jwt = authenticationService.generateJWT(username);
-            response = new ResponseEntity<>("Valid password;" + jwt, HttpStatus.OK);
+            jwt = new AuthenticationJWT(authenticationService.generateJWT(username), "Valid password");
+            response = new ResponseEntity<>(new Gson().toJson(jwt), HttpStatus.OK);
         }
         return response;
     }
