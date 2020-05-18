@@ -1,6 +1,6 @@
-package com.qoajad.backend.rpc;
+package com.qoajad.backend.rpc.eps;
 
-import com.qoajad.backend.model.external.specialty.Specialties;
+import com.qoajad.backend.model.external.eps.specialty.Specialties;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,4 @@
-package com.qoajad.backend.model.external.response;
-
-import com.google.gson.annotations.SerializedName;
+package com.qoajad.backend.model.external.eps.response;
 
 public class Response {
 

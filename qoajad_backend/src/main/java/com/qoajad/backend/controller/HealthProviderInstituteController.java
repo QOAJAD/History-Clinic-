@@ -1,6 +1,6 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.external.health.HealthProviderInstitute;
+import com.qoajad.backend.model.external.eps.health.HealthProviderInstitute;
 import com.qoajad.backend.service.external.health.HealthProviderInstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

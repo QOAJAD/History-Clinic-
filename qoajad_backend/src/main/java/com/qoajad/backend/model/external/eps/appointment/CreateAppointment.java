@@ -1,6 +1,5 @@
-package com.qoajad.backend.model.external.appointment;
+package com.qoajad.backend.model.external.eps.appointment;
 
-import com.google.gson.annotations.SerializedName;
 import com.qoajad.backend.utils.ValidationUtils;
 
 import java.util.Date;

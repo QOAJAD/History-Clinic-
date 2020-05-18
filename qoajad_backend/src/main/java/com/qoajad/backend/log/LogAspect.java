@@ -1,19 +1,16 @@
 package com.qoajad.backend.log;
 
-import com.qoajad.backend.model.external.appointment.Appointment;
-import com.qoajad.backend.model.external.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.appointment.CreateAppointment;
-import com.qoajad.backend.model.external.appointment.UpdateAppointment;
-import com.qoajad.backend.model.external.health.HealthProviderInstitute;
-import com.qoajad.backend.model.external.specialty.Specialty;
+import com.qoajad.backend.model.external.eps.appointment.Appointment;
+import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
+import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.eps.health.HealthProviderInstitute;
+import com.qoajad.backend.model.external.eps.specialty.Specialty;
 import com.qoajad.backend.model.internal.log.AuthenticationLog;
 import com.qoajad.backend.model.internal.log.DeleteAppointmentLog;
 import com.qoajad.backend.model.internal.log.LogCreate;
-import com.qoajad.backend.model.internal.log.UpdateAppointmentLog;
 import com.qoajad.backend.service.external.appointment.AppointmentService;
 import com.qoajad.backend.service.internal.log.WritableLogService;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

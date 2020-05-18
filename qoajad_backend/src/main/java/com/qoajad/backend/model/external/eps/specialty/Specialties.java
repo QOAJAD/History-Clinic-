@@ -1,4 +1,4 @@
-package com.qoajad.backend.model.external.specialty;
+package com.qoajad.backend.model.external.eps.specialty;
 
 
 import java.util.List;

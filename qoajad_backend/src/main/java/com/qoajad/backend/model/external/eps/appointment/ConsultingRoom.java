@@ -1,4 +1,4 @@
-package com.qoajad.backend.model.external.appointment;
+package com.qoajad.backend.model.external.eps.appointment;
 
 import java.util.List;
 import java.util.Objects;

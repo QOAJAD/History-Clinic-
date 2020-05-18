@@ -1,6 +1,4 @@
-package com.qoajad.backend.model.external.health;
-
-import com.google.gson.annotations.SerializedName;
+package com.qoajad.backend.model.external.eps.health;
 
 public class HealthProviderInstitute {
 
