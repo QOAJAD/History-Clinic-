@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class HCEFeignInterceptor implements RequestInterceptor {
 
-    private static final HealthPromotingEntityAuthentication USERS_HEALTH_AUTHENTICATION = new HealthPromotingEntityAuthentication(2, "password");
+    private static final HealthPromotingEntityAuthentication USERS_HEALTH_AUTHENTICATION = new HealthPromotingEntityAuthentication(2, "UsersModulePassword");
 
     private final AuthenticationRPC authenticationRPC;
 

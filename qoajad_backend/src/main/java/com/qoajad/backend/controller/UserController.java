@@ -1,7 +1,9 @@
 package com.qoajad.backend.controller;
 
+import com.qoajad.backend.model.external.eps.response.Response;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
+import com.qoajad.backend.rpc.hce.UserRPC;
 import com.qoajad.backend.service.internal.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,11 +19,13 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    private final UserRPC userRPC;
     private final UserService userService;
 
     @Autowired
-    public UserController(@Qualifier("defaultUserService") final UserService userService) {
+    public UserController(@Qualifier("defaultUserService") final UserService userService, @Qualifier("defaultHCEUserServiceRPC") final UserRPC userRPC) {
         this.userService = userService;
+        this.userRPC = userRPC;
     }
 
     @RequestMapping(value = "/user/list_all", method = RequestMethod.GET)
@@ -68,7 +72,12 @@ public class UserController {
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
-            int rowsUpdated = userService.updateUser(user) ? 1 : 0;
+            final ResponseEntity<Response> hceResponse = userRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getId(), user.getPassword()));
+            int rowsUpdated = 0;
+            // The user password was able to be updated in hce.
+            if (hceResponse.getStatusCode() == HttpStatus.OK) {
+                rowsUpdated = userService.updateUser(user) ? 1 : 0;
+            }
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
