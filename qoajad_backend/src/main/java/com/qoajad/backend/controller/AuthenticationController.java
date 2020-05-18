@@ -1,5 +1,7 @@
 package com.qoajad.backend.controller;
 
+import com.google.gson.Gson;
+import com.qoajad.backend.model.internal.authentication.AuthenticationResponse;
 import com.qoajad.backend.service.internal.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,14 +29,16 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/authentication/authenticate/{username}/{password}", method = RequestMethod.GET)
-    public ResponseEntity<String> authenticate(@PathVariable("username") final String username, @PathVariable("password") final String password) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@PathVariable("username") final String username, @PathVariable("password") final String password) {
         final boolean couldAuthenticate = attemptToAuthenticate(username, password);
-        ResponseEntity<String> response;
+        AuthenticationResponse authenticationResponse;
+        ResponseEntity<AuthenticationResponse> response;
         if (!couldAuthenticate) {
-            response = new ResponseEntity<>("Invalid username or password.", HttpStatus.UNAUTHORIZED);
+            authenticationResponse = new AuthenticationResponse("Invalid username or password.", "");
+            response = new ResponseEntity<>(authenticationResponse, HttpStatus.UNAUTHORIZED);
         } else {
-            final String jwt = authenticationService.generateJWT(username);
-            response = new ResponseEntity<>("Valid password;" + jwt, HttpStatus.OK);
+            authenticationResponse = new AuthenticationResponse("Valid login.", authenticationService.generateJWT(username));
+            response = new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
         }
         return response;
     }
