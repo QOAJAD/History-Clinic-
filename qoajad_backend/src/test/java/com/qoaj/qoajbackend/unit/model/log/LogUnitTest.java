@@ -1,8 +1,7 @@
 package com.qoaj.qoajbackend.unit.model.log;
 
-import com.google.gson.Gson;
-import com.qoajad.backend.model.log.AuthenticationLog;
-import com.qoajad.backend.model.log.Log;
+import com.qoajad.backend.model.internal.log.AuthenticationLog;
+import com.qoajad.backend.model.internal.log.Log;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

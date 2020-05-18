@@ -1,8 +1,8 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.user.UpdateUser;
-import com.qoajad.backend.model.user.User;
-import com.qoajad.backend.service.user.UserService;
+import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.User;
+import com.qoajad.backend.service.internal.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

@@ -1,8 +1,8 @@
 package com.qoajad.backend.database;
 
 import com.qoajad.backend.database.accessor.UserAccessor;
-import com.qoajad.backend.model.user.UpdateUser;
-import com.qoajad.backend.model.user.User;
+import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.User;
 import com.qoajad.backend.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
