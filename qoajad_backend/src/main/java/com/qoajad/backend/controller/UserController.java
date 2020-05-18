@@ -63,6 +63,8 @@ public class UserController {
             // The user password was able to be updated in hce.
             if (hceResponse.getStatusCode() == HttpStatus.OK) {
                 userService.createUser(user);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             response = new ResponseEntity<>("User created successfully.", HttpStatus.CREATED);
         } catch (EmptyResultDataAccessException e) {
@@ -86,6 +88,8 @@ public class UserController {
             // The user password was able to be updated in hce.
             if (hceResponse.getStatusCode() == HttpStatus.OK) {
                 rowsUpdated = userService.updateUser(user) ? 1 : 0;
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
