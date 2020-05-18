@@ -1,3 +1,19 @@
+# These properties are used to enable feign logger. This can help in finding bugs whenever we use it.
+# logging:
+#  level:
+#    com:
+#     qoajad:
+#       backend:
+#         rpc:
+#           hce:
+#             UserRPC: DEBUG
+
+# feign:
+#   client:
+#     config:
+#       default:
+#         loggerLevel: FULL
+
 spring:
   main:
     banner-mode: off

@@ -17,7 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class HCEFeignInterceptor implements RequestInterceptor {
 
-    private static final HealthPromotingEntityAuthentication USERS_HEALTH_AUTHENTICATION = new HealthPromotingEntityAuthentication(2, "UsersModulePassword");
+    /**
+     * This is data that identify US in hce service.
+     */
+    public static final int HEALTH_PROMOTING_ENTITY_ID = 2;
+    private static final HealthPromotingEntityAuthentication USERS_HEALTH_AUTHENTICATION = new HealthPromotingEntityAuthentication(HEALTH_PROMOTING_ENTITY_ID, "UsersModulePassword");
 
     private final AuthenticationRPC authenticationRPC;
 
@@ -41,6 +45,7 @@ public class HCEFeignInterceptor implements RequestInterceptor {
         if (responseIsOkAndHasABody) {
             final String jwt = response.getBody().getToken();
             template.header("Authorization", jwt);
+            template.header("Content-Type", "application/json");
         }
     }
 }
