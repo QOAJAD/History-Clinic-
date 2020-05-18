@@ -5,8 +5,6 @@ import com.qoajad.backend.service.external.health.HealthProviderInstituteService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +26,10 @@ public class HealthProviderInstituteController {
     }
 
     @RequestMapping(value = "/hpi/list_all", method = RequestMethod.GET)
-    public ResponseEntity<List<HealthProviderInstitute>> retrieveAll() {
+    public ResponseEntity<List<HealthProviderInstitute>> retrieveAllHPI() {
         ResponseEntity<List<HealthProviderInstitute>> response;
-        try {
-            response = new ResponseEntity<>(hpiService.retrieveAll(), HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e) {
-            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (DataIntegrityViolationException e) {
-            response = new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        //TODO: Must process the response given by the API to check whether it was successful or not.
+        response = new ResponseEntity<>(hpiService.retrieveAllHPI(), HttpStatus.OK);
         return response;
     }
 }

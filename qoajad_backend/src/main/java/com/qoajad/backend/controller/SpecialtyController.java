@@ -28,15 +28,10 @@ public class SpecialtyController {
     }
 
     @RequestMapping(value = "/specialty/list_all/{hpiName}", method = RequestMethod.GET)
-    public ResponseEntity<List<Specialties>> retrieveAll(@PathVariable String hpiName) {
+    public ResponseEntity<List<Specialties>> retrieveAllSpecialties(@PathVariable("hpiName") String hpiName) {
         ResponseEntity<List<Specialties>> response;
-        try {
-            response = new ResponseEntity<>(specialtyService.retrieveAllSpecialties(hpiName), HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e) {
-            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (DataIntegrityViolationException e) {
-            response = new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        //TODO: Must process the response given by the API to check whether it was successful or not.
+        response = new ResponseEntity<>(specialtyService.retrieveAllSpecialties(hpiName), HttpStatus.OK);
         return response;
     }
 }
