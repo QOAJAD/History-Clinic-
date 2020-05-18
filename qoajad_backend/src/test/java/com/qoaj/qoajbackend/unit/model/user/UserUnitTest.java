@@ -12,33 +12,31 @@ public class UserUnitTest {
 
     @Test(expected = IllegalStateException.class)
     public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException() {
-        new UpdateUser(0, "username", "password", 1144099495);
+        new UpdateUser("username", "password", 1144099495);
     }
 
     @Test(expected = NullPointerException.class)
     public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException1() {
-        new UpdateUser(15, null, "password", 16748051);
+        new UpdateUser(null, "password", 16748051);
     }
 
     @Test(expected = NullPointerException.class)
     public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException2() {
-        new UpdateUser(15, "username", null, 16748051);
+        new UpdateUser("username", null, 16748051);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException3() {
-        new UpdateUser(64, "username", "password", -1);
+        new UpdateUser("username", "password", -1);
     }
 
     @Test
     public void testUpdateUserConstructorAssignsLocalFieldsCorrectly() {
-        final int id = 69;
         final String username = "juan.2114@hotmail.com";
         final String password = "BurBon48";
         final int document = 16784098;
 
-        final UpdateUser updateUser = new UpdateUser(id, username, password, document);
-        Assert.assertEquals(updateUser.getId(), id);
+        final UpdateUser updateUser = new UpdateUser(username, password, document);
         Assert.assertEquals(updateUser.getUsername(), username);
         Assert.assertEquals(updateUser.getPassword(), password);
         Assert.assertEquals(updateUser.getDocument(), document);

@@ -2,6 +2,7 @@ package com.qoajad.backend.controller;
 
 import com.qoajad.backend.model.external.eps.response.Response;
 import com.qoajad.backend.model.external.hce.user.UpdateUserResponse;
+import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
 import com.qoajad.backend.rpc.hce.UserRPC;
@@ -56,7 +57,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody CreateUser user) {
         ResponseEntity<String> response;
         try {
             final ResponseEntity<UpdateUserResponse> hceResponse = userRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));

@@ -4,6 +4,7 @@ import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
 import com.qoajad.backend.database.UserDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
 import org.junit.Assert;
@@ -102,7 +103,7 @@ public class UserDatabaseIntegrationTest {
         final int document = 178495433;
         final String username = "andrea@timaran.com";
         final String password = "andrea321";
-        final User user = new User(2, username, password, document);
+        final CreateUser user = new CreateUser(username, password, document);
 
         userAccessor.createUser(user);
 
@@ -119,12 +120,11 @@ public class UserDatabaseIntegrationTest {
         final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
 
         // Update the user id in the database.
-        final int defaultUserId = 1;
         final String newUsername = "juan.2114@hotmail.com";
         final String newPassword = "password123";
         final int newDocument = 321874569;
 
-        Assert.assertTrue(userAccessor.updateUser(new UpdateUser(defaultUserId, newUsername, newPassword, newDocument)));
+        Assert.assertTrue(userAccessor.updateUser(new UpdateUser(newUsername, newPassword, newDocument)));
 
         // Retrieve the user id from the database and validate it changed.
         final User updatedUser = userAccessor.findUserByDocument(newDocument);
@@ -140,7 +140,7 @@ public class UserDatabaseIntegrationTest {
         final UserAccessor userAccessor = new UserDatabaseAccessorImplementation(mockedJdbcTemplate);
 
         final int nonExistingUserId = 38;
-        Assert.assertFalse(userAccessor.updateUser(new UpdateUser(nonExistingUserId, "juan.2114@hotmail.com", "password123", 321874569)));
+        Assert.assertFalse(userAccessor.updateUser(new UpdateUser("juan.2114@hotmail.com", "password123", 321874569)));
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
@@ -213,7 +213,7 @@ public class UserDatabaseIntegrationTest {
 
         Assert.assertEquals(userAccessor.retrieveAllUsers().size(), 1);
 
-        userAccessor.createUser(new User(1, "pedro-ortega@gmail.com", "pedro874", 446985413));
+        userAccessor.createUser(new CreateUser("pedro-ortega@gmail.com", "pedro874", 446985413));
         Assert.assertEquals(userAccessor.retrieveAllUsers().size(), 2);
     }
 }

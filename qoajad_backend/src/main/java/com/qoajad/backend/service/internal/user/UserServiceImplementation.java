@@ -1,6 +1,7 @@
 package com.qoajad.backend.service.internal.user;
 
 import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(CreateUser user) {
         userAccessor.createUser(user);
     }
 
