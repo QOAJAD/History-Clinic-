@@ -35,10 +35,10 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     public void log(final LogCreate logCreate) {
         Objects.requireNonNull(logCreate, "The logCreate cannot be null.");
         try {
-            final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
+            final String query = "INSERT INTO Log(activeUsername, state, time, ip, data, requestType, eventType) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(
-                    query, logCreate.getActiveUserId() == -1 ? null : logCreate.getActiveUserId(), logCreate.getState(),
+                    query, logCreate.getActiveUsername().equals("") ? null : logCreate.getActiveUsername(), logCreate.getState(),
                     dateFormatService.convertDateToMySQLDateTime(logCreate.getRequestDate()),
                     logCreate.getIp(), new Gson().toJson(logCreate.getData()), logCreate.getRequestType(), logCreate.getEventType());
         } catch(Exception e) {
@@ -51,10 +51,10 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     public List<Log> retrieveAllLogs() {
         List<Log> logs;
         try {
-            final String query = "SELECT id, active_user_id, state, time, ip, data, requestType, eventType FROM Log";
+            final String query = "SELECT id, activeUsername, state, time, ip, data, requestType, eventType FROM Log";
             logs = jdbcTemplate.query(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
-                final int activeUserId = resultSet.getInt("active_user_id");
+                final String activeUsername = resultSet.getString("activeUsername");
                 final String state = resultSet.getString("state");
                 Date time = null;
                 try {
@@ -69,7 +69,7 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
                 switch(eventType) {
                     case "AuthenticationLog": data = new Gson().fromJson(data.toString(), AuthenticationLog.class);
                 }
-                return new Log(id, activeUserId, state, time, ip, data, requestType);
+                return new Log(id, activeUsername, state, time, ip, data, requestType);
             });
         } catch (Exception e) {
             e.printStackTrace();

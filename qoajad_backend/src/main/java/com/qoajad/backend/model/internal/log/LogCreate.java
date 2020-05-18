@@ -1,14 +1,12 @@
 package com.qoajad.backend.model.internal.log;
 
-import com.qoajad.backend.utils.ValidationUtils;
-
 import java.util.Date;
 import java.util.Objects;
 
 public class LogCreate {
 
     // If there is no active user id, then the following value must be set to -1.
-    private final int activeUserId;
+    private final String activeUsername;
     private final String state;
     private final Date requestDate;
     private final String ip;
@@ -16,8 +14,8 @@ public class LogCreate {
     private final String requestType;
     private final String eventType;
 
-    public LogCreate(int activeUserId, String state, Date requestDate, String ip, Object data, String requestType) {
-        this.activeUserId = activeUserId;
+    public LogCreate(String activeUsername, String state, Date requestDate, String ip, Object data, String requestType) {
+        this.activeUsername = activeUsername;
         this.state = state;
         this.requestDate = requestDate;
         this.ip = ip;
@@ -32,8 +30,8 @@ public class LogCreate {
 
     }
 
-    public int getActiveUserId() {
-        return activeUserId;
+    public String getActiveUsername() {
+        return activeUsername;
     }
 
     public String getState() {
