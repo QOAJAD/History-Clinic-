@@ -6,7 +6,6 @@ import java.util.List;
 public class Specialties {
 
     private final String name;
-
     private final List<Specialty> specialties;
 
     public Specialties(String name, List<Specialty> specialties) {

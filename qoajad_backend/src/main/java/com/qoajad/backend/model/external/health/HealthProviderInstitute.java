@@ -5,11 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class HealthProviderInstitute {
 
     private final int id;
-
-    @SerializedName("nombre")
     private final String name;
-
-    @SerializedName("direccion")
     private final String streetAddress;
 
     public HealthProviderInstitute(final int id, final String name, final String streetAddress) {
