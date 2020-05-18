@@ -21,16 +21,19 @@ public interface AppointmentRPC {
     @RequestMapping(value = "/horarios/{healthProviderInstituteName}/{specialtyName}", method = RequestMethod.GET)
     List<ConsultingRoom> findAvailableAppointments(@PathVariable("healthProviderInstituteName") String healthProviderInstituteName, @PathVariable("specialtyName") String specialtyName);
 
-    @RequestMapping(value = "/horarios/", method = RequestMethod.POST)
+    @RequestMapping(value = "/horarios", method = RequestMethod.POST)
     Response attemptToCreateAppointment(@RequestBody final CreateAppointment createAppointment);
 
     @RequestMapping(value = "/horarios/{appointmentId}", method = RequestMethod.DELETE)
     Response attemptToDeleteAppointment(@PathVariable("appointmentId") final int appointmentId);
 
     @RequestMapping(value = "/horarios/{userDocument}", method = RequestMethod.GET)
-    List<Appointment> findUserAppointments(@PathVariable("userDocument") int userDocument);
+    List<Appointment> findUserAppointments(@PathVariable("userDocument") final int userDocument);
 
-    //TODO(AntonioYu): Change the path to the updating method to match the API path.
-    @RequestMapping(value = "/horarios/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/solicitud", method = RequestMethod.PUT)
     Response attemptToUpdateAppointment(UpdateAppointment updateAppointment);
+
+    @RequestMapping(value = "/{userDocument}/{appointmentId}")
+    Appointment findUserAppointment(@PathVariable("userDocument") final int userDocument,
+                                    @PathVariable("appointmentId") final int appointmentId);
 }
