@@ -10,11 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class UserUnitTest {
 
-    @Test(expected = IllegalStateException.class)
-    public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException() {
-        new UpdateUser("username", "password", 1144099495);
-    }
-
     @Test(expected = NullPointerException.class)
     public void testUpdateUserConstructorFieldsAreInvalidAndThrowsException1() {
         new UpdateUser(null, "password", 16748051);
@@ -46,13 +41,11 @@ public class UserUnitTest {
     public void testUserConstructorAssignsLocalFieldsCorrectly() {
         final int id = 4785;
         final String username = "roberto97@gmail.com";
-        final String password = "bertoP45";
         final int document = 66808451;
 
-        final User user = new User(id, username, password, document);
+        final User user = new User(id, username, document);
         Assert.assertEquals(user.getId(), id);
         Assert.assertEquals(user.getUsername(), username);
-        Assert.assertEquals(user.getPassword(), password);
         Assert.assertEquals(user.getDocument(), document);
     }
 }
