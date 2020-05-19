@@ -8,9 +8,9 @@ public class UpdateUser {
 
     private final String username;
     private final String password;
-    private final int document;
+    private final long document;
 
-    public UpdateUser(final String username, final String password, final int document) {
+    public UpdateUser(final String username, final String password, final long document) {
         this.username = username;
         this.password = password;
         this.document = document;
@@ -19,7 +19,7 @@ public class UpdateUser {
         ValidationUtils.requireLeftGreaterThanRight(this.document, 0, "The document must be positive.");
     }
 
-    public int getDocument() {
+    public long getDocument() {
         return document;
     }
 

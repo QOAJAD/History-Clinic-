@@ -9,7 +9,7 @@ import java.util.Objects;
 public class UpdateUser {
 
     @JsonProperty("DNI")
-    private final int document;
+    private final long document;
     private final String newPassword;
 
     /**
@@ -18,14 +18,14 @@ public class UpdateUser {
     @JsonProperty("idEntidad")
     private final int entityId = HCEFeignInterceptor.HEALTH_PROMOTING_ENTITY_ID;
 
-    public UpdateUser(final int document, final String newPassword) {
+    public UpdateUser(final long document, final String newPassword) {
         this.document = document;
         this.newPassword = newPassword;
         ValidationUtils.requireLeftGreaterThanRight(this.document, 0, "The document must be positive.");
         Objects.requireNonNull(newPassword, "The new password cannot be null.");
     }
 
-    public int getDocument() {
+    public long getDocument() {
         return document;
     }
 

@@ -8,9 +8,9 @@ public class CreateUser {
 
     private final String username;
     private final String password;
-    private final int document;
+    private final long document;
 
-    public CreateUser(String username, String password, int document) {
+    public CreateUser(String username, String password, long document) {
         this.username = username;
         this.password = password;
         this.document = document;
@@ -27,7 +27,7 @@ public class CreateUser {
         return password;
     }
 
-    public int getDocument() {
+    public long getDocument() {
         return document;
     }
 }

@@ -19,7 +19,7 @@ CREATE TABLE Log (
 CREATE TABLE User (
     id int NOT NULL AUTO_INCREMENT,
     username varchar(50) NOT NULL,
-    document int unsigned NOT NULL,
+    document bigint unsigned NOT NULL,
     pw tinytext NOT NULL,
     UNIQUE INDEX unique_document (document),
     UNIQUE INDEX unique_username (username),
