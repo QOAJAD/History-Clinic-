@@ -16,30 +16,37 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class AppointmentUnitTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalStateException.class)
     public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException() {
-        new AvailableAppointment(null, 1144099495, new Date(System.currentTimeMillis()));
+        new AvailableAppointment(0, "Juan Arias", 1144099495, new Date(System.currentTimeMillis()));
     }
+
+    @Test(expected = NullPointerException.class)
+    public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException2() {
+        new AvailableAppointment(1, null, 1144099495, new Date(System.currentTimeMillis()));
+    }
+
 
     @Test(expected = IllegalStateException.class)
-    public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException2() {
-        new AvailableAppointment("Camilo Medina", 0, new Date(System.currentTimeMillis()));
+    public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException3() {
+        new AvailableAppointment(1, "Camilo Medina", 0, new Date(System.currentTimeMillis()));
     }
 
     @Test(expected = NullPointerException.class)
-    public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException3() {
-        new AvailableAppointment("Andres Ricardo Mercedes", 16748021, null);
+    public void TestAvailableAppointmentConstructorFieldsAreInvalidAndThrowsException4() {
+        new AvailableAppointment(1,"Andres Ricardo Mercedes", 16748021, null);
     }
 
     @Test
     public void testAvailableAppointmentConstructorAssignsLocalFieldsCorrectly() {
+        final int id = 1;
         final int document = 66480784;
         final String doctorName = "Carlos Ramiro";
         // YYYY-MM-DD
         final String dateFormat = "1997-12-03";
         final Date date = Date.valueOf(dateFormat);
 
-        final AvailableAppointment availableAppointment = new AvailableAppointment(doctorName, document, date);
+        final AvailableAppointment availableAppointment = new AvailableAppointment(id, doctorName, document, date);
         Assert.assertEquals(availableAppointment.getDoctorName(), doctorName);
         Assert.assertEquals(availableAppointment.getDoctorDocument(), document);
         Assert.assertEquals(availableAppointment.getDate(), date);
@@ -95,11 +102,11 @@ public class AppointmentUnitTest {
     @Test
     public void testConsultingRoomConstructorAssignsLocalFieldsCorrectly() {
         final String consultingRoomName = "Consultorio 3450";
-        final AvailableAppointment availableAppointment1 = new AvailableAppointment("Camilo Ergueta", 1616161, new Date(System.currentTimeMillis()));
+        final AvailableAppointment availableAppointment1 = new AvailableAppointment(1, "Camilo Ergueta", 1616161, new Date(System.currentTimeMillis()));
 
         final String dateFormat = "2008-05-20";
         final Date date = Date.valueOf(dateFormat);
-        final AvailableAppointment availableAppointment2 = new AvailableAppointment("Daniel Bonilla", 121211, date);
+        final AvailableAppointment availableAppointment2 = new AvailableAppointment(2, "Daniel Bonilla", 121211, date);
 
         final List<AvailableAppointment> availableAppointments = new ArrayList<>();
         availableAppointments.add(availableAppointment1);
