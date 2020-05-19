@@ -1,6 +1,6 @@
-package com.qoajad.backend.model.external.appointment;
+package com.qoajad.backend.model.external.eps.appointment;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qoajad.backend.utils.ValidationUtils;
 
 import java.util.Date;
@@ -9,6 +9,8 @@ import java.util.Objects;
 public class CreateAppointment {
 
     private final int patientDocument;
+    // Format this date in the following way when sent to eps.
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy HH:mm:ss")
     private final Date date;
     private final int doctorDocument;
     private final String healthProviderInstituteName;

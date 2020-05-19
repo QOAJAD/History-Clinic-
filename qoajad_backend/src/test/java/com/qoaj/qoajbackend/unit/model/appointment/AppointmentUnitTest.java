@@ -1,8 +1,8 @@
 package com.qoaj.qoajbackend.unit.model.appointment;
 
-import com.qoajad.backend.model.external.appointment.AvailableAppointment;
-import com.qoajad.backend.model.external.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.AvailableAppointment;
+import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
+import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

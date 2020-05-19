@@ -1,6 +1,6 @@
 package com.qoajad.backend.model.internal.log;
 
-import com.qoajad.backend.model.external.appointment.Appointment;
+import com.qoajad.backend.model.external.eps.appointment.Appointment;
 
 public class UpdateAppointmentLog {
     private final Appointment oldAppointment;

@@ -1,9 +1,9 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.external.appointment.Appointment;
-import com.qoajad.backend.model.external.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.appointment.CreateAppointment;
-import com.qoajad.backend.model.external.appointment.UpdateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.Appointment;
+import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
+import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.UpdateAppointment;
 import com.qoajad.backend.service.external.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

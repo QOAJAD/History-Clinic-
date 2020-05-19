@@ -1,10 +1,10 @@
-package com.qoajad.backend.rpc;
+package com.qoajad.backend.rpc.eps;
 
-import com.qoajad.backend.model.external.appointment.Appointment;
-import com.qoajad.backend.model.external.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.appointment.CreateAppointment;
-import com.qoajad.backend.model.external.appointment.UpdateAppointment;
-import com.qoajad.backend.model.external.response.Response;
+import com.qoajad.backend.model.external.eps.appointment.Appointment;
+import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
+import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.UpdateAppointment;
+import com.qoajad.backend.model.external.eps.response.Response;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

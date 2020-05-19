@@ -1,6 +1,6 @@
 package com.qoajad.backend.service.external.specialty;
 
-import com.qoajad.backend.model.external.specialty.Specialties;
+import com.qoajad.backend.model.external.eps.specialty.Specialties;
 
 import java.util.List;
 
