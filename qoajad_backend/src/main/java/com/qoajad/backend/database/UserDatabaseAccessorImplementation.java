@@ -1,6 +1,7 @@
 package com.qoajad.backend.database;
 
 import com.qoajad.backend.database.accessor.UserAccessor;
+import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
 import com.qoajad.backend.utils.ValidationUtils;
@@ -67,7 +68,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(CreateUser user) {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
             final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
@@ -84,8 +85,8 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(user, "The updated user cannot be null.");
         int rowsChanged;
         try {
-            final String query = "UPDATE User SET username = ?, document = ?, pw = ? WHERE id = ?";
-            rowsChanged = jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptPassword(user.getPassword()), user.getId());
+            final String query = "UPDATE User SET username = ?, pw = ? WHERE document = ?";
+            rowsChanged = jdbcTemplate.update(query, user.getUsername(), encryptPassword(user.getPassword()), user.getDocument());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

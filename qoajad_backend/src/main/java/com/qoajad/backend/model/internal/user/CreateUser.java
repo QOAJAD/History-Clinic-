@@ -4,13 +4,13 @@ import com.qoajad.backend.utils.ValidationUtils;
 
 import java.util.Objects;
 
-public class UpdateUser {
+public class CreateUser {
 
     private final String username;
     private final String password;
     private final int document;
 
-    public UpdateUser(final String username, final String password, final int document) {
+    public CreateUser(String username, String password, int document) {
         this.username = username;
         this.password = password;
         this.document = document;
@@ -19,17 +19,15 @@ public class UpdateUser {
         ValidationUtils.requireLeftGreaterThanRight(this.document, 0, "The document must be positive.");
     }
 
-    public int getDocument() {
-        return document;
+    public String getUsername() {
+        return username;
     }
-
 
     public String getPassword() {
         return password;
     }
 
-    public String getUsername() {
-        return username;
+    public int getDocument() {
+        return document;
     }
 }
-

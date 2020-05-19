@@ -1,5 +1,6 @@
 package com.qoajad.backend.service.internal.user;
 
+import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
 
@@ -9,7 +10,7 @@ public interface UserService {
 
     List<User> retrieveAllUsers();
     User findUserByDocument(int document);
-    void createUser(User user);
+    void createUser(CreateUser user);
     boolean updateUser(UpdateUser user);
     boolean deleteUser(int document);
 }
