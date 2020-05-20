@@ -83,8 +83,10 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(username, "The username cannot be null.");
         int rowsChanged;
         try {
+            final User localUser = findUserByUsername(username);
             final String query = "UPDATE User SET username = ?, pw = ? WHERE username = ?";
-            rowsChanged = jdbcTemplate.update(query, user.getUsername(), encryptPassword(user.getPassword()), username);
+            rowsChanged = jdbcTemplate.update(query, user.getUsername() == null ? localUser.getUsername() : user.getUsername(),
+                    user.getPassword() == null ? localUser.getPassword() : encryptPassword(user.getPassword()), username);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
