@@ -1,25 +1,24 @@
 package com.qoajad.backend.model.external.eps.appointment;
 
-import java.util.List;
 import java.util.Objects;
 
 public class ConsultingRoom {
 
     private final String name;
-    private final List<AvailableAppointment> availableAppointments;
+    private final AvailableAppointment[] availableAppointment;
 
-    public ConsultingRoom(final String name, final List<AvailableAppointment> availableAppointments) {
+    public ConsultingRoom(final String name, final AvailableAppointment[] availableAppointment) {
         this.name = name;
-        this.availableAppointments = availableAppointments;
+        this.availableAppointment = availableAppointment;
         Objects.requireNonNull(this.name, "The consulting room name cannot be null.");
-        Objects.requireNonNull(this.availableAppointments, "Available appointments cannot be null.");
+        Objects.requireNonNull(this.availableAppointment, "Available appointments cannot be null.");
     }
 
     public String getName() {
         return name;
     }
 
-    public List<AvailableAppointment> getAvailableAppointments() {
-        return availableAppointments;
+    public AvailableAppointment[] getAvailableAppointment() {
+        return availableAppointment;
     }
 }
