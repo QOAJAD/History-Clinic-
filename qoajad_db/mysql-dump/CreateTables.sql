@@ -29,7 +29,7 @@ CREATE TABLE User (
 -- foreign keys
 -- Reference: Log_User (table: Log)
 ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (activeUsername)
-    REFERENCES User (username);
+    REFERENCES User (username) ON UPDATE CASCADE;
 
 -- End of file.
 
