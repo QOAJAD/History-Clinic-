@@ -46,7 +46,7 @@ public class AppointmentController {
             response = new ResponseEntity<>(createAppointmentResponse, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
-            response = new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            response = new ResponseEntity<>(new CreateAppointmentResponse("The backend of EPS failed.", "The backend of EPS failed."), HttpStatus.CONFLICT);
         }
         return response;
     }
