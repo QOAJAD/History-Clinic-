@@ -1,6 +1,5 @@
 package com.qoajad.backend.controller;
 
-import com.google.gson.Gson;
 import com.qoajad.backend.model.internal.authentication.AuthenticationResponse;
 import com.qoajad.backend.service.internal.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;

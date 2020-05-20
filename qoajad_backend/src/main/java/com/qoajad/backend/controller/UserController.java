@@ -1,6 +1,5 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.external.eps.response.Response;
 import com.qoajad.backend.model.external.hce.user.UpdateUserResponse;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
@@ -14,6 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -43,11 +44,12 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/user/find/{document}", method = RequestMethod.GET)
-    public ResponseEntity<User> findUserByDocument(@PathVariable("document") int document) {
+    @RequestMapping(value = "/user/find", method = RequestMethod.GET)
+    public ResponseEntity<User> findUserByUsername() {
         ResponseEntity<User> response;
         try {
-            response = new ResponseEntity<>(userService.findUserByDocument(document), HttpStatus.OK);
+            UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            response = new ResponseEntity<>(userService.findUserByUsername(currentUser.getUsername()), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
@@ -80,8 +82,9 @@ public class UserController {
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
         ResponseEntity<String> response;
         try {
+            UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             // The user password was able to be updated in hce.
-            int rowsUpdated = userService.updateUser(user) ? 1 : 0;
+            int rowsUpdated = userService.updateUser(user, currentUser.getUsername()) ? 1 : 0;
             if (rowsUpdated > 0) {
                 // This should never fail due that we assume their backend is always active.
                 userRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));
@@ -95,11 +98,12 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/user/delete/{document}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser(@PathVariable int document) {
+    @RequestMapping(value = "/user/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser() {
         ResponseEntity<String> response;
         try {
-            int rowsDeleted = userService.deleteUser(document) ? 1 : 0;
+            UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            int rowsDeleted = userService.deleteUser(currentUser.getUsername()) ? 1 : 0;
             response = new ResponseEntity<>(rowsDeleted + " row(s) changed.", HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);

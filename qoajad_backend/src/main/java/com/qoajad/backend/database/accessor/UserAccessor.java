@@ -9,8 +9,8 @@ import java.util.List;
 public interface UserAccessor {
 
     List<User> retrieveAllUsers();
-    User findUserByDocument(int document);
+    User findUserByUsername(String username);
     void createUser(CreateUser user);
-    boolean updateUser(UpdateUser user);
-    boolean deleteUser(int document);
+    boolean updateUser(UpdateUser user, String username);
+    boolean deleteUser(String username);
 }

@@ -4,7 +4,6 @@ import com.qoajad.backend.database.accessor.UserAccessor;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
-import com.qoajad.backend.utils.ValidationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,9 +36,8 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
             users = jdbcTemplate.query(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
                 final String username = resultSet.getString("username");
-                final int document = resultSet.getInt("document");
-                final String password = resultSet.getString("pw");
-                return new User(id, username, password, document);
+                final long document = resultSet.getLong("document");
+                return new User(id, username, document);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,17 +47,16 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public User findUserByDocument(int document) {
-        ValidationUtils.requireLeftGreaterThanRight(document, 0, "The document must be positive.");
+    public User findUserByUsername(String username) {
+        Objects.requireNonNull(username, "The username cannot be null.");
         User user;
         try {
-            final String query = "SELECT id, username, document, pw FROM User where document = ?";
+            final String query = "SELECT id, username, document FROM User where username = ?";
             user = jdbcTemplate.queryForObject(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
-                final String username = resultSet.getString("username");
-                final String password = resultSet.getString("pw");
-                return new User(id, username, password, document);
-            }, document);
+                final long document = resultSet.getLong("document");
+                return new User(id, username, document);
+            }, username);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -81,12 +78,13 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public boolean updateUser(UpdateUser user) {
+    public boolean updateUser(UpdateUser user, String username) {
         Objects.requireNonNull(user, "The updated user cannot be null.");
+        Objects.requireNonNull(username, "The username cannot be null.");
         int rowsChanged;
         try {
-            final String query = "UPDATE User SET username = ?, pw = ? WHERE document = ?";
-            rowsChanged = jdbcTemplate.update(query, user.getUsername(), encryptPassword(user.getPassword()), user.getDocument());
+            final String query = "UPDATE User SET username = ?, pw = ? WHERE username = ?";
+            rowsChanged = jdbcTemplate.update(query, user.getUsername(), encryptPassword(user.getPassword()), username);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -99,12 +97,12 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     }
 
     @Override
-    public boolean deleteUser(int document) {
-        ValidationUtils.requireLeftGreaterThanRight(document, 0, "The document must be positive.");
+    public boolean deleteUser(String username) {
+        Objects.requireNonNull(username, "The username cannot be null.");
         int rowsChanged;
         try {
-            final String query = "DELETE FROM User WHERE document = ?";
-            rowsChanged = jdbcTemplate.update(query, document);
+            final String query = "DELETE FROM User WHERE username = ?";
+            rowsChanged = jdbcTemplate.update(query, username);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

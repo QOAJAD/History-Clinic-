@@ -27,8 +27,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserByDocument(int document) {
-        return userAccessor.findUserByDocument(document);
+    public User findUserByUsername(String username) {
+        return userAccessor.findUserByUsername(username);
     }
 
     @Override
@@ -37,12 +37,12 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean updateUser(UpdateUser user) {
-        return userAccessor.updateUser(user);
+    public boolean updateUser(UpdateUser user, String username) {
+        return userAccessor.updateUser(user, username);
     }
 
     @Override
-    public boolean deleteUser(int document) {
-        return userAccessor.deleteUser(document);
+    public boolean deleteUser(String username) {
+        return userAccessor.deleteUser(username);
     }
 }

@@ -8,26 +8,19 @@ public class User {
 
     private final int id;
     private final String username;
-    private final String password;
-    private final int document;
+    private final long document;
 
-    public User(final int id, final String username, final String password, final int document) {
+    public User(final int id, final String username, final long document) {
         this.id = id;
         this.username = username;
-        this.password = password;
         this.document = document;
         ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The user id must be positive.");
         Objects.requireNonNull(this.username, "The username cannot be null.");
-        Objects.requireNonNull(this.password, "The password cannot be null.");
         ValidationUtils.requireLeftGreaterThanRight(this.document, 0, "The document must be positive");
     }
 
-    public int getDocument() {
+    public long getDocument() {
         return document;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public int getId() { return id; }
