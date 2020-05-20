@@ -1,9 +1,6 @@
 package com.qoajad.backend.controller;
 
-import com.qoajad.backend.model.external.eps.appointment.Appointment;
-import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
-import com.qoajad.backend.model.external.eps.appointment.UpdateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.*;
 import com.qoajad.backend.service.external.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,13 +38,14 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/appointment/create", method = RequestMethod.POST)
-    public ResponseEntity<String> createAppointment(@RequestBody final CreateAppointment createAppointment) {
-        ResponseEntity<String> response;
-        boolean rowsChanged = appointmentService.attemptToCreateAppointment(createAppointment);
-        if(rowsChanged) {
-            response = new ResponseEntity<>("Appointment created successfully.", HttpStatus.CREATED);
-        } else {
-            response = new ResponseEntity<>("An error has occurred while creating the appointment.", HttpStatus.CONFLICT);
+    public ResponseEntity<CreateAppointmentResponse> createAppointment(@RequestBody final CreateAppointment createAppointment) {
+        ResponseEntity<CreateAppointmentResponse> response;
+        try {
+            CreateAppointmentResponse createAppointmentResponse = appointmentService.attemptToCreateAppointment(createAppointment);
+            response = new ResponseEntity<>(createAppointmentResponse, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
         return response;
     }
