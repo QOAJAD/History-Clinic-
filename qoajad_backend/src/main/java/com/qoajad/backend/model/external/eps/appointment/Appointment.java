@@ -1,5 +1,6 @@
 package com.qoajad.backend.model.external.eps.appointment;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qoajad.backend.utils.ValidationUtils;
 
 import java.text.DateFormat;
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class Appointment {
 
     private final int id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a", timezone = "America/Jamaica")
     private Date date;
     private final String healthProviderInstitute;
     private final String address;
