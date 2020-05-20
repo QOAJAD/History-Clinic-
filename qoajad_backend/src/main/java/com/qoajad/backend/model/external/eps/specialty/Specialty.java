@@ -2,7 +2,10 @@ package com.qoajad.backend.model.external.eps.specialty;
 
 public class Specialty {
 
-    private final String name;
+    private String name;
+
+    public Specialty() {
+    }
 
     public Specialty(final String name) {
         this.name = name;

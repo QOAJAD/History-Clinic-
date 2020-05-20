@@ -1,14 +1,14 @@
 package com.qoajad.backend.model.external.eps.specialty;
 
-
-import java.util.List;
-
 public class Specialties {
 
-    private final String name;
-    private final List<Specialty> specialties;
+    private String name;
+    private Specialty[] specialties;
 
-    public Specialties(String name, List<Specialty> specialties) {
+    public Specialties() {
+    }
+
+    public Specialties(String name, Specialty[] specialties) {
         this.name = name;
         this.specialties = specialties;
     }
@@ -17,7 +17,7 @@ public class Specialties {
         return name;
     }
 
-    public List<Specialty> getSpecialties() {
+    public Specialty[] getSpecialties() {
         return specialties;
     }
 }

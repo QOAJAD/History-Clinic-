@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,6 +22,6 @@ public class SpecialtyServiceImplementation implements SpecialtyService {
 
     @Override
     public List<Specialties> retrieveAllSpecialties(String healthProviderName) {
-        return specialtyRPC.retrieveAllSpecialties(healthProviderName).getSpecialtiesList();
+        return Arrays.asList(specialtyRPC.retrieveAllSpecialties(healthProviderName));
     }
 }
