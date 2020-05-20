@@ -85,7 +85,7 @@ public class UserController {
             UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             // The user password was able to be updated in hce.
             int rowsUpdated = userService.updateUser(user, currentUser.getUsername()) ? 1 : 0;
-            if (rowsUpdated > 0) {
+            if (rowsUpdated > 0 && (user.getPassword() != null && !user.getPassword().isEmpty())) {
                 // This should never fail due that we assume their backend is always active.
                 userRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));
             }
