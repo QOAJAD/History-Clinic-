@@ -1,6 +1,7 @@
 package com.qoajad.backend.service.external.appointment;
 
 import com.qoajad.backend.model.external.eps.appointment.*;
+import com.qoajad.backend.model.external.eps.response.Response;
 
 import java.util.List;
 
@@ -10,6 +11,6 @@ public interface AppointmentService {
     List<Appointment> findUserAppointments(final int userDocument);
 
     CreateAppointmentResponse attemptToCreateAppointment(final CreateAppointment createAppointment);
-    boolean attemptToDeleteAppointment(final int appointmentId);
-    boolean attemptToUpdateAppointment(final UpdateAppointment updateAppointment);
+    Response attemptToDeleteAppointment(final int appointmentId);
+    Response attemptToUpdateAppointment(final UpdateAppointment updateAppointment);
 }

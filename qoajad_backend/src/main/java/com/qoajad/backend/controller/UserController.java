@@ -5,6 +5,7 @@ import com.qoajad.backend.model.external.hce.authentication.AuthenticationRespon
 import com.qoajad.backend.model.external.hce.user.UpdateUserResponse;
 import com.qoajad.backend.model.external.hce.user.UserResponse;
 import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.model.internal.response.Response;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
 import com.qoajad.backend.model.internal.user.User;
@@ -93,8 +94,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateUser(@RequestBody UpdateUser user) {
-        ResponseEntity<String> response;
+    public ResponseEntity<Response> updateUser(@RequestBody UpdateUser user) {
+        ResponseEntity<Response> response;
         try {
             UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             // The user password was able to be updated in hce.
@@ -103,7 +104,7 @@ public class UserController {
                 // This should never fail due that we assume their backend is always active.
                 moduleRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));
             }
-            response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
+            response = new ResponseEntity<>(new Response(rowsUpdated + " row(s) changed."), HttpStatus.OK);
         } catch (Exception e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -111,12 +112,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteUser() {
-        ResponseEntity<String> response;
+    public ResponseEntity<Response> deleteUser() {
+        ResponseEntity<Response> response;
         try {
             UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             int rowsDeleted = userService.deleteUser(currentUser.getUsername()) ? 1 : 0;
-            response = new ResponseEntity<>(rowsDeleted + " row(s) changed.", HttpStatus.OK);
+            response = new ResponseEntity<>(new Response(rowsDeleted + " row(s) changed."), HttpStatus.OK);
         } catch (EmptyResultDataAccessException e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
