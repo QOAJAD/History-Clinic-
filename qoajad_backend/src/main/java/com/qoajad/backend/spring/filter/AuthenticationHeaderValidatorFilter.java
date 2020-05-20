@@ -26,7 +26,7 @@ import java.util.Objects;
 @Qualifier("defaultAuthenticationHeaderValidator")
 public class AuthenticationHeaderValidatorFilter extends OncePerRequestFilter {
 
-    private static final String [] VALIDATE_WHEN_URL_DOESNT_CONTAINS = new String [] {AuthenticationConstants.AUTHENTICATION_ROOT_URI};
+    private static final String [] VALIDATE_WHEN_URL_DOESNT_CONTAINS = new String [] {AuthenticationConstants.AUTHENTICATION_ROOT_URI, "user/create"};
 
     private final JWTService jwtService;
 

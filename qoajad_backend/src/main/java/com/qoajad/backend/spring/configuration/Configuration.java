@@ -37,7 +37,7 @@ public class Configuration extends WebSecurityConfigurerAdapter {
             // make sure we use stateless session to avoid storing the user state.
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             // don't authenticate request to the following url.
-            .authorizeRequests().antMatchers("/" + AuthenticationConstants.AUTHENTICATION_ROOT_URI +"**").permitAll().and()
+            .authorizeRequests().antMatchers("/" + AuthenticationConstants.AUTHENTICATION_ROOT_URI +"**", "/user/create/**").permitAll().and()
             // Filter before the authentication stage to set the authenticated user.
             .addFilterAfter(authenticationHeaderValidatorFilter, UsernamePasswordAuthenticationFilter.class)
             // Apply the authentication settings.
