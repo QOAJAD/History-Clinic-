@@ -1,7 +1,8 @@
-package com.qoajad.backend.rpc.hce;
+package com.qoajad.backend.rpc.hce.module;
 
 import com.qoajad.backend.model.external.hce.authentication.AuthenticationResponse;
 import com.qoajad.backend.model.external.hce.authentication.HealthPromotingEntityAuthentication;
+import com.qoajad.backend.rpc.hce.AuthenticationRPC;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class HCEFeignInterceptor implements RequestInterceptor {
+public class HCEModuleFeignInterceptor implements RequestInterceptor {
 
     /**
      * This is data that identify US in hce service.
@@ -26,7 +27,7 @@ public class HCEFeignInterceptor implements RequestInterceptor {
     private final AuthenticationRPC authenticationRPC;
 
     @Autowired
-    public HCEFeignInterceptor(@Qualifier("defaultHCEAuthenticationServiceRPC") final AuthenticationRPC authenticationRPC) {
+    public HCEModuleFeignInterceptor(@Qualifier("defaultHCEAuthenticationServiceRPC") final AuthenticationRPC authenticationRPC) {
         this.authenticationRPC = authenticationRPC;
     }
 
@@ -40,6 +41,7 @@ public class HCEFeignInterceptor implements RequestInterceptor {
         if (request == null) {
             return;
         }
+
         final ResponseEntity<AuthenticationResponse> response = authenticationRPC.attemptToAuthenticateAsHealthPromotingEntity(USERS_HEALTH_AUTHENTICATION);
         final boolean responseIsOkAndHasABody = response.getStatusCode() == HttpStatus.OK && response.getBody() != null;
         if (responseIsOkAndHasABody) {
