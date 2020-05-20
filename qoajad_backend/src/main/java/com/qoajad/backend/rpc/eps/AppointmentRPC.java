@@ -1,9 +1,6 @@
 package com.qoajad.backend.rpc.eps;
 
-import com.qoajad.backend.model.external.eps.appointment.Appointment;
-import com.qoajad.backend.model.external.eps.appointment.ConsultingRoom;
-import com.qoajad.backend.model.external.eps.appointment.CreateAppointment;
-import com.qoajad.backend.model.external.eps.appointment.UpdateAppointment;
+import com.qoajad.backend.model.external.eps.appointment.*;
 import com.qoajad.backend.model.external.eps.response.Response;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,7 +19,7 @@ public interface AppointmentRPC {
     List<ConsultingRoom> findAvailableAppointments(@PathVariable("healthProviderInstituteName") String healthProviderInstituteName, @PathVariable("specialtyName") String specialtyName);
 
     @RequestMapping(value = "/horarios", method = RequestMethod.POST)
-    Response attemptToCreateAppointment(@RequestBody final CreateAppointment createAppointment);
+    CreateAppointmentResponse attemptToCreateAppointment(@RequestBody final CreateAppointment createAppointment);
 
     @RequestMapping(value = "/horarios/{appointmentId}", method = RequestMethod.DELETE)
     Response attemptToDeleteAppointment(@PathVariable("appointmentId") final int appointmentId);

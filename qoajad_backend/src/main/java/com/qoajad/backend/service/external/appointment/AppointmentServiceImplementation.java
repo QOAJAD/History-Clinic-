@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,10 +32,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
     }
 
     @Override
-    public boolean attemptToCreateAppointment(CreateAppointment createAppointment) {
-        //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
-        Response response = appointmentRPC.attemptToCreateAppointment(createAppointment);
-        return true;
+    public CreateAppointmentResponse attemptToCreateAppointment(CreateAppointment createAppointment) {
+        return appointmentRPC.attemptToCreateAppointment(createAppointment);
     }
 
     @Override
@@ -49,10 +48,5 @@ public class AppointmentServiceImplementation implements AppointmentService {
         //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
         Response response = appointmentRPC.attemptToUpdateAppointment(updateAppointment);
         return true;
-    }
-
-    @Override
-    public Appointment findUserAppointment(int userDocument, int appointmentId) {
-        return appointmentRPC.findUserAppointment(userDocument, appointmentId);
     }
 }
