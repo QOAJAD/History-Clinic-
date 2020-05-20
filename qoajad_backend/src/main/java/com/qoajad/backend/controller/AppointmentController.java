@@ -1,6 +1,7 @@
 package com.qoajad.backend.controller;
 
 import com.qoajad.backend.model.external.eps.appointment.*;
+import com.qoajad.backend.model.external.eps.response.Response;
 import com.qoajad.backend.service.external.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,10 +59,15 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/appointment/delete/{appointmentId}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteAppointment(@PathVariable("appointmentId") final int appointmentId) {
-        final int rowsChanged = appointmentService.attemptToDeleteAppointment(appointmentId) ? 1 : 0;
-        ResponseEntity<String> response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
-        return response;
+    public ResponseEntity<Response> deleteAppointment(@PathVariable("appointmentId") final int appointmentId) {
+        Response response;
+        try {
+            response = appointmentService.attemptToDeleteAppointment(appointmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = new Response("EPS no pudo eliminar la cita.");
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
    // TODO(Juan, AntonioYu): This has to be redone based on the api requirements. The services are done, so we just need to fulfill the service with the parameters.

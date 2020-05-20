@@ -37,10 +37,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
     }
 
     @Override
-    public boolean attemptToDeleteAppointment(int appointmentId) {
-        //TODO: Response has not been handled. There should be a serialization of it so it can return either true or false
-        Response response = appointmentRPC.attemptToDeleteAppointment(appointmentId);
-        return true;
+    public Response attemptToDeleteAppointment(int appointmentId) {
+        return appointmentRPC.attemptToDeleteAppointment(appointmentId);
     }
 
     @Override

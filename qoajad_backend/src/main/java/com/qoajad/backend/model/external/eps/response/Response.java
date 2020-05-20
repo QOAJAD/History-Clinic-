@@ -12,8 +12,8 @@ public class Response {
      */
     public Response() { }
 
-    public Response(final String message) {
-        this.message = message;
+    public Response(final String mensaje) {
+        this.message = mensaje;
     }
 
     public String getMessage() {
