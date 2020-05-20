@@ -6,7 +6,7 @@ Project for subject Large-Scale Software Development.
 
 In order to execute the SQL script, you must execute the following command while on the qoajad_db folder
 
-`docker-compose up`
+`docker-compose up -d`
 
 Once the environment has been set, you can connect through the following commands
 

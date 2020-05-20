@@ -1,7 +1,7 @@
 package com.qoajad.backend.spring.configuration;
 
-import com.qoajad.backend.model.authentication.PrimitiveUserDetail;
-import com.qoajad.backend.service.authentication.AuthenticationService;
+import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
+import com.qoajad.backend.service.internal.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

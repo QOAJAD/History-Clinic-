@@ -5,10 +5,10 @@ import ch.vorburger.mariadb4j.DBConfigurationBuilder;
 import ch.vorburger.mariadb4j.junit.MariaDB4jRule;
 import com.qoajad.backend.database.LogDatabaseAccessorImplementation;
 import com.qoajad.backend.database.accessor.LogAccessor;
-import com.qoajad.backend.model.log.AuthenticationLog;
-import com.qoajad.backend.model.log.Log;
-import com.qoajad.backend.service.date.format.DateFormatService;
-import com.qoajad.backend.service.date.format.DateFormatServiceImplementation;
+import com.qoajad.backend.model.internal.log.AuthenticationLog;
+import com.qoajad.backend.model.internal.log.LogCreate;
+import com.qoajad.backend.service.internal.date.format.DateFormatService;
+import com.qoajad.backend.service.internal.date.format.DateFormatServiceImplementation;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -51,7 +51,7 @@ public class LogDatabaseIntegrationTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testDateFormatserviceInLogDatabaseAccessorCannotBePassedAsNull() throws SQLException {
+    public void testDateFormatServiceInLogDatabaseAccessorCannotBePassedAsNull() throws SQLException {
         new LogDatabaseAccessorImplementation(createMockedJdbcTemplate(databaseRule.getURL()), null);
     }
 
@@ -72,14 +72,14 @@ public class LogDatabaseIntegrationTest {
         final LogAccessor logAccessor = new LogDatabaseAccessorImplementation(mockedJdbcTemplate, dateFormatService);
 
         final int id = 1;
-        final int activeUserId = -1;
+        final String activeUsername = "";
         final String state = "OK";
         final Date requestDate = new Date();
         final String ip = "0:0:0:0:0:0:0:1";
         final Object data = new AuthenticationLog("juan@hotmail.com");
         final String requestType = "GET";
-        final Log log = new Log(id, activeUserId, state, requestDate, ip, data, requestType);
+        final LogCreate logCreate = new LogCreate(activeUsername, state, requestDate, ip, data, requestType);
 
-        logAccessor.log(log);
+        logAccessor.log(logCreate);
     }
 }

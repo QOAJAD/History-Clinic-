@@ -2,9 +2,10 @@ package com.qoajad.backend.database;
 
 import com.google.gson.Gson;
 import com.qoajad.backend.database.accessor.LogAccessor;
-import com.qoajad.backend.model.log.AuthenticationLog;
-import com.qoajad.backend.model.log.Log;
-import com.qoajad.backend.service.date.format.DateFormatService;
+import com.qoajad.backend.model.internal.log.AuthenticationLog;
+import com.qoajad.backend.model.internal.log.Log;
+import com.qoajad.backend.model.internal.log.LogCreate;
+import com.qoajad.backend.service.internal.date.format.DateFormatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,15 +32,15 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     }
 
     @Override
-    public void log(final Log log) {
-        Objects.requireNonNull(log, "The log cannot be null.");
+    public void log(final LogCreate logCreate) {
+        Objects.requireNonNull(logCreate, "The logCreate cannot be null.");
         try {
-            final String query = "INSERT INTO Log(active_user_id, state, time, ip, data, requestType, eventType) " +
+            final String query = "INSERT INTO Log(activeUsername, state, time, ip, data, requestType, eventType) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
             jdbcTemplate.update(
-                    query, log.getActiveUserId() == -1 ? null : log.getActiveUserId(), log.getState(),
-                    dateFormatService.convertDateToMySQLDateTime(log.getRequestDate()),
-                    log.getIp(), new Gson().toJson(log.getData()), log.getRequestType(), log.getEventType());
+                    query, logCreate.getActiveUsername().equals("") ? null : logCreate.getActiveUsername(), logCreate.getState(),
+                    dateFormatService.convertDateToMySQLDateTime(logCreate.getRequestDate()),
+                    logCreate.getIp(), new Gson().toJson(logCreate.getData()), logCreate.getRequestType(), logCreate.getEventType());
         } catch(Exception e) {
             e.printStackTrace();
             throw e;
@@ -50,10 +51,10 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
     public List<Log> retrieveAllLogs() {
         List<Log> logs;
         try {
-            final String query = "SELECT id, active_user_id, state, time, ip, data, requestType, eventType FROM Log";
+            final String query = "SELECT id, activeUsername, state, time, ip, data, requestType, eventType FROM Log";
             logs = jdbcTemplate.query(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
-                final int activeUserId = resultSet.getInt("active_user_id");
+                final String activeUsername = resultSet.getString("activeUsername");
                 final String state = resultSet.getString("state");
                 Date time = null;
                 try {
@@ -68,7 +69,7 @@ public class LogDatabaseAccessorImplementation implements LogAccessor {
                 switch(eventType) {
                     case "AuthenticationLog": data = new Gson().fromJson(data.toString(), AuthenticationLog.class);
                 }
-                return new Log(id, activeUserId, state, time, ip, data, requestType);
+                return new Log(id, activeUsername, state, time, ip, data, requestType);
             });
         } catch (Exception e) {
             e.printStackTrace();
