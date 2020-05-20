@@ -6,9 +6,12 @@ import java.util.Objects;
 
 public class CreateUser {
 
-    private final String username;
-    private final String password;
-    private final long document;
+    private String username;
+    private String password;
+    private long document;
+
+    public CreateUser() {
+    }
 
     public CreateUser(String username, String password, long document) {
         this.username = username;

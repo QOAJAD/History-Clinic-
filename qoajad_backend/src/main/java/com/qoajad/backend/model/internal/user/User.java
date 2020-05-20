@@ -6,9 +6,12 @@ import java.util.Objects;
 
 public class User {
 
-    private final int id;
-    private final String username;
-    private final long document;
+    private int id;
+    private String username;
+    private long document;
+
+    public User() {
+    }
 
     public User(final int id, final String username, final long document) {
         this.id = id;
