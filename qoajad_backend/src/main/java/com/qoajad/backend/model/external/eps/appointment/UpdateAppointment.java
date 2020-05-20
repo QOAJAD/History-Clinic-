@@ -16,9 +16,9 @@ public class UpdateAppointment {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a", timezone = "America/Jamaica")
     private Date date;
     private int doctorDocument;
-    private String healthProviderInstitute;
+    private String healthProviderInstituteName;
 
-    public UpdateAppointment(int id, int patientDocument, String date, int doctorDocument, String healthProviderInstitute) {
+    public UpdateAppointment(int id, int patientDocument, String date, int doctorDocument, String healthProviderInstituteName) {
         this.id = id;
         this.patientDocument = patientDocument;
         // This had to be hardcoded due to json property not being able to parse this date.
@@ -29,12 +29,12 @@ public class UpdateAppointment {
             e.printStackTrace();
         }
         this.doctorDocument = doctorDocument;
-        this.healthProviderInstitute = healthProviderInstitute;
+        this.healthProviderInstituteName = healthProviderInstituteName;
         ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "Appointment id must be positive.");
         ValidationUtils.requireLeftGreaterThanRight(this.patientDocument, 0, "Patient document must be positive.");
         Objects.requireNonNull(this.date, "Date cannot be null.");
         ValidationUtils.requireLeftGreaterThanRight(this.doctorDocument, 0, "Doctor document must be positive.");
-        Objects.requireNonNull(this.healthProviderInstitute, "Health provider institute cannot be null.");
+        Objects.requireNonNull(this.healthProviderInstituteName, "Health provider institute cannot be null.");
     }
 
     public int getId() {
@@ -53,7 +53,7 @@ public class UpdateAppointment {
         return doctorDocument;
     }
 
-    public String getHealthProviderInstitute() {
-        return healthProviderInstitute;
+    public String getHealthProviderInstituteName() {
+        return healthProviderInstituteName;
     }
 }

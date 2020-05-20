@@ -27,7 +27,7 @@ public interface AppointmentRPC {
     @RequestMapping(value = "/horarios/{userDocument}", method = RequestMethod.GET)
     List<Appointment> findUserAppointments(@PathVariable("userDocument") final int userDocument);
 
-    @RequestMapping(value = "/solicitud", method = RequestMethod.PUT)
+    @RequestMapping(value = "/solicitud", method = RequestMethod.POST)
     Response attemptToUpdateAppointment(UpdateAppointment updateAppointment);
 
     @RequestMapping(value = "/{userDocument}/{appointmentId}")
