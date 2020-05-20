@@ -2,25 +2,34 @@ package com.qoajad.backend.model.external.eps.appointment;
 
 import com.qoajad.backend.utils.ValidationUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public class Appointment {
 
     private final int id;
-    private final Date date;
+    private Date date;
     private final String healthProviderInstitute;
     private final String address;
     private final String doctorName;
+
     private final String specialty;
 
-    public Appointment(int id, Date date, String healthProviderInstitute, String address, String doctorName, String specialty) {
+    public Appointment(int id, String date, String healthProviderInstitute, String address, String doctorName, String specialization) {
         this.id = id;
-        this.date = date;
+        // This had to be hardcoded due to json property not being able to parse this date.
+        final DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy (HH:mm:ss)");
+        try {
+            this.date = dateFormat.parse(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.healthProviderInstitute = healthProviderInstitute;
         this.address = address;
         this.doctorName = doctorName;
-        this.specialty = specialty;
+        this.specialty = specialization;
         ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "Appointment id must be positive.");
         Objects.requireNonNull(this.date, "Date cannot be null.");
         Objects.requireNonNull(this.healthProviderInstitute, "Health provider institute cannot be null.");
