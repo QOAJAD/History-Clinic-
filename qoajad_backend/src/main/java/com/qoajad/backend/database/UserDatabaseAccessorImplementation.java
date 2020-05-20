@@ -84,9 +84,10 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         int rowsChanged;
         try {
             final User localUser = findUserByUsername(username);
+            final String localPassword = retrievePassword(username);
             final String query = "UPDATE User SET username = ?, pw = ? WHERE username = ?";
             rowsChanged = jdbcTemplate.update(query, user.getUsername() == null ? localUser.getUsername() : user.getUsername(),
-                    user.getPassword() == null ? localUser.getPassword() : encryptPassword(user.getPassword()), username);
+                    user.getPassword() == null ? localPassword : encryptPassword(user.getPassword()), username);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -110,5 +111,13 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
             throw e;
         }
         return rowsChanged > 0;
+    }
+
+    @Override
+    public String retrievePassword(String username) {
+        Objects.requireNonNull(username, "The username cannot be null.");
+        final String query = "SELECT pw from User where username = ?";
+        final String password = jdbcTemplate.queryForObject(query, new Object [] {username}, String.class);
+        return password;
     }
 }
