@@ -115,6 +115,6 @@ public class AppointmentUnitTest {
         final ConsultingRoom consultingRoom = new ConsultingRoom(consultingRoomName, availableAppointments);
 
         Assert.assertEquals(consultingRoom.getName(), consultingRoomName);
-        Assert.assertEquals(consultingRoom.getAvailableAppointments(), availableAppointments);
+        Assert.assertEquals(consultingRoom.getAvailableAppointment(), availableAppointments);
     }
 }

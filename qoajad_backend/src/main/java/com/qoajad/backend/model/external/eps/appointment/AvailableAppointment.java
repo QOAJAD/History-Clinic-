@@ -1,23 +1,27 @@
 package com.qoajad.backend.model.external.eps.appointment;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qoajad.backend.utils.ValidationUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public class AvailableAppointment {
 
-    private final int id;
-    private final String doctorName;
-    private final int doctorDocument;
-    private final Date date;
+    private String doctorName;
+    private int doctorDocument;
+    // Format this date in the following way when sent to eps.
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy HH:mm:ss")
+    private Date date;
 
-    public AvailableAppointment(int id, final String doctorName, final int doctorDocument, final Date date) {
-        this.id = id;
+    public AvailableAppointment() {
+    }
+
+    public AvailableAppointment(final String doctorName, final int doctorDocument, final Date date) {
         this.doctorName = doctorName;
         this.doctorDocument = doctorDocument;
         this.date = date;
-        ValidationUtils.requireLeftGreaterThanRight(this.id, 0, "The id must be positive.");
         Objects.requireNonNull(this.doctorName, "The doctorName field cannot be null.");
         ValidationUtils.requireLeftGreaterThanRight(this.doctorDocument, 0, "The doctor document must be positive.");
         Objects.requireNonNull(this.date, "The date field cannot be null.");
@@ -33,9 +37,5 @@ public class AvailableAppointment {
 
     public Date getDate() {
         return date;
-    }
-
-    public int getId() {
-        return id;
     }
 }
