@@ -1,7 +1,7 @@
 package com.qoajad.backend.model.external.hce.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.qoajad.backend.rpc.hce.HCEFeignInterceptor;
+import com.qoajad.backend.rpc.hce.module.HCEModuleFeignInterceptor;
 import com.qoajad.backend.utils.ValidationUtils;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class UpdateUser {
      * This field is required by the hce service.
      */
     @JsonProperty("idEntidad")
-    private final int entityId = HCEFeignInterceptor.HEALTH_PROMOTING_ENTITY_ID;
+    private final int entityId = HCEModuleFeignInterceptor.HEALTH_PROMOTING_ENTITY_ID;
 
     public UpdateUser(final long document, final String newPassword) {
         this.document = document;
