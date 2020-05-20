@@ -125,13 +125,10 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = "/user/retrieve_information/{password}", method = RequestMethod.GET)
-    public ResponseEntity<UserResponse> retrieveUserInformation(@PathVariable("password") String password) {
+    @RequestMapping(value = "/user/retrieve_information/{username}/{password}", method = RequestMethod.GET)
+    public ResponseEntity<UserResponse> retrieveUserInformation(@PathVariable("username") final String username, @PathVariable("password") final String password) {
         ResponseEntity<UserResponse> response;
-        UserResponse userResponse;
-        UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User newUser = userService.findUserByUsername(currentUser.getUsername());
-        Authentication authentication = new Authentication(newUser.getDocument(), password);
+        Authentication authentication = new Authentication(userService.findUserByUsername(username).getDocument(), password);
         final ResponseEntity<AuthenticationResponse> authenticationResponse = authenticationRPC.attemptToAuthenticateAsUser(authentication);
         if (authenticationResponse.getStatusCode() == HttpStatus.OK) {
             final String jwt = authenticationResponse.getBody().getToken();
@@ -139,35 +136,11 @@ public class UserController {
             ResponseEntity<String> userRPCResponse = userRPC.attemptToRetrieveUserInformation(jwt, user);
             String userInformation = userRPCResponse.getBody();
             System.out.println(userInformation);
-            userResponse = new UserResponse("Accepted", userInformation);
-            response = new ResponseEntity<>(userResponse, HttpStatus.OK);
+            response = new ResponseEntity<>(new UserResponse("Accepted", userInformation), HttpStatus.OK);
         } else {
-            userResponse = new UserResponse("Declined", null);
-            response = new ResponseEntity<>(userResponse, HttpStatus.UNAUTHORIZED);
+            response = new ResponseEntity<>(new UserResponse("Declined", null), HttpStatus.UNAUTHORIZED);
         }
         return response;
     }
 
-    @RequestMapping(value = "/medical_history/retrieve_information/{password}", method = RequestMethod.GET)
-    public ResponseEntity<UserResponse> retrieveMH(@PathVariable("password") String password) {
-        ResponseEntity<UserResponse> response;
-        UserResponse userResponse;
-        UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User newUser = userService.findUserByUsername(currentUser.getUsername());
-        Authentication authentication = new Authentication(newUser.getDocument(), password);
-        final ResponseEntity<AuthenticationResponse> authenticationResponse = authenticationRPC.attemptToAuthenticateAsUser(authentication);
-        if (authenticationResponse.getStatusCode() == HttpStatus.OK) {
-            final String jwt = authenticationResponse.getBody().getToken();
-            com.qoajad.backend.model.external.hce.user.User user = new com.qoajad.backend.model.external.hce.user.User(authentication.getId());
-            ResponseEntity<String> userRPCResponse = userRPC.attemptToRetrieveMH(jwt, user);
-            String userInformation = userRPCResponse.getBody();
-            System.out.println(userInformation);
-            userResponse = new UserResponse("Accepted", userInformation);
-            response = new ResponseEntity<>(userResponse, HttpStatus.OK);
-        } else {
-            userResponse = new UserResponse("Declined", null);
-            response = new ResponseEntity<>(userResponse, HttpStatus.UNAUTHORIZED);
-        }
-        return response;
-    }
 }
