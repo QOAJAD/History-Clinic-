@@ -13,7 +13,7 @@ public class UpdateAppointment {
     private int id;
     private int patientDocument;
     // Format this date in the following way when sent to eps.
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMM dd, yyyy hh:mm:ss a")
     private Date date;
     private int doctorDocument;
     private String healthProviderInstitute;
