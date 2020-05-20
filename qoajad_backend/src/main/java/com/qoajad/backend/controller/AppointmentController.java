@@ -1,6 +1,7 @@
 package com.qoajad.backend.controller;
 
 import com.qoajad.backend.model.external.eps.appointment.*;
+import com.qoajad.backend.model.internal.response.Response;
 import com.qoajad.backend.service.external.appointment.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,16 +52,28 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/appointment/update", method = RequestMethod.PUT)
-    public ResponseEntity<String> updateAppointment(@RequestBody final UpdateAppointment updateAppointment) {
-        final int rowsChanged = appointmentService.attemptToUpdateAppointment(updateAppointment) ? 1 : 0;
-        ResponseEntity<String> response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
+    public ResponseEntity<Response> updateAppointment(@RequestBody final UpdateAppointment updateAppointment) {
+        ResponseEntity<Response> response;
+        try{
+            appointmentService.attemptToUpdateAppointment(updateAppointment);
+            response = new ResponseEntity<>(new Response("Appointment updated."), HttpStatus.OK);
+        } catch(Exception e) {
+            e.printStackTrace();
+            response = new ResponseEntity<>(new Response("An error has occurred with the EPS service."), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return response;
     }
 
     @RequestMapping(value = "/appointment/delete/{appointmentId}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteAppointment(@PathVariable("appointmentId") final int appointmentId) {
-        final int rowsChanged = appointmentService.attemptToDeleteAppointment(appointmentId) ? 1 : 0;
-        ResponseEntity<String> response = new ResponseEntity<>(rowsChanged + "rows changed.", HttpStatus.OK);
+    public ResponseEntity<Response> deleteAppointment(@PathVariable("appointmentId") final int appointmentId) {
+        ResponseEntity<Response> response;
+        try{
+            appointmentService.attemptToDeleteAppointment(appointmentId);
+            response = new ResponseEntity<>(new Response("Appointment deleted."), HttpStatus.OK);
+        } catch(Exception e) {
+            e.printStackTrace();
+            response = new ResponseEntity<>(new Response("An error has occurred with the EPS service."), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return response;
     }
 
