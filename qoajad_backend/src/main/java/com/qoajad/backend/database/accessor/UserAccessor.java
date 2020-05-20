@@ -13,4 +13,5 @@ public interface UserAccessor {
     void createUser(CreateUser user);
     boolean updateUser(UpdateUser user, String username);
     boolean deleteUser(String username);
+    String retrievePassword(String username);
 }
