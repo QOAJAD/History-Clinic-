@@ -90,10 +90,8 @@ public class UserController {
                 userRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));
             }
             response = new ResponseEntity<>(rowsUpdated + " row(s) changed.", HttpStatus.OK);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (Exception e) {
             response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (DataIntegrityViolationException e) {
-            response = new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return response;
     }
