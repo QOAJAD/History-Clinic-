@@ -81,6 +81,7 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public boolean updateUser(UpdateUser user, String username) {
         Objects.requireNonNull(user, "The updated user cannot be null.");
         Objects.requireNonNull(username, "The username cannot be null.");
+        System.out.println("Username: " + username + " new usname : " + user.getUsername());
         int rowsChanged;
         try {
             final User localUser = findUserByUsername(username);
