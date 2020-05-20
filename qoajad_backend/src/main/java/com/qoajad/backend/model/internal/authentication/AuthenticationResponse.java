@@ -1,8 +1,11 @@
 package com.qoajad.backend.model.internal.authentication;
 
 public class AuthenticationResponse {
-    private final String response;
-    private final String jwt;
+    private String response;
+    private String jwt;
+
+    public AuthenticationResponse() {
+    }
 
     public AuthenticationResponse(String response, String jwt) {
         this.response = response;

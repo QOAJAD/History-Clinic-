@@ -6,9 +6,12 @@ import java.util.Objects;
 
 public class UpdateUser {
 
-    private final String username;
-    private final String password;
-    private final long document;
+    private String username;
+    private String password;
+    private long document;
+
+    public UpdateUser() {
+    }
 
     public UpdateUser(final String username, final String password, final long document) {
         this.username = username;

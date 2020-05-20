@@ -4,8 +4,11 @@ import java.util.Objects;
 
 public class PrimitiveUserDetail {
 
-    private final String username;
-    private final String password;
+    private String username;
+    private String password;
+
+    public PrimitiveUserDetail() {
+    }
 
     public PrimitiveUserDetail(final String username, final String password) {
         this.username = username;
