@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.aspectj:aspectjweaver'
 	implementation 'org.aspectj:aspectjrt'
 	implementation 'com.google.code.gson:gson:2.8.6'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
 	compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.2.RELEASE'
 	// https://mvnrepository.com/artifact/com.zaxxer/HikariCP

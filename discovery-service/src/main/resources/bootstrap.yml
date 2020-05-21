@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: EurekaDiscovery
+
+    main:
+      banner-mode: off
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/
+    register-with-eureka: false
+    fetch-registry: false
+
+server:
+  port: 9091
