@@ -15,7 +15,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Service
 public class HCEModuleFeignInterceptor implements RequestInterceptor {
 
     /**
