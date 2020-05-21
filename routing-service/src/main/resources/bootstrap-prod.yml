@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: TrainingInmediaProxy
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://176.31.163.207:9091/eureka
+    fetchRegistry: true
+
+server:
+  port: 8084
+  context: zuul
+
+management:
+  security:
+    enabled: false
+
+zuul:
+  # Sensitive headers that won't be passed over.
+  sensitiveHeaders: Cookie,Set-Cookie
+
+  host:
+    socket-timeout-millis: 30000
+  routes:
+    clients:
+      path: /proxy/clients/**
+      serviceId: ClientEdgeService
+
+    courses:
+      path: /proxy/courses/**
+      serviceId: CourseEdgeService
+
+    ui:
+      path: /proxy/ui/**
+      serviceId: UIService
+
+    authentication:
+      path: /proxy/authentication/**
+      serviceId: AuthenticationMicroservice
+
+security:
+  # Disable spring boot basic authentication
+  basic:
+    enabled: false
+
+  jwt:
+    secret: pnUXzJ+}*q!4a#(qc=-M,XV_NnQzfG#R}[xp4KR>^R,Gkd/NtLgC_`%yxf2nu4G3::+D:cxBnX$~D'AaVz]%jc-g2%2v,qp2m:=<
+

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: Gateway
+
+  main:
+    banner-mode: off
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka
+    fetchRegistry: true
+
+server:
+  port: 9092
+  context: zuul
+
+management:
+  security:
+    enabled: false
+
+# This has to be added since the first request hystrix loads in a lazzy manner, the petition gets canceled due to the timeout.
+ribbon:
+  ReadTimeout: 60000
+
+zuul:
+  # Sensitive headers that won't be passed over.
+  sensitiveHeaders: Cookie,Set-Cookie
+
+  host:
+    socket-timeout-millis: 30000
+
+  routes:
+    all:
+      path: /**
+      serviceId: QoajadBackend
+
+security:
+  # Disable spring boot basic authentication
+  basic:
+    enabled: false
+
+  jwt:
+    secret: e-7L$F&Xne8hm_PgLArL9xj=uKuYyx-de93GV+pgaZ2Tw57@-S8W7URAK9y_TN$MDV9LDbg?j+dUH#--zg&pzSeyk#z*L*gL%X-7!tDGPhC6g$%PGgU-%ymK+t*s6v@^
+
