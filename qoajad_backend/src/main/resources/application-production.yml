@@ -41,7 +41,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://91.134.137.144:9091/eureka
+      defaultZone: http://193.70.42.102:9091/eureka
     fetchRegistry: true
 
 security:
