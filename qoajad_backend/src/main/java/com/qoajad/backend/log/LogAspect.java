@@ -34,7 +34,7 @@ public class LogAspect {
 
     @Autowired
     public LogAspect(@Qualifier("asynchronousWritableLogService") final WritableLogService writableLogService,
-                     @Qualifier("defaultAppointmentService") final AppointmentService appointmentService) {
+                     @Qualifier("defaultColsanitasAppointmentService") final AppointmentService appointmentService) {
         this.writableLogService = writableLogService;
         this.appointmentService = appointmentService;
     }

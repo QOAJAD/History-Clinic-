@@ -3,6 +3,7 @@ package com.qoajad.backend.database;
 import com.qoajad.backend.database.accessor.UserAccessor;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.UpdateUserHPE;
 import com.qoajad.backend.model.internal.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,12 +33,13 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public List<User> retrieveAllUsers() {
         List<User> users;
         try {
-            final String query = "SELECT id, username, document, pw FROM User";
+            final String query = "SELECT id, username, document, health_promoting_entity_id FROM User";
             users = jdbcTemplate.query(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
                 final String username = resultSet.getString("username");
                 final long document = resultSet.getLong("document");
-                return new User(id, username, document);
+                final int healthPromotingEntityId = resultSet.getInt("health_promoting_entity_id");
+                return new User(id, username, document, healthPromotingEntityId);
             });
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,11 +53,13 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
         Objects.requireNonNull(username, "The username cannot be null.");
         User user;
         try {
-            final String query = "SELECT id, username, document FROM User where username = ?";
+            final String query = "SELECT id, username, document, health_promoting_entity_id FROM User where username = ?";
             user = jdbcTemplate.queryForObject(query, (resultSet, rowNum) -> {
                 final int id = resultSet.getInt("id");
                 final long document = resultSet.getLong("document");
-                return new User(id, username, document);
+                final int healthPromotingEntityId = resultSet.getInt("health_promoting_entity_id");
+
+                return new User(id, username, document, healthPromotingEntityId);
             }, username);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,9 +72,9 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public void createUser(CreateUser user) {
         Objects.requireNonNull(user, "The user cannot be null.");
         try {
-            final String query = "INSERT INTO User(username, document, pw) VALUES (?, ?, ?)";
+            final String query = "INSERT INTO User(username, document, pw, health_promoting_entity_id) VALUES (?, ?, ?, ?)";
             final String encryptedPassword = encryptPassword(user.getPassword());
-            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptedPassword);
+            jdbcTemplate.update(query, user.getUsername(), user.getDocument(), encryptedPassword, 1);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -118,7 +122,27 @@ public class UserDatabaseAccessorImplementation implements UserAccessor {
     public String retrievePassword(String username) {
         Objects.requireNonNull(username, "The username cannot be null.");
         final String query = "SELECT pw from User where username = ?";
-        final String password = jdbcTemplate.queryForObject(query, new Object [] {username}, String.class);
-        return password;
+        return jdbcTemplate.queryForObject(query, new Object [] {username}, String.class);
+    }
+
+    @Override
+    public boolean updateUserHealthPromotingEntity(UpdateUserHPE updateUserHPE) {
+        Objects.requireNonNull(updateUserHPE, "The user cannot be null.");
+        int rowsChanged;
+        try {
+            final String query = "UPDATE User SET health_promoting_entity_id = (SELECT id FROM HealthPromotingEntity WHERE name = ?) WHERE document = ?";
+            rowsChanged = jdbcTemplate.update(query, updateUserHPE.getHealthPromotingEntityName(), updateUserHPE.getDocument());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return rowsChanged > 0;
+    }
+
+    @Override
+    public String retrieveHPE(String username) {
+        Objects.requireNonNull(username, "The user cannot be null.");
+        final String query = "SELECT name FROM HealthPromotingEntity LEFT JOIN User ON User.health_promoting_entity_id = HealthPromotingEntity.id WHERE username = ?";
+        return jdbcTemplate.queryForObject(query, new Object [] {username}, String.class);
     }
 }

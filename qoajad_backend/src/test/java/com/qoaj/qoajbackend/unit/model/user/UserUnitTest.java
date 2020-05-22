@@ -43,7 +43,7 @@ public class UserUnitTest {
         final String username = "roberto97@gmail.com";
         final int document = 66808451;
 
-        final User user = new User(id, username, document);
+        final User user = new User(id, username, document, healthPromotingEntityId);
         Assert.assertEquals(user.getId(), id);
         Assert.assertEquals(user.getUsername(), username);
         Assert.assertEquals(user.getDocument(), document);

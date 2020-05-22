@@ -3,6 +3,7 @@ package com.qoajad.backend.service.internal.user;
 import com.qoajad.backend.database.accessor.UserAccessor;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.UpdateUserHPE;
 import com.qoajad.backend.model.internal.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,5 +45,15 @@ public class UserServiceImplementation implements UserService {
     @Override
     public boolean deleteUser(String username) {
         return userAccessor.deleteUser(username);
+    }
+
+    @Override
+    public boolean updateUserHealthPromotingEntity(UpdateUserHPE updateUserHPE) {
+        return userAccessor.updateUserHealthPromotingEntity(updateUserHPE);
+    }
+
+    @Override
+    public String retrieveHPE(String username) {
+        return userAccessor.retrieveHPE(username);
     }
 }
