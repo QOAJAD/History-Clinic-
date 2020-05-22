@@ -22,9 +22,9 @@ public class SpecialtyFactory {
     public SpecialtyService create(final String healthPromotingEntityName) {
         switch (healthPromotingEntityName) {
             case "Colsanitas":
-                return suraSpecialtyService;
-            case "SURA":
                 return colsanitasSpecialtyService;
+            case "SURA":
+                return suraSpecialtyService;
             default:
                 throw new IllegalStateException("The health promoting entity name is not a valid one.");
         }

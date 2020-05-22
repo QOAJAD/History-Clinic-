@@ -22,9 +22,10 @@ public class AppointmentFactory {
     public AppointmentService create(final String healthPromotingEntityName) {
         switch (healthPromotingEntityName) {
             case "Colsanitas":
-                return suraAppointmentService;
-            case "SURA":
                 return colsanitasAppointmentService;
+
+            case "SURA":
+                return suraAppointmentService;
             default:
                 throw new IllegalStateException("The health promoting entity name is not a valid one.");
         }
