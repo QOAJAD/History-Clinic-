@@ -29,14 +29,11 @@ import java.util.List;
 public class LogAspect {
 
     private final WritableLogService writableLogService;
-    private final AppointmentService appointmentService;
     private HttpServletRequest request;
 
     @Autowired
-    public LogAspect(@Qualifier("asynchronousWritableLogService") final WritableLogService writableLogService,
-                     @Qualifier("defaultColsanitasAppointmentService") final AppointmentService appointmentService) {
+    public LogAspect(@Qualifier("asynchronousWritableLogService") final WritableLogService writableLogService) {
         this.writableLogService = writableLogService;
-        this.appointmentService = appointmentService;
     }
 
     @Pointcut("execution (* com.qoajad.backend.controller..*(..))")
@@ -103,24 +100,6 @@ public class LogAspect {
                 request.getRemoteAddr(), createAppointment, request.getMethod());
         writableLogService.log(logCreate);
     }
-
-//    @Around("updateAppointmentPointcut()")
-//    public void logUpdateAppointment(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-//        Object[] args = proceedingJoinPoint.getArgs();
-//        final UpdateAppointment updateAppointment = (UpdateAppointment) args[0];
-//        Appointment oldAppointment;
-//        Appointment newAppointment;
-//        oldAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
-//                updateAppointment.getPatientDocument());
-//        ResponseEntity<String> response = (ResponseEntity<String>) proceedingJoinPoint.proceed(args);
-//        newAppointment = appointmentService.findUserAppointment(updateAppointment.getId(),
-//                updateAppointment.getPatientDocument());
-//        UserDetails currentUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        final UpdateAppointmentLog updateAppointmentLog = new UpdateAppointmentLog(oldAppointment, newAppointment);
-//        final LogCreate logCreate = new LogCreate(currentUser.getUsername(), response.getStatusCode().name(), new Date(),
-//                request.getRemoteAddr(), updateAppointmentLog, request.getMethod());
-//        writableLogService.log(logCreate);
-//    }
 
     @AfterReturning(pointcut = "deleteAppointmentPointcut()", returning = "response")
     public void logDeleteAppointment(JoinPoint joinPoint, ResponseEntity<String> response) {

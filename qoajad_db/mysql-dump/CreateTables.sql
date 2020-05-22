@@ -2,6 +2,14 @@
 -- Last modification date: 2020-05-17 20:17:46.456
 
 -- tables
+-- Table: HealthPromotingEntity
+CREATE TABLE HealthPromotingEntity (
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(20) NOT NULL,
+    CONSTRAINT HealthPromotingEntity_pk PRIMARY KEY (id)
+);
+
+-- tables
 -- Table: Log
 CREATE TABLE Log (
     id int NOT NULL AUTO_INCREMENT,
@@ -21,6 +29,7 @@ CREATE TABLE User (
     username varchar(50) NOT NULL,
     document bigint unsigned NOT NULL,
     pw tinytext NOT NULL,
+    health_promoting_entity_id int NOT NULL,
     UNIQUE INDEX unique_document (document),
     UNIQUE INDEX unique_username (username),
     CONSTRAINT id PRIMARY KEY (id)
@@ -31,5 +40,8 @@ CREATE TABLE User (
 ALTER TABLE Log ADD CONSTRAINT Log_User FOREIGN KEY Log_User (activeUsername)
     REFERENCES User (username) ON UPDATE CASCADE;
 
+-- Reference: User_HPE (table: User)
+ALTER TABLE User ADD CONSTRAINT User_HPE FOREIGN KEY User_HPE (health_promoting_entity_id)
+    REFERENCES HealthPromotingEntity (id);
 -- End of file.
 
