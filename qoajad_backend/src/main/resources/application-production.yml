@@ -1,3 +1,19 @@
+# These properties are used to enable feign logger. This can help in finding bugs whenever we use it.
+# logging:
+#  level:
+#    com:
+#     qoajad:
+#       backend:
+#         rpc:
+#           hce:
+#             UserRPC: DEBUG
+
+# feign:
+#   client:
+#     config:
+#       default:
+#         loggerLevel: FULL
+
 spring:
   main:
     banner-mode: off
@@ -7,7 +23,7 @@ spring:
 
   datasource:
     url:
-      jdbc:mysql://18.221.11.31:3306/qoajad_users
+      jdbc:mysql://193.70.42.96:3306/qoajad_users
     username: qoajad
     password: qoajad
     driver-class-name: com.mysql.jdbc.Driver
@@ -21,6 +37,12 @@ spring:
 
 server:
   port: 9090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://91.134.137.144:9091/eureka
+    fetchRegistry: true
 
 security:
   basic:
