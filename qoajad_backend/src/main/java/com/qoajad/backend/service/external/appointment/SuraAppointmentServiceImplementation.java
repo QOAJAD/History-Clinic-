@@ -2,47 +2,46 @@ package com.qoajad.backend.service.external.appointment;
 
 import com.qoajad.backend.model.external.eps.appointment.*;
 import com.qoajad.backend.model.external.eps.response.Response;
-import com.qoajad.backend.rpc.eps.AppointmentRPC;
+import com.qoajad.backend.rpc.eps.sura.SuraAppointmentRPC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Qualifier("defaultAppointmentService")
-public class AppointmentServiceImplementation implements AppointmentService {
+@Qualifier("defaultSuraAppointmentService")
+public class SuraAppointmentServiceImplementation implements AppointmentService {
 
-    private final AppointmentRPC appointmentRPC;
+    private final SuraAppointmentRPC suraAppointmentRPC;
 
     @Autowired
-    public AppointmentServiceImplementation(@Qualifier("defaultAppointmentRPC") final AppointmentRPC appointmentRPC) {
-        this.appointmentRPC = appointmentRPC;
+    public SuraAppointmentServiceImplementation(@Qualifier("defaultSuraAppointmentRPC") final SuraAppointmentRPC suraAppointmentRPC) {
+        this.suraAppointmentRPC = suraAppointmentRPC;
     }
 
     @Override
     public List<ConsultingRoom> findAvailableAppointments(String healthProviderInstituteName, String specialtyName) {
-        return appointmentRPC.findAvailableAppointments(healthProviderInstituteName, specialtyName);
+        return suraAppointmentRPC.findAvailableAppointments(healthProviderInstituteName, specialtyName);
     }
 
     @Override
     public List<Appointment> findUserAppointments(int userDocument) {
-        return appointmentRPC.findUserAppointments(userDocument);
+        return suraAppointmentRPC.findUserAppointments(userDocument);
     }
 
     @Override
     public CreateAppointmentResponse attemptToCreateAppointment(CreateAppointment createAppointment) {
-        return appointmentRPC.attemptToCreateAppointment(createAppointment);
+        return suraAppointmentRPC.attemptToCreateAppointment(createAppointment);
     }
 
     @Override
     public Response attemptToDeleteAppointment(int appointmentId) {
-        return appointmentRPC.attemptToDeleteAppointment(appointmentId);
+        return suraAppointmentRPC.attemptToDeleteAppointment(appointmentId);
     }
 
     @Override
     public Response attemptToUpdateAppointment(UpdateAppointment updateAppointment) {
-        return appointmentRPC.attemptToUpdateAppointment(updateAppointment);
+        return suraAppointmentRPC.attemptToUpdateAppointment(updateAppointment);
     }
 }

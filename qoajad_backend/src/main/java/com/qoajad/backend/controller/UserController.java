@@ -8,6 +8,7 @@ import com.qoajad.backend.model.internal.authentication.PrimitiveUserDetail;
 import com.qoajad.backend.model.internal.response.Response;
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.UpdateUserHPE;
 import com.qoajad.backend.model.internal.user.User;
 import com.qoajad.backend.rpc.hce.AuthenticationRPC;
 import com.qoajad.backend.rpc.hce.module.ModuleRPC;
@@ -74,8 +75,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public ResponseEntity<String> createUser(@RequestBody CreateUser user) {
-        ResponseEntity<String> response;
+    public ResponseEntity<Response> createUser(@RequestBody CreateUser user) {
+        ResponseEntity<Response> response;
         try {
             final ResponseEntity<UpdateUserResponse> hceResponse = moduleRPC.attemptToUpdateUser(new com.qoajad.backend.model.external.hce.user.UpdateUser(user.getDocument(), user.getPassword()));
             // The user password was able to be updated in hce.
@@ -84,11 +85,11 @@ public class UserController {
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            response = new ResponseEntity<>("User created successfully.", HttpStatus.CREATED);
+            response = new ResponseEntity<>(new Response("User created successfully."), HttpStatus.CREATED);
         } catch (EmptyResultDataAccessException e) {
-            response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response = new ResponseEntity<>(new Response("An error has occurred while creating the user."), HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException e) {
-            response = new ResponseEntity<>(HttpStatus.CONFLICT);
+            response = new ResponseEntity<>(new Response("An error has occurred while creating the user."), HttpStatus.CONFLICT);
         }
         return response;
     }
@@ -140,6 +141,18 @@ public class UserController {
             response = new ResponseEntity<>(new UserResponse("Accepted", userInformation), HttpStatus.OK);
         } else {
             response = new ResponseEntity<>(new UserResponse("Declined", null), HttpStatus.UNAUTHORIZED);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/user/update_hpe", method = RequestMethod.PUT)
+    public ResponseEntity<Response> modifyUserHPE(@RequestBody UpdateUserHPE updateUserHPE) {
+        ResponseEntity<Response> response;
+        try {
+            int rowsUpdated = userService.updateUserHealthPromotingEntity(updateUserHPE) ? 1 : 0;
+            response = new ResponseEntity<>(new Response(rowsUpdated + " row(s) updated."), HttpStatus.OK);
+        } catch (Exception e) {
+            response = new ResponseEntity<>(new Response("An error has occurred while updating the user's health promoting entity."), HttpStatus.NOT_FOUND);
         }
         return response;
     }

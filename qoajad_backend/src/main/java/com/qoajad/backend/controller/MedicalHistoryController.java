@@ -29,7 +29,7 @@ public class MedicalHistoryController {
     @Autowired
     public MedicalHistoryController(@Qualifier("defaultUserService") final UserService userService,
                                     @Qualifier("defaultHCEAuthenticationServiceRPC") AuthenticationRPC authenticationRPC,
-                          @Qualifier("defaultHCEUserServiceRPC") UserRPC userRPC) {
+                                    @Qualifier("defaultHCEUserServiceRPC") UserRPC userRPC) {
         this.userService = userService;
         this.authenticationRPC = authenticationRPC;
         this.userRPC = userRPC;

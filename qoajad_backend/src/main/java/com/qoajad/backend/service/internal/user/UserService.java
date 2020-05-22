@@ -2,6 +2,7 @@ package com.qoajad.backend.service.internal.user;
 
 import com.qoajad.backend.model.internal.user.CreateUser;
 import com.qoajad.backend.model.internal.user.UpdateUser;
+import com.qoajad.backend.model.internal.user.UpdateUserHPE;
 import com.qoajad.backend.model.internal.user.User;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface UserService {
     void createUser(CreateUser user);
     boolean updateUser(UpdateUser user, String username);
     boolean deleteUser(String username);
+    boolean updateUserHealthPromotingEntity(UpdateUserHPE updateUserHPE);
+    String retrieveHPE(String username);
 }
